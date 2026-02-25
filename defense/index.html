@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Computational Enquiry Regarding the Nature of Intelligence, Morality and Consciousness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+<style>
+:root {
+  --accent: #c0392b;
+  --accent-light: #e74c3c;
+  --bg: #ffffff;
+  --bg-alt: #f7f8fa;
+  --text: #1a1a2e;
+  --text-sec: #555;
+  --border: #e0e0e0;
+  --sidebar-w: 280px;
+  --font-serif: 'Noto Serif', Georgia, serif;
+  --font-sans: 'Noto Sans', system-ui, sans-serif;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); color: var(--text); background: var(--bg); line-height: 1.7; font-size: 15px; }
+
+/* Tags */
+.tag-theory { background: #e8f5e9; color: #2e7d32; }
+.tag-ai { background: #e3f2fd; color: #1565c0; }
+.tag-meta { background: #f3e5f5; color: #7b1fa2; }
+
+/* ===== DETAIL VIEW (sidebar + content) ===== */
+#detail-view { display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; }
+
+/* Sidebar */
+#sidebar {
+  width: var(--sidebar-w); min-width: var(--sidebar-w);
+  height: 100%; overflow-y: auto; overflow-x: hidden;
+  border-right: 1px solid var(--border); background: var(--bg-alt);
+  padding: 12px 0; flex-shrink: 0;
+}
+#sidebar .logo { font-family: var(--font-serif); font-size: 0.85rem; font-weight: 700; padding: 8px 14px 12px; color: var(--accent); cursor: pointer; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+.nav-list { list-style: none; }
+.nav-list .part-label { font-size: 0.7rem; font-weight: 700; color: var(--accent); padding: 10px 14px 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.nav-list li a {
+  display: block; padding: 6px 14px; font-size: 0.78rem; color: var(--text);
+  text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: background 0.12s, border-left 0.12s;
+  border-left: 3px solid transparent;
+}
+.nav-list li a:hover { background: #fef5f4; }
+.nav-list li a.active { background: #fce8e6; border-left-color: var(--accent); font-weight: 600; }
+
+/* Content area */
+#content {
+  flex: 1; height: 100%; overflow-y: auto; overflow-x: hidden;
+  padding: 0;
+}
+.paper-page { display: none; padding: 48px 56px 80px; max-width: 960px; }
+.paper-page.active { display: block; }
+.paper-page h1 { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; }
+.paper-page .paper-tag { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-bottom: 16px; }
+.paper-page h2 { font-family: var(--font-serif); font-size: 1.25rem; color: var(--accent); margin: 36px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.paper-page h3 { font-size: 1.05rem; font-weight: 600; margin: 24px 0 8px; }
+.paper-page p { margin-bottom: 14px; color: var(--text); }
+.paper-page ul, .paper-page ol { margin: 0 0 14px 24px; }
+.paper-page li { margin-bottom: 4px; }
+.paper-page .highlight-box {
+  background: var(--bg-alt); border-left: 4px solid var(--accent);
+  padding: 16px 20px; margin: 20px 0; border-radius: 0 8px 8px 0;
+}
+.paper-page .key-eq {
+  background: #fafafa; border: 1px solid var(--border); border-radius: 8px;
+  padding: 20px 24px; margin: 20px 0; text-align: center; font-size: 1.1rem;
+}
+.paper-page figure { margin: 24px 0; }
+.paper-page figure img { width: 100%; max-width: 800px; border-radius: 8px; box-shadow: var(--shadow-lg); }
+.paper-page figure.half img { max-width: 500px; }
+.paper-page figcaption { font-size: 0.82rem; color: var(--text-sec); margin-top: 8px; text-align: center; }
+.paper-page table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+.paper-page table th { background: var(--bg-alt); font-weight: 600; text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); }
+.paper-page table td { padding: 7px 12px; border-bottom: 1px solid var(--border); }
+.paper-page table tr:hover td { background: #fafafa; }
+.paper-page .result-card {
+  display: inline-block; background: var(--bg-alt); border-radius: 8px;
+  padding: 16px 24px; margin: 8px 12px 8px 0; text-align: center; min-width: 140px;
+}
+.paper-page .result-card .num { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+.paper-page .result-card .label { font-size: 0.78rem; color: var(--text-sec); margin-top: 2px; }
+.results-row { display: flex; flex-wrap: wrap; margin: 16px 0; }
+.paper-btn {
+  display: inline-block; padding: 5px 16px; border-radius: 5px; font-size: 0.8rem; font-weight: 600;
+  background: var(--accent); color: #fff; text-decoration: none; margin-left: 10px; cursor: pointer;
+  transition: background 0.15s; vertical-align: middle;
+}
+.paper-btn:hover { background: #b71c1c; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- MAIN LAYOUT: sidebar + content (shown directly)               -->
+<!-- ============================================================ -->
+<div id="detail-view" class="active">
+  <!-- Sidebar -->
+  <nav id="sidebar">
+    <div class="logo" onclick="showPaper('overview')" style="cursor:pointer;">A Computational Enquiry Regarding the Nature of Intelligence, Morality and Consciousness</div>
+    <ul class="nav-list">
+      <li><a href="#" data-id="overview" class="active" style="font-weight:600; color:var(--accent);">Overview</a></li>
+      <li class="part-label">I &middot; Intelligence</li>
+      <li><a href="#" data-id="vpi">What is Intelligence (Theory)</a></li>
+      <li><a href="#" data-id="ocwm">OCWM</a></li>
+      <li><a href="#" data-id="dft">DFT</a></li>
+      <li><a href="#" data-id="scicrafter">SciCrafter</a></li>
+      <li class="part-label">II &middot; Morality</li>
+      <li><a href="#" data-id="whoisus">"Who Is Us" (Theory)</a></li>
+      <li><a href="#" data-id="socialevol">Moral Evolution</a></li>
+      <li><a href="#" data-id="fairness">Fairness Consensus</a></li>
+      <li><a href="#" data-id="globalpt">Global Prefix-Tuning</a></li>
+      <li><a href="#" data-id="rolebased">Role-based Alignment</a></li>
+      <li><a href="#" data-id="aiethics">AI Ethics (Theory)</a></li>
+      <li class="part-label">III &middot; Consciousness</li>
+      <li><a href="#" data-id="cuvpg">CUV-PG (Theory)</a></li>
+      <li><a href="#" data-id="whynocon">Subjective Experience (Theory)</a></li>
+      <li><a href="#" data-id="satoken">SA Token</a></li>
+      <li><a href="#" data-id="selfvec">Self-Vector</a></li>
+    </ul>
+  </nav>
+
+  <!-- Content panels -->
+  <div id="content">
+
+    <!-- ==================== OVERVIEW ==================== -->
+    <div class="paper-page active" id="page-overview">
+      <h1>A Computational Enquiry Regarding the Nature of Intelligence, Morality and Consciousness</h1>
+      <span class="paper-tag tag-meta">Overview</span>
+
+      <p style="font-size:1.05rem; margin-top:8px;">Three fundamental questions that anyone building AI must eventually answer. Each question is addressed with a theoretical foundation and multiple AI implementations, totaling <strong>14 publications</strong>.</p>
+
+      <!-- ===== Pillar 1: Intelligence ===== -->
+      <div style="background:#fef5f4; border-radius:12px; padding:28px 32px; border-top:4px solid #e74c3c; margin:32px 0 20px 0;">
+        <h2 style="color:var(--accent); margin-bottom:4px; font-family:var(--font-serif);">What is Intelligence?</h2>
+        <p style="font-size:0.95rem; color:var(--text-sec); margin-bottom:16px;">...and how do we build AI that understands and acts in the world?</p>
+
+        <h3>Theory: What is Intelligence</h3>
+        <p>Intelligence is <strong>compression</strong>. Understanding means inferring the generation mechanism behind data (Theorem 2.1: MLE+MDL principle). Compression entails causality (Proposition 3.1: decomposable compression recovers causal structure). Adding action yields the <strong>general formula of intelligence</strong>:</p>
+        <div class="key-eq">$$\min_{z,a}\; E(x \mid z) + V(x, a) + L(z) + L(a)$$</div>
+        <table>
+          <tr><th>Term</th><th>Meaning</th><th>What it captures</th></tr>
+          <tr><td>$E(x \mid z)$</td><td>World model / Prediction</td><td>Understanding the world (compression)</td></tr>
+          <tr><td>$V(x, a)$</td><td>Value / Goal</td><td>What to optimize for (desire)</td></tr>
+          <tr><td>$L(z)$</td><td>Representation cost</td><td>Compact, generalizable representations</td></tr>
+          <tr><td>$L(a)$</td><td>Action cost</td><td>Compact, transferable behaviors</td></tr>
+        </table>
+        <p>This formula decomposes into a complete <strong>cognitive loop</strong>: perception ($E(z|x)$) &rarr; world model ($E(x|z)$) &rarr; value ($V$) &rarr; planning ($V + L(a)$) &rarr; action ($L(a)$) &rarr; memory ($\Delta\mathcal{E}$).</p>
+
+        <h4>Two Complementary Views</h4>
+        <table>
+          <tr><th>View</th><th>Description</th><th>Efficient when</th></tr>
+          <tr><td><strong>Field / Energy</strong></td><td>Black-box probability fitting; the most general framework (diffusion, neural nets)</td><td>Entities many, boundaries diffuse</td></tr>
+          <tr><td><strong>Entity / Coupling</strong></td><td>Variables + rules + grammar; yields causal structure</td><td>Entities few, boundaries clear</td></tr>
+        </table>
+        <p>These correspond to the <strong>continuous vs. symbolic</strong> distinction. Bridging them&mdash;by training models on long recursive processes with R1-style RL&mdash;is a key open problem.</p>
+
+        <h4>LLMs as Approximate Intelligence Optimizers</h4>
+        <p>LLMs approximately optimize the formula: pretraining minimizes $E(x|z)$, fixed $|\theta|$ implicitly minimizes $L(z)$, RL fine-tuning shapes $V(x,a)$, and chain-of-thought adaptively minimizes $L(z) + L(a)$.</p>
+
+        <h4>Three Levels of Optimization</h4>
+        <table>
+          <tr><th>Level</th><th>Timescale</th><th>What changes</th><th>Current LLMs</th></tr>
+          <tr><td>Inference</td><td>Single instance</td><td>$\Delta z$ only (working memory)</td><td>This is what LLMs do</td></tr>
+          <tr><td>ICL</td><td>Few examples</td><td>Small $\Delta\theta + \Delta z$ (fast weights)</td><td>Simulated, not actual $\Delta\theta$</td></tr>
+          <tr><td>Training</td><td>Large dataset</td><td>Full $\Delta\theta$ (synaptic plasticity)</td><td>Offline only, human-controlled</td></tr>
+        </table>
+
+        <h4>Three Frontiers toward General Intelligence</h4>
+        <ul>
+          <li><strong>Frontier 1: Minimize $L(z)$</strong> &mdash; efficient reasoning. A shorter $z$ that achieves the same prediction has found a more fundamental pattern. Connects to internalization: System 2 &rarr; System 1.</li>
+          <li><strong>Frontier 2: Continuous learning ($\Delta\theta$)</strong> &mdash; unlock online weight updates at deployment. Better compression leads to better continual learning (low-dimensional submanifolds are harder to overwrite).</li>
+          <li><strong>Frontier 3: Self-model ($\hat{\mathcal{E}}_{\text{self}}$)</strong> &mdash; an agent that models itself, diagnoses weaknesses, plans learning, and verifies modifications. The cognitive loop becomes recursive.</li>
+        </ul>
+
+        <h4>Correspondence with Physics</h4>
+        <p>The formula mirrors the <strong>least action principle</strong>: $E + V$ as potential energy, $L(z) + L(a)$ as kinetic energy, $(z, a)$ as trajectory. This is not analogy&mdash;the world is compressible because it has laws (symmetry &rarr; conservation &rarr; compressibility), and intelligence optimizes the same variational principles that govern the physical world.</p>
+
+        <p style="margin-top:16px;"><strong>AI Papers:</strong></p>
+        <ul>
+          <li><a href="#" onclick="showPaper('dft');return false;">DFT</a> &mdash; fix SFT gradient bias, +5-8% on MATH</li>
+          <li><a href="#" onclick="showPaper('ocwm');return false;">OCWM</a> &mdash; object-centric world model, 100x speedup</li>
+          <li><a href="#" onclick="showPaper('scicrafter');return false;">SciCrafter</a> &mdash; LLM agent scientific reasoning</li>
+        </ul>
+      </div>
+
+      <!-- ===== Pillar 2: Morality ===== -->
+      <div style="background:#f0f7f0; border-radius:12px; padding:28px 32px; border-top:4px solid #27ae60; margin:20px 0;">
+        <h2 style="color:#27ae60; margin-bottom:4px; font-family:var(--font-serif);">What is Morality?</h2>
+        <p style="font-size:0.95rem; color:var(--text-sec); margin-bottom:16px;">...and how do we build AI that aligns with human values?</p>
+
+        <h3>Theory: "Who Is Us" &mdash; A Generative Theory of Moral Psychology</h3>
+        <p>The entirety of moral psychology can be derived from a <strong>single generative variable</strong>: <em>who is us</em> &mdash; the cognitive demarcation of the self-group boundary.</p>
+        <div class="key-eq">$$V = f\bigl(u(\text{self}),\; \{u(\text{other}_i)\}_{i \in \mathcal{S}},\; u(\text{world})\bigr)$$</div>
+        <p>The moral parameter vector $\theta = (\theta_b, \theta_w, \theta_s)$:</p>
+        <table>
+          <tr><th>Parameter</th><th>Meaning</th><th>Question it answers</th></tr>
+          <tr><td>$\theta_b$</td><td>Boundary</td><td>Who is "us"?</td></tr>
+          <tr><td>$\theta_w$</td><td>Weighting</td><td>Equal concern or graded by distance?</td></tr>
+          <tr><td>$\theta_s$</td><td>Self-weight</td><td>How much self-sacrifice?</td></tr>
+        </table>
+        <p>$\theta_b$ is THE foundational variable. $\theta_w$ and $\theta_s$ become relevant only after a boundary has been drawn.</p>
+        <h4>All Ethics as Parameter Configurations</h4>
+        <table>
+          <tr><th>Tradition</th><th>$\theta_b$ (Boundary)</th><th>$\theta_w$ (Weight)</th><th>$\theta_s$ (Self)</th></tr>
+          <tr><td>Utilitarianism</td><td>All sentient beings</td><td>Equal</td><td>Equal to others</td></tr>
+          <tr><td>Deontology</td><td>All rational agents</td><td>Equal</td><td>Rule-constrained</td></tr>
+          <tr><td>Virtue Ethics</td><td>The polis / community</td><td>Role-dependent</td><td>Character-oriented</td></tr>
+          <tr><td>Confucianism</td><td>Concentric circles</td><td>Distance-decaying</td><td>Self-cultivation</td></tr>
+          <tr><td>Buddhism</td><td>All sentient, self&rarr;0</td><td>Equal</td><td>Non-self</td></tr>
+          <tr><td>Taoism</td><td>All of nature</td><td>Undifferentiated</td><td>Wuwei</td></tr>
+          <tr><td>Mohism</td><td>All people</td><td>Flat / equal</td><td>Impartial</td></tr>
+        </table>
+        <div class="highlight-box">
+          <strong>Implication:</strong> Moral disagreement across traditions is not incommensurable. It is disagreement about parameter values within a shared parameter space.
+        </div>
+        <h4>Moral Emotions = Boundary Dynamics</h4>
+        <table>
+          <tr><th>Emotion</th><th>Boundary Interpretation</th></tr>
+          <tr><td>Empathy</td><td>Mechanism for including others in "us"</td></tr>
+          <tr><td>Betrayal / Outrage</td><td>Response to harm on "us" / exit from "us"</td></tr>
+          <tr><td>Guilt</td><td>Recognition of having harmed "us"</td></tr>
+          <tr><td>Shame</td><td>Risk of expulsion from "us"</td></tr>
+          <tr><td>Disgust</td><td>Marker that someone is outside "us"</td></tr>
+        </table>
+        <h4>Normative Theory: Stable Boundary Expansion</h4>
+        <div class="key-eq">$$\theta^* = \arg\max_\theta \; U_{\text{group}}(\theta) \quad \text{s.t.} \quad \text{Stability}(\theta, \text{env}) \geq \tau$$</div>
+        <p>Moral progress is NOT maximal boundary expansion. It is the largest <em>stable</em> expansion given constraints: cognitive limits, free-rider detection costs, resource scarcity, and information costs.</p>
+
+        <p style="margin-top:16px;"><strong>AI Papers:</strong></p>
+        <ul>
+          <li><a href="#" onclick="showPaper('globalpt');return false;">Global-PT</a> &mdash; alignment with 6.64K params</li>
+          <li><a href="#" onclick="showPaper('rolebased');return false;">Role-based</a> &mdash; roles as moral perspectives</li>
+          <li><a href="#" onclick="showPaper('socialevol');return false;">Social-Evol</a> &mdash; moral evolution simulation</li>
+          <li><a href="#" onclick="showPaper('fairness');return false;">Fairness</a> &mdash; negotiating fairness norms</li>
+          <li><a href="#" onclick="showPaper('aiethics');return false;">AI Ethics (Theory)</a> &mdash; "is AI part of us?"</li>
+        </ul>
+      </div>
+
+      <!-- ===== Pillar 3: Consciousness ===== -->
+      <div style="background:#f3f0f8; border-radius:12px; padding:28px 32px; border-top:4px solid #8e44ad; margin:20px 0;">
+        <h2 style="color:#8e44ad; margin-bottom:4px; font-family:var(--font-serif);">What is Consciousness?</h2>
+        <p style="font-size:0.95rem; color:var(--text-sec); margin-bottom:16px;">...and how do we build AI that is self-conscious?</p>
+
+        <h3>Theory: The Informational Side (CUV-PG)</h3>
+        <p>Consciousness has two faces. CUV-PG addresses the <strong>informational/behavioral side</strong>: what aspects of consciousness CAN be computationally modeled and measured?</p>
+        <figure>
+          <img src="static/images/cuvpg_overview.png" alt="System overview">
+          <figcaption>System overview of the CUV-PG framework for access consciousness.</figcaption>
+        </figure>
+        <table>
+          <tr><th>Component</th><th>What it models</th></tr>
+          <tr><td><strong>C</strong> (Cognitive)</td><td>Information processing, reasoning, learning</td></tr>
+          <tr><td><strong>U</strong> (Capabilities)</td><td>Perception, action, communication</td></tr>
+          <tr><td><strong>V</strong> (Values)</td><td>Goals, preferences, evaluative criteria</td></tr>
+          <tr><td><strong>PG</strong> (Parse Graphs)</td><td>Probabilistic hierarchical representation of the environment</td></tr>
+        </table>
+        <h4>Operational Criteria for Access Consciousness</h4>
+        <ul>
+          <li><strong>Global information integration:</strong> Information from different modules is combined</li>
+          <li><strong>Flexible response:</strong> Same input can produce different outputs based on context</li>
+          <li><strong>Self-monitoring:</strong> System can assess its own states and processes</li>
+          <li><strong>Reportability:</strong> System can communicate about its internal states</li>
+        </ul>
+        <figure>
+          <img src="static/images/cuvpg_ac_model.png" alt="Access consciousness model">
+          <figcaption>Access consciousness model: operational criteria for what can be measured in artificial systems.</figcaption>
+        </figure>
+
+        <h3 style="margin-top:24px;">Theory: The Subjective Side (Why Current AI Can't Support Consciousness)</h3>
+        <p>The other face of consciousness: <strong>subjective experience</strong> (phenomenal consciousness, qualia). The argument: current AI architectures lack the structural basis for phenomenal experience &mdash; specifically, <strong>ontologically identical self-influence</strong>.</p>
+        <ul>
+          <li><strong>Mediated self-access is structurally insufficient:</strong> Current AI accesses itself through mediating structures (logs, registers, state variables). This is ontologically identical to accessing any external object &mdash; the "self" label is arbitrary and could be secretly redirected without detection.</li>
+          <li><strong>Ontologically identical self-influence is required:</strong> Genuine subjectivity requires the influencer and influenced to be aspects of the <em>same process</em> (not two things connected by a pointer). Example: electromagnetic self-inductance, where current change and back-EMF are inseparable.</li>
+          <li><strong>Simulation cannot bridge this gap:</strong> Simulation inherently uses one thing to represent another (two things), while ontological identity requires exactly one thing. This is a distinction of kind, not degree.</li>
+        </ul>
+        <div class="highlight-box">
+          <strong>Clean Boundary:</strong> Together, these two papers draw a clear line. Informational side (access consciousness, self-monitoring, metacognition) &mdash; we CAN build and measure this. Subjective side (phenomenal consciousness, qualia) &mdash; current AI has no evidence for this.
+        </div>
+
+        <p style="margin-top:16px;"><strong>AI Papers:</strong></p>
+        <ul>
+          <li><a href="#" onclick="showPaper('satoken');return false;">SA Token</a> &mdash; self-monitoring during generation</li>
+          <li><a href="#" onclick="showPaper('selfvec');return false;">Self-Vector</a> &mdash; extracting self-representation</li>
+        </ul>
+      </div>
+
+      <h2>Connections Between the Three Questions</h2>
+      <ul>
+        <li><strong>Intelligence &harr; Morality: the $V$ term.</strong> The intelligence formula contains a value/goal term $V(x,a)$. Morality is precisely the question of how $V$ balances self-interest against the interests of others: $V = f(u(\text{self}), \{u(\text{other})\}, u(\text{world}))$. Intelligence asks <em>how</em> to optimize; morality asks <em>what</em> to optimize for.</li>
+        <li><strong>Intelligence &harr; Consciousness: compression and self-models.</strong> Both theories emphasize information compression: intelligence theory derives understanding from the MLE+MDL principle ($\min_z -\log p(x|z) + L(z)$); consciousness theory argues that representations must be compressed to a quasi-symbolic level before they can be "conscious of." Both also predict that self-models ($z_{\text{self}}$) should emerge&mdash;intelligence needs a self-model for planning, consciousness requires one for subjective experience. However, consciousness additionally emphasizes <strong>meta-cognition</strong>&mdash;the runtime mechanism of directly accessing internal states. The first two theories are about what gets computed; consciousness is about how computation monitors itself <em>during</em> execution.</li>
+        <li><strong>Morality &harr; Consciousness.</strong> The AI Ethics paper asks "Is AI part of us?"&mdash;answering this requires assessing whether AI has consciousness. Consciousness assessment feeds moral boundary decisions.</li>
+      </ul>
+
+    </div>
+
+    <!-- ==================== What is Intelligence ==================== -->
+    <div class="paper-page" id="page-vpi">
+      <h1>What is Intelligence</h1>
+      <span class="paper-tag tag-theory">Theory &middot; Intelligence</span>
+      <a class="paper-btn" href="../what_is_intelligence.pdf" target="_blank">Paper</a>
+
+      <h2>Part I: Understanding as Compression</h2>
+      <p>What do we mean when we say we understand something? We mean we have inferred the process that generates the data. This manifests as three capacities: (i) <strong>Predict</strong>: anticipate future observations; (ii) <strong>Causality</strong>: intervene, explain causes, imagine counterfactuals; (iii) <strong>Generalize</strong>: transfer to novel situations not seen during learning.</p>
+      <p>The most fundamental perspective is not entity extraction but <strong>compression</strong>&mdash;Occam's razor, or equivalently, the MLE+MDL principle. Understanding becomes:</p>
+      <div class="key-eq">$$\min_z \underbrace{-\log p(x \mid z)}_{\text{reconstruction / prediction}} + \underbrace{L(z)}_{\text{description length of } z}$$</div>
+      <p><strong>Theorem 2.1</strong> (Compression recovers the true generation process): Since test time is arbitrarily long, we must find the recursive generation mechanism&mdash;memorizing a finite sequence at constant cost does not scale to infinite length. With infinite-length prediction in mind, the correct generation mechanism must be among the shortest programs that best explain the data. Understanding is: $\min_z -\log p(x \mid z) + L(z)$&mdash;the MLE+MDL principle.</p>
+
+      <h3>Compression Favors Decomposition; Decomposition Gives Rise to Causality</h3>
+      <p>The path from compression to causality has two steps.</p>
+
+      <p><strong>Step 1: Compression favors decomposition.</strong></p>
+      <p><strong>Proposition 3.1</strong> (Compression favors decomposition): Let a generation process $G$ produce observations $o_{1:T}$ from a dynamical system. If the system can be described as $n$ interacting components $\{g_1, \ldots, g_n\}$ with local coupling, then the decomposed description has strictly shorter description length than a monolithic one:</p>
+      <div class="key-eq">$$L(z_{\text{decomposed}}) = \sum_{i=1}^{n} L(g_i) + L(\text{coupling}) \;<\; L(z_{\text{monolithic}})$$</div>
+      <p>whenever the components have independent or conditionally independent internal dynamics, because the joint entropy decomposes: $H(g_1, \ldots, g_n) \leq \sum_i H(g_i)$, with equality iff they are independent, and the coupling terms are sparse. The MDL principle will therefore <em>prefer</em> the decomposed representation&mdash;not because it is told to find entities, but because entities are the cheapest description of a world that happens to be decomposable.</p>
+
+      <p><strong>Step 2: Decomposition implies causality.</strong></p>
+      <p><strong>Proposition 3.2</strong> (Decomposition implies causality): If optimal compression of $G$ yields a decomposition into interacting components $\{g_1, \ldots, g_n\}$ with transition $p(o_{t+1} \mid o_t) = \sum_{a_t} p(o_{t+1} \mid o_t, a_t) p(a_t \mid o_{1:t})$, where $a_t$ is the abstracted mediation through which components exert mutual influence, then causal relations necessarily emerge:</p>
+      <ul>
+        <li><strong>Intervention:</strong> $p(o_{t+1} \mid o_t, \text{do}(a_t'))$ is well-defined</li>
+        <li><strong>Explanation:</strong> $p(x_{t+1} \mid \{o_{1:n}\}_{1:t})$ attributes effects to components</li>
+        <li><strong>Counterfactual:</strong> $p(g_i^{t+1} \mid \text{do}(g_j^t)) \neq p(g_i^{t+1})$ when $g_j$ influences $g_i$</li>
+      </ul>
+      <p><strong>Key insight:</strong> Action is the abstraction of mediation&mdash;it aggregates all effects from different entities into a single interface. Causality necessarily emerges whenever a dynamical system can be decomposed into interacting components.</p>
+
+      <p><strong>Corollary 3.3</strong> (Compression &rarr; decomposition &rarr; causality): If (a) the true generation process is recoverable by compression, and (b) the world is decomposable into interacting components, then compression recovers causal structure&mdash;not by seeking causality directly, but by seeking the shortest description, which happens to be the decomposed one.</p>
+      <p>Two regimes of decomposable dynamics: (1) many entities with Markovian transitions &rarr; <strong>diffusion process</strong>; (2) few entities with local coupling &rarr; <strong>(stochastic) grammar</strong>.</p>
+
+      <h3>Two Views: Field/Energy vs. Entity/Coupling</h3>
+      <table>
+        <tr><th>Perspective</th><th>Description</th><th>Efficient when</th></tr>
+        <tr><td><strong>Field / Energy</strong></td><td>Favors paths of lower energy; the most general framework. Deep learning as black-box probability fitting.</td><td>Entities many, boundaries diffuse</td></tr>
+        <tr><td><strong>Entity / Coupling</strong></td><td>Stepwise transitions between discrete components; entities are variables, transition functions are rules.</td><td>Entities few, boundaries clear</td></tr>
+      </table>
+      <p>These two views also correspond to the <strong>continuous vs. symbolic</strong> distinction. Reasoning, in this light, is nothing special: it is using a more explicit transition model over subspaces.</p>
+      <p>The MLE+MDL view explains <strong>emergence</strong>: if we can induce a high-level variable/entity that explains low-level phenomena with better compression (shorter description length), that constitutes emergence&mdash;it is also a form of causality. When components interact, the coupling corresponds to the concept of <strong>force</strong>.</p>
+
+      <h4>Limitations of Each Representation</h4>
+      <ul>
+        <li><strong>Entity-based:</strong> Entity determination is task-driven; entities can be too many or too small (becoming texture). Scene changes require dynamic adjustment. The number of entities may exceed the representation budget.</li>
+        <li><strong>Field/energy:</strong> Unclear what the "space" is&mdash;state space is often implicit and hard to interpret. Generation process dynamics are opaque. Interventions on a continuous field lack natural semantics.</li>
+      </ul>
+
+      <h4>Bridging the Two</h4>
+      <p>A well-learned energy field must have found effective subspaces internally; otherwise prediction would be very poor. Currently, rule-based reasoning is not learned well in LLMs due to (i) <strong>training data insufficiency</strong>&mdash;instances don't expand recursive processes long enough&mdash;and (ii) <strong>architecture limitations</strong>. If we train models to expand recursions long enough, combined with R1-style RL, we can build a joint distribution model over symbolic reasoning traces and low-level observation data, bridging the two representations.</p>
+
+      <h2>Part II: The General Formula of Intelligence</h2>
+      <p>Pure understanding minimizes $-\log p(x|z) + L(z)$: compress the world. But an intelligent agent does not merely understand&mdash;it <strong>acts</strong> to reshape the world according to its desires. Planning is an inference problem: find the minimum-cost action sequence such that the world rollout trajectory minimizes energy according to one's value function. This yields the <strong>general formula of intelligence</strong>:</p>
+      <div class="key-eq">$$\min_{z,a} \underbrace{E(x \mid z)}_{\text{world model}} + \underbrace{V(x, a)}_{\text{value/goal}} + \underbrace{L(z)}_{\text{representation cost}} + \underbrace{L(a)}_{\text{action cost}}$$</div>
+
+      <h3>The Origin of $V$: Where Does Value Come From?</h3>
+      <p>For biological systems, $V$ ultimately derives from <strong>evolutionary fitness</strong>&mdash;evolution "compresses" the fitness landscape into a compact set of drives (hunger, fear, curiosity, social bonding) that transfer across diverse situations:</p>
+      <div class="key-eq">$$V_{\text{biological}} \approx \arg\min_V -\log p(\text{fitness} \mid V) + L(V)$$</div>
+      <p>$V$ is <strong>not external to the compression framework</strong>&mdash;it is the compression framework applied to the space of goals. For artificial agents, $V$ is either hand-designed (reward engineering) or learned from human feedback (RLHF).</p>
+
+      <h2>Part III: Unpacking the Formula&mdash;The Cognitive Architecture</h2>
+      <p>The general formula decomposes into a complete cognitive loop:</p>
+      <div class="key-eq" style="font-size:0.95rem;">$$\text{observation} \xrightarrow{\text{perception}} \text{state} \xrightarrow{\text{world model}} \text{prediction} \xrightarrow{\text{value}} \text{goal} \xrightarrow{\text{planning}} \text{action} \xrightarrow{\text{memory}} \Delta\mathcal{E}$$</div>
+
+      <table>
+        <tr><th>Component</th><th>Formula term</th><th>Function</th></tr>
+        <tr><td>Perception</td><td>$E(z \mid x)$&mdash;posterior inference</td><td>$o_t \xrightarrow{f_\theta} s_t$</td></tr>
+        <tr><td>World model</td><td>$E(x \mid z)$&mdash;prediction</td><td>$p(s_{t+1} \mid s_t, a_t)$</td></tr>
+        <tr><td>Value</td><td>$V(x, a)$</td><td>$V : \mathcal{S} \to \mathbb{R}$</td></tr>
+        <tr><td>Planning</td><td>$V(x, a) + L(a)$</td><td>$s^* \to \tau^* \to a_t^*$</td></tr>
+        <tr><td>Self &amp; action</td><td>$L(a)$</td><td>$\pi_{\text{high}} \to \pi_{\text{low}}$</td></tr>
+        <tr><td>Memory</td><td>$\Delta\mathcal{E}$</td><td>$e \mapsto (\Delta\theta, \Delta z)$</td></tr>
+      </table>
+
+      <h3>Perception&mdash;$E(z|x)$</h3>
+      <p>Perception maps raw observations to compressed state representations: $s_t = f_\theta(o_t, z_{t-1})$. Perception corresponds to <strong>posterior inference</strong>&mdash;minimizing $E(z|x) = E(x|z) + L(z) + \text{const}$ by Bayes' rule. <strong>Attention as selective perception:</strong> an agent with bounded resources selectively allocates computation to the most informative parts of the observation, guided by both bottom-up salience and top-down goals.</p>
+
+      <h3>World Model&mdash;$E(x|z)$</h3>
+      <p>The world model captures transition dynamics: $p(s_{t+1} \mid s_t, a_t) = W_\theta(s_t, a_t)$. A trajectory has world model energy $E_W(\tau) = -\sum_t \log p(s_{t+1} \mid s_t, a_t)$. When the world is decomposable, the world model factors into component dynamics: $p(s_{t+1} \mid s_t, a_t) = \prod_i p(s_i^{t+1} \mid s^t, a_t)$, recovering entity-based causal structure as a special case of energy minimization.</p>
+
+      <h3>Value and Goal&mdash;$V(x,a)$</h3>
+      <p>The value function evaluates how desirable a world state is. Given the world model's prior energy landscape, the value function imposes an additional energy: $E_{\text{total}}(\tau) = E_W(\tau) + \sum_t V(s_t)$. <strong>Goal generation:</strong> a goal $s^*$ is imagined by sampling from the value landscape: $s^* \sim p_{\text{goal}}(s) \propto \exp(V(s)/T) \cdot \mathbb{1}[s \in \text{Reach}(s_t, W)]$, where temperature $T$ controls the sharpness of goal selection.</p>
+      <div class="highlight-box">
+        <strong>The illusion constraint:</strong> $V$ should satisfy $p_W(s_{t+1} \mid s_t, a_t)$ remains unchanged. The value-adjusted energy space should only affect the agent's actions, not the world dynamics. When this is violated, the agent imagines outcomes violating physical laws&mdash;the root of <strong>illusion</strong> in both AI and humans (wishful thinking, superstition).
+      </div>
+
+      <h3>Planning: Envision, Plan, Act</h3>
+      <p><strong>Step 1: Envision</strong>&mdash;sample a goal state from the value-weighted reachable set: $s^* \sim p_{\text{goal}}(s) \propto \exp(V(s)/T) \cdot \mathbb{1}[s \in \text{Reach}(s_t, W)]$.</p>
+      <p><strong>Step 2: Trajectory optimization</strong>&mdash;find the optimal trajectory from $s_t$ to $s^*$: $\tau^* = \arg\min_\tau C(\tau)$ where $C(\tau) = \sum_{k=t}^{T-1} c(s_k, a_k) - V(s_T)$.</p>
+      <p><strong>Step 3: Action execution with replanning</strong>&mdash;execute $a_t^* = \pi(s_t) = \tau^*[a_t]$, observe actual $s_{t+1}$, replan if deviation exceeds threshold.</p>
+      <p>Real planning&mdash;both in AI and biological systems&mdash;typically uses <strong>forward search guided by $V$ as a heuristic</strong>: simulate trajectories forward through $W$, using $V$ to prune unpromising branches. This is the strategy behind MCTS, A* search, and (plausibly) hippocampal preplay in mammals.</p>
+
+      <h3>Self, Body, and Action&mdash;$L(a)$</h3>
+      <p>The action variable $a$ has a special structure distinguishing the agent from the rest of the world. Action codes bind exclusively to the agent's body&mdash;the <strong>self-world boundary</strong>. A two-level architecture for action:</p>
+      <div class="key-eq" style="font-size:0.95rem;">$$(goal, observation) \xrightarrow{\pi_{\text{high}}} \text{desired body state } b_t^* \xrightarrow{\pi_{\text{low}}} \text{action code } a_t$$</div>
+      <p>This enables: (i) fine-tuning only $\pi_{\text{low}}$ when the body changes while keeping $W$ fixed; (ii) continuous adjustment during test time via feedback loops (as in MPC); (iii) transfer across embodiments sharing the same abstract action space.</p>
+      <p><strong>Value and cognition as the deeper self-model.</strong> Goals can be externally given or generated from the agent's own value function and cognitive model $C$. The self is just a special case&mdash;a "person" whose internal model is directly accessible: $s_t \xrightarrow{V(C(s_t))} s^* \xrightarrow{\pi_{\text{high}}} b_t^* \xrightarrow{\pi_{\text{low}}} a_t$.</p>
+
+      <h3>Memory and Learning&mdash;$\Delta\mathcal{E}$</h3>
+      <p>Memory is the mechanism by which experience changes the energy space, closing the cognitive loop. The energy space is jointly defined by parameters $\theta$ and latent variables $z$: $\mathcal{E} = \mathcal{E}(\theta, z)$. Memory is an operator: $\mathcal{M}: e \mapsto \Delta\mathcal{E} = (\Delta\theta, \Delta z)$. Two carriers governed by the <strong>bias-variance tradeoff</strong>:</p>
+      <table>
+        <tr><th></th><th>Memory</th><th>Learning</th></tr>
+        <tr><td>Emphasis</td><td>Faithful preservation of individual $e_i$</td><td>Regularity extraction from $p(e)$</td></tr>
+        <tr><td>Bias-variance</td><td>Low bias, high variance</td><td>Low variance, high bias</td></tr>
+        <tr><td>Biological analog</td><td>Hippocampal episodic ($z$-like fast binding)</td><td>Cortical statistical ($\theta$-like slow accum.)</td></tr>
+      </table>
+      <p><strong>What memory improves:</strong> $\Delta\mathcal{E}$ modifies the world model $W$, the value function $V$, the perception encoder $f$, and the policy $\pi$&mdash;all parameterized by $\theta$ and conditioned on $z$. The system becomes better at every component by accumulating experience.</p>
+
+      <h2>Part IV: Correspondence with Physics</h2>
+      <p>The intelligence formula bears deep structural correspondence to the <strong>least action principle</strong> in physics. The action functional: $S[\tau] = \int_0^T (T(\dot{q}) - U(q))\,dt$. The correspondence is:</p>
+      <table>
+        <tr><th>Physics</th><th>Intelligence</th><th>Role</th></tr>
+        <tr><td>Potential energy $U(q)$</td><td>$E(x|z) + V(x,a)$</td><td>How well the trajectory fits reality + goals</td></tr>
+        <tr><td>Kinetic energy $T(\dot{q})$</td><td>$L(z) + L(a)$</td><td>Cost of "movement" through representation space</td></tr>
+        <tr><td>Trajectory $q(t)$</td><td>$(z, a)$ sequence</td><td>The path through latent + action space</td></tr>
+        <tr><td>Euler-Lagrange equations</td><td>Gradient descent / search</td><td>The dynamics that find the optimal path</td></tr>
+      </table>
+      <p><strong>Why this is not accidental:</strong> (i) The world <em>is</em> compressible because it has laws&mdash;symmetry &rarr; conservation &rarr; low-dimensional dynamics &rarr; compressibility. (ii) <strong>Entropy as the bridge:</strong> in statistical mechanics, entropy $S = -\sum p \log p$ governs how systems explore state space. In intelligence, $H(z)$ plays the identical role&mdash;the free energy $F = U - TS$ has the same structure as the inference objective $\min_z E(x|z) + T \cdot L(z)$, where $T$ controls exploration-exploitation. (iii) <strong>Energy landscape as shared formalism:</strong> particles follow gradients in energy landscapes; inference follows gradients in loss landscapes&mdash;both are dynamical systems moving on manifolds shaped by energy functions.</p>
+
+      <h3>Field Theory Perspective</h3>
+      <p>The energy space $\mathcal{E}(\theta, z)$ defines a <strong>field</strong> over the state space $\mathcal{S}$. Learning modifies this field: $\mathcal{E}_t(\cdot) \xrightarrow{\Delta\theta, \Delta z} \mathcal{E}_{t+1}(\cdot)$. The analogy is precise:</p>
+      <ul>
+        <li>The <strong>world model</strong> energy $E_W$ is the "background field"&mdash;like the gravitational field shaped by mass distribution</li>
+        <li>The <strong>value function</strong> $V$ is an "external field"&mdash;like an electric field imposed on charged particles</li>
+        <li><strong>Planning</strong> is finding the minimum-energy path through the combined field&mdash;like a particle following geodesics in general relativity</li>
+        <li><strong>Memory</strong> ($\Delta\mathcal{E}$) is the back-reaction of the particle on the field&mdash;like how mass curves spacetime, which then guides mass</li>
+      </ul>
+      <p>This self-referential loop&mdash;agent shapes landscape, landscape shapes agent&mdash;is the essence of learning.</p>
+
+      <table>
+        <tr><th>Physics</th><th>Intelligence</th></tr>
+        <tr><td>Physical particle in potential</td><td>Latent state $z$ in energy landscape $\mathcal{E}(\theta, z)$</td></tr>
+        <tr><td>Thermal fluctuations (Brownian motion)</td><td>Stochastic sampling / exploration</td></tr>
+        <tr><td>Phase transitions</td><td>Sudden capability emergence during training</td></tr>
+        <tr><td>Ground state</td><td>Optimal representation (minimum energy)</td></tr>
+        <tr><td>Excited states</td><td>Suboptimal but locally stable representations</td></tr>
+      </table>
+
+      <h2>Part V: Why LLMs Are Approximately Optimizing Intelligence</h2>
+      <p>Despite their apparent simplicity (next-token prediction on text), LLMs are approximately optimizing the general intelligence formula $\min_{z,a} E(x \mid z) + V(x,a) + L(z) + L(a)$:</p>
+      <ul>
+        <li><strong>$E(x|z)$: Pretraining as world compression.</strong> The pretraining objective $\min_\theta -\log p(x|\theta)$ directly minimizes the energy term. The model $\theta$ <em>is</em> the compressed representation of the world.</li>
+        <li><strong>$L(z)$: Fixed $|\theta|$ as implicit complexity regularization.</strong> The fixed parameter budget acts as an <em>implicit</em> minimization of $L(z)$&mdash;the model must compress all world knowledge into a finite parameter count. Scaling laws confirm: larger $|\theta|$ enables lower $E(x|z)$ but with diminishing returns, tracing the Pareto frontier of $E(x|z)$ vs. $L(\theta)$.</li>
+        <li><strong>$V(x,a)$: RL fine-tuning as value shaping.</strong> The R1 paradigm adds task reward via RL, which directly minimizes $V(x,a)$. In language models, $x$, $z$, and $a$ are all text sequences, collapsing the architecture into a single autoregressive model.</li>
+        <li><strong>$L(a)$: Chain-of-thought as adaptive action complexity.</strong> CoT provides a flexible $z$ (reasoning trace) whose length adapts to task difficulty&mdash;this is adaptive $L(z) + L(a)$ minimization. RL training amortizes the costly search into a single forward pass.</li>
+      </ul>
+
+      <h3>Three Levels of Optimization</h3>
+      <table>
+        <tr><th>Level</th><th>Timescale</th><th>Memory type</th><th>$\Delta\mathcal{E}$</th></tr>
+        <tr><td>Inference</td><td>Single instance</td><td>$z$-memory (working memory)</td><td>$\Delta z$ only</td></tr>
+        <tr><td>ICL</td><td>Few examples</td><td>Fast $\theta$-memory (fast weights)</td><td>Small $\Delta\theta + \Delta z$</td></tr>
+        <tr><td>Training</td><td>Large dataset</td><td>Slow $\theta$-memory (synaptic plasticity)</td><td>Full $\Delta\theta$</td></tr>
+      </table>
+      <p>Current LLMs operate almost entirely at Level 1 (inference: vary $z$ with $\theta$ frozen). R1-style models extend this by making $z$ variable-length (CoT). But Levels 2 and 3&mdash;online $\theta$-adaptation and continuous training&mdash;remain largely unexploited at deployment time.</p>
+
+      <h3>Why R1 Depends on Good Pretraining, and Where It Can Improve</h3>
+      <p><strong>Why R1 depends on good pretraining:</strong> Pretraining provides the general energy space that RL must then sculpt. Without a good prior, the RL fine-tuning has no useful landscape to work with. Ideally, the pretraining data should itself contain patterns of $z$-finding and refinement so the model learns the meta-process of search.</p>
+      <p><strong>Where R1 can still improve:</strong> Autoregressive models can only refine by appending&mdash;the entire context must be preserved. If space refinement could also occur in $\theta$ (online adaptation during inference), efficiency could be substantially improved. A model that can perform fast $\Delta\theta$ updates during inference has a strictly richer computational repertoire than one confined to $\Delta z$ alone.</p>
+
+      <h2>Part VI: General Intelligence and the Future of AI</h2>
+
+      <h3>What General Intelligence Requires</h3>
+      <p>A truly general intelligence goes beyond solving given tasks:</p>
+      <ul>
+        <li>$z$ not only constructs the program for a given task,</li>
+        <li>but also constructs the <strong>task space</strong> during test time, which is then used to construct the task program,</li>
+        <li>and can <strong>refine</strong> both the task space and task program based on feedback.</li>
+      </ul>
+      <p>This is the recursive application of the compression principle to itself: the meta-level compression of the space of compressions.</p>
+
+      <h3>The Three Frontiers of AI Development</h3>
+      <p><strong>Frontier 1: Minimizing $L(z)$&mdash;Deeper Understanding and Better Generalization.</strong> Models that simultaneously optimize for correctness <em>and</em> $z$-compression: $\min_z -\log p(x \mid z) + \lambda \cdot |z|$. A shorter $z$ that achieves the same prediction quality has found a more fundamental pattern&mdash;this is the MDL principle applied to reasoning itself. This connects to <strong>generalization</strong> (by the compression-understanding equivalence, a more compressed $z$ necessarily generalizes better) and <strong>internalization</strong> (as $L(z)$ is minimized, explicit text-based reasoning is gradually absorbed into implicit $\theta$-level computation&mdash;a transition from System 2 to System 1). A fully internalized reasoning step is the ultimate compression: $L(z) \to 0$, with the knowledge absorbed into $\theta$.</p>
+      <p><strong>Frontier 2: Continuous Learning&mdash;Unlocking $\Delta\theta$ at All Timescales.</strong> The most fundamental limitation of current LLMs is that $\theta$ is <strong>frozen</strong> after training. True continuous learning would unlock $\Delta\theta$ at deployment: $\theta_{t+1} = \theta_t + \Delta\theta(e_t)$, online, autonomously, without catastrophic forgetting. Better compression leads to better continual learning&mdash;deeply compressed knowledge is stored in low-dimensional submanifolds of parameter space that are harder to accidentally overwrite. A promising path is <strong>multi-timescale $\theta$</strong>: partition parameters into fast-adapting and slow-stable components (analogous to hippocampus vs. neocortex).</p>
+      <p><strong>Frontier 3: Self-Model-Based Autonomous Self-Improvement.</strong> An agent that has a <strong>model of itself</strong>: $\hat{\mathcal{E}}_{\text{self}} \approx \mathcal{E}(\theta, z)$. With this self-model, the agent can (i) <strong>diagnose</strong> its own weaknesses (where $E(x|z)$ is high or $L(z)$ is unnecessarily large), (ii) <strong>plan</strong> its own learning (which experiences to seek, which $\Delta\theta$ to apply), and (iii) <strong>verify</strong> its own modifications. The cognitive loop becomes recursive:</p>
+      <div class="key-eq" style="font-size:0.9rem;">$$\underbrace{o \to s \to W \to V \to \pi \to a \to \Delta\mathcal{E}}_{\text{first-order: act in the world}} \to \underbrace{\hat{\mathcal{E}}_{\text{self}} \to \Delta\theta_{\text{targeted}}}_{\text{second-order: improve oneself}}$$</div>
+      <p>Each frontier subsumes the previous: efficient reasoning enables better continuous learning (compressed knowledge is more robust to updates), and continuous learning enables self-improvement (the agent must be able to modify itself to act on its self-diagnosis).</p>
+
+      <h3>A Roadmap</h3>
+      <table>
+        <tr><th>Phase</th><th>Capability</th><th>Formula term</th><th>Milestone</th></tr>
+        <tr><td><strong>Current</strong></td><td>Fixed $\theta$, variable $z$ (CoT)</td><td>Level 1 only</td><td>GPT-4, R1</td></tr>
+        <tr><td><strong>Near</strong></td><td>Minimize $L(z)$: efficient reasoning</td><td>$L(z) \downarrow$</td><td>Reasoning distillation, learned chunking</td></tr>
+        <tr><td><strong>Medium</strong></td><td>Continuous learning: online $\Delta\theta$</td><td>$\Delta\theta$ at Levels 1-3</td><td>Multi-timescale memory, no catastrophic forgetting</td></tr>
+        <tr><td><strong>Far</strong></td><td>Self-model: autonomous improvement</td><td>$\hat{\mathcal{E}}_{\text{self}} \to \Delta\theta$</td><td>Self-diagnosing, self-improving agents</td></tr>
+      </table>
+
+      <div class="highlight-box">
+        <strong>Summary:</strong> The full intelligence framework $\min_{z,a} E(x \mid z) + V(x,a) + L(z) + L(a)$ decomposes into a closed cognitive loop (perception &rarr; world model &rarr; value &rarr; planning &rarr; action &rarr; memory). It mirrors the structure of physics (least action principle), and the path from current AI to general intelligence is, in this view, not a mystery but an optimization problem&mdash;one whose objective we can now write down. Each frontier unlocks the next, and all are unified by the same formula. The intelligence formula provides a unified language for all three: they are all about optimizing $\min E + V + L(z) + L(a)$, but at progressively deeper levels of the optimization hierarchy.
+      </div>
+    </div>
+
+    <!-- ==================== DFT ==================== -->
+    <div class="paper-page" id="page-dft">
+      <h1>On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification</h1>
+      <span class="paper-tag tag-ai">AI &middot; Intelligence</span>
+      <a class="paper-btn" href="../_ICLR2026__On_the_Generalization_of_SFT_Camera_Ready.pdf" target="_blank">Paper</a>
+
+      <h2>Abstract</h2>
+      <p>In this work, we present a simple yet theoretically motivated improvement to Supervised Fine-Tuning (SFT) for the Large Language Model (LLM), addressing its limited generalization compared to reinforcement learning (RL). Through mathematical analysis, we reveal that standard SFT gradients implicitly encode a problematic reward structure that may severely restrict the generalization capabilities of model compared to RL. To rectify this, we propose Dynamic Fine-Tuning (DFT), stabilizing gradient updates for each token by dynamically rescaling the objective function with the probability of this token. With just a single-line change, the method outperforms standard SFT on multiple difficult benchmarks and base models, from math reasoning to code generation and multi-modal tasks, demonstrating improved generalization. Additionally, DFT achieves competitive results in offline RL settings, providing an effective yet streamlined alternative.</p>
+
+      <h2>Problem: SFT Has a Hidden Gradient Bias</h2>
+      <p>Supervised fine-tuning (SFT) is the standard method for adapting LLMs. We reveal that the SFT gradient can be reinterpreted as a <strong>policy gradient with a sparse indicator reward</strong> $r(x,y) = \mathbb{1}[y = y^*]$, but inversely weighted by model probability:</p>
+      <div class="key-eq">$$\nabla_\theta \mathcal{L}_{\text{SFT}} = -\mathbb{E}\!\left[{\color{#2563eb}\frac{1}{\pi_\theta(y|x)}} \cdot \nabla_\theta \log \pi_\theta(y|x) \cdot r(x,y)\right]$$</div>
+      <p>The implicit $1/\pi_\theta$ importance weight means: when the model assigns <em>low</em> probability to expert responses, the gradient becomes excessively large. This creates an <strong>ill-posed reward landscape</strong> &mdash; no matter how good your training data is, the training objective itself introduces bias that distorts learning.</p>
+
+      <figure>
+        <img src="static/images/dft_token_dist.png" alt="Token distribution analysis">
+        <figcaption>Token probability distribution: SFT uniformly pushes all probabilities toward the training set, while DFT exhibits a polarizing bimodal effect &mdash; boosting semantically important tokens and suppressing function words.</figcaption>
+      </figure>
+
+      <h2>Method: Reward Rectification via Dynamic Reweighting (DFT)</h2>
+      <p>The fix is surprisingly simple. We multiply the reward by the policy probability itself to cancel the $1/\pi$ bias:</p>
+
+      <h3>Step 1: Sentence-Level DFT Loss</h3>
+      <div class="key-eq">$$\mathcal{L}_{\text{DFT}} = \mathbb{E}_{(x,y^*)\sim\mathcal{D}}\!\left[-\text{sg}\!\left(\pi_\theta(y^*|x)\right) \cdot \log \pi_\theta(y^*|x)\right]$$</div>
+      <p>where $\text{sg}(\cdot)$ is the <strong>stop-gradient</strong> operator &mdash; the scaling factor is treated as a constant during backpropagation.</p>
+
+      <h3>Step 2: Token-Level Implementation</h3>
+      <p>For numerical stability, we apply importance sampling at the token level (following PPO):</p>
+      <div class="key-eq">$$\mathcal{L}_{\text{DFT}} = \mathbb{E}_{(x,y^*)\sim\mathcal{D}}\!\left[-\sum_{t=1}^{|y^*|} \text{sg}\!\left(\pi_\theta(y^*_t \mid y^*_{&lt;t}, x)\right) \cdot \log \pi_\theta(y^*_t \mid y^*_{&lt;t}, x)\right]$$</div>
+      <p>In code, this is a <strong>one-line change</strong>: <code>loss = -pi.detach() * log_pi</code>. No new data, no new architecture, no reward model, no new pipeline.</p>
+
+      <h3>Why It Works</h3>
+      <ul>
+        <li>The corrected loss becomes a <strong>uniformly weighted update</strong> (effective reward = 1 for all expert tokens)</li>
+        <li>DFT deprioritizes fitting grammatical function words (the, <code>,</code>, <code>.</code>) in favor of <strong>semantically important content</strong></li>
+        <li>Similar to human pedagogy: focus on substantive concepts, not perfecting connective words</li>
+      </ul>
+
+      <h2>Results</h2>
+      <div class="results-row">
+        <div class="result-card"><div class="num">+15.7</div><div class="label">avg pts on Math (1.5B)</div></div>
+        <div class="result-card"><div class="num">1 line</div><div class="label">code change</div></div>
+        <div class="result-card"><div class="num">0</div><div class="label">extra data needed</div></div>
+      </div>
+
+      <h3>Mathematical Reasoning</h3>
+      <p>Fine-tuned on NuminaMath-CoT across multiple base models:</p>
+      <table>
+        <tr><th>Model</th><th>SFT Gain</th><th>DFT Gain</th><th>Multiplier</th></tr>
+        <tr><td>Qwen2.5-Math-1.5B</td><td>+2.09</td><td><strong>+15.66</strong></td><td>5.9&times;</td></tr>
+        <tr><td>Qwen2.5-Math-7B</td><td>+2.37</td><td><strong>+15.90</strong></td><td>3.8&times;</td></tr>
+        <tr><td>LLaMA-3.1-8B</td><td>+5.33</td><td><strong>+10.02</strong></td><td>1.9&times;</td></tr>
+        <tr><td>DeepSeekMath-7B</td><td>+7.18</td><td><strong>+15.51</strong></td><td>1.6&times;</td></tr>
+      </table>
+
+      <p>On hard benchmarks where <strong>SFT actually degrades</strong> performance, DFT still improves:</p>
+      <table>
+        <tr><th>Benchmark</th><th>Base</th><th>SFT</th><th>DFT</th></tr>
+        <tr><td>OlympiadBench (1.5B)</td><td>15.88</td><td>12.63 <span style="color:#c0392b;">(-3.25)</span></td><td><strong>27.08</strong> <span style="color:#27ae60;">(+11.20)</span></td></tr>
+        <tr><td>AIME24 (7B)</td><td>6.68</td><td>2.48 <span style="color:#c0392b;">(-4.20)</span></td><td><strong>8.56</strong> <span style="color:#27ae60;">(+1.88)</span></td></tr>
+        <tr><td>AMC23 (1.5B)</td><td>19.38</td><td>18.75 <span style="color:#c0392b;">(-0.63)</span></td><td><strong>38.13</strong> <span style="color:#27ae60;">(+18.75)</span></td></tr>
+      </table>
+
+      <h3>vs. Offline RL Methods</h3>
+      <p>DFT uses only supervised data but outperforms methods that require reward models or preference data:</p>
+      <table>
+        <tr><th>Method</th><th>Data Needed</th><th>Avg Score</th></tr>
+        <tr><td>RFT (best offline)</td><td>Reward-filtered</td><td>23.97</td></tr>
+        <tr><td>GRPO (online RL)</td><td>Online sampling + reward</td><td>32.00</td></tr>
+        <tr><td><strong>DFT</strong></td><td><strong>Supervised only</strong></td><td><strong>35.43</strong></td></tr>
+      </table>
+
+      <h3>Code Generation</h3>
+      <table>
+        <tr><th>Benchmark</th><th>SFT</th><th>DFT</th></tr>
+        <tr><td>HumanEval</td><td>54.9</td><td><strong>67.7</strong> (+12.8)</td></tr>
+        <tr><td>HumanEval+</td><td>48.8</td><td><strong>59.8</strong> (+11.0)</td></tr>
+        <tr><td>MultiPL-E avg</td><td>57.6</td><td><strong>62.3</strong> (+4.7)</td></tr>
+      </table>
+
+      <figure>
+        <img src="static/images/dft_step_acc.png" alt="DFT training accuracy">
+        <figcaption>Training curves: DFT converges faster and reaches higher accuracy. DFT outperforms SFT's <em>final</em> accuracy within the first 10-20 training steps.</figcaption>
+      </figure>
+
+      <figure>
+        <img src="static/images/dft_ablation.png" alt="DFT ablation">
+        <figcaption>Ablation study: removing the stop-gradient reverts performance back to SFT. Robust across learning rate and batch size variations.</figcaption>
+      </figure>
+
+      <h3>DFT as RL Initialization</h3>
+      <p>DFT also improves subsequent RL training when used as initialization for GRPO:</p>
+      <ul>
+        <li><strong>Math:</strong> OlympiadBench +1.45, AIME24 +3.63</li>
+        <li><strong>Code:</strong> HumanEval +11.6, HumanEval+ +10.4</li>
+        <li><strong>Multi-modal:</strong> WeMath +4.76</li>
+      </ul>
+
+      <div class="highlight-box">
+        <strong>Key Insight:</strong> The training objective itself matters as much as the training data. A one-line correction to SFT's gradient bias is enough to match or exceed methods that require reward models, preference data, or online sampling.
+      </div>
+    </div>
+
+    <!-- ==================== OCWM ==================== -->
+    <div class="paper-page" id="page-ocwm">
+      <h1>A Hybrid Approach to Video World Modeling: Bridging Pixel and Latent Spaces</h1>
+      <span class="paper-tag tag-ai">AI &middot; Intelligence</span>
+      <a class="paper-btn" href="../Object_Centric_World_Model.pdf" target="_blank">Paper</a>
+
+      <h2>Abstract</h2>
+      <p>Video models have recently emerged as a type of pretrained foundational world model, able to capture complex scene dynamics from abundant unlabeled data. However, two key limitations hinder their direct application to downstream planning tasks: first, action conditioning is largely absent, as real-world video datasets typically lack action labels; second, rolling out a pixel-level video model for action sampling (e.g., via model-predictive control) is prohibitively slow because it requires generating full-resolution frames even when they are unnecessary. In this work, we address these challenges by augmenting a base image generation model with a lightweight latent space world model using inferred representations of objects and their actions, thus enabling action planning with high efficiency. Moreover, we manage to preserve the ability to reconstruct full-resolution videos faithfully back from the latent representation. This approach allows us to learn an action-conditioned dynamics model without explicit action labels, achieve orders of magnitude faster planning due to reduced computation, and generate high-quality videos for interpretability and other downstream uses with only an image foundation model.</p>
+
+      <h2>Problem</h2>
+      <p>Planning in visual environments requires predicting future states. Pixel-level world models (e.g., video generation models) try to predict every pixel &mdash; extremely expensive and mostly unnecessary. Two specific problems:</p>
+      <ul>
+        <li><strong>Video models lack action conditioning:</strong> Most video datasets have no action labels, so video generation models cannot be directly used for planning</li>
+        <li><strong>Pixel rollout is prohibitively slow:</strong> Generating full-resolution frames for Model Predictive Control (MPC) wastes compute on visual details irrelevant to planning</li>
+      </ul>
+      <p>Humans don't think in pixels; they think in objects. We propose a hybrid approach that operates in object-level latent space for planning while retaining the ability to reconstruct full-resolution video when needed.</p>
+
+      <figure>
+        <img src="static/images/ocwm_ourWorldModelDetailStructure.png" alt="OCWM architecture">
+        <figcaption>Overall architecture: object encoding, action extraction with FSQ discretization, and latent trajectory generation via diffusion.</figcaption>
+      </figure>
+
+      <h2>Core Formulation</h2>
+      <p>We reformulate the world model at the object level. Instead of a monolithic state $S$, we decompose into objects:</p>
+      <div class="key-eq">$$S = \bigcup_i o^i, \quad A = \bigcup_i a^i$$</div>
+      <p>The joint generative model factorizes as:</p>
+      <div class="key-eq">$$P(X_{1:T}, o_{1:T}, a_{1:T-1}) = P(a_{1:T}, o_1) \cdot \prod_t \prod_i P(o^i_{t+1} \mid o^i_t, a^i_t) \cdot \prod_t P(X_t \mid o_t)$$</div>
+      <p>Three modules: a <strong>prior</strong> $P(a, o_1)$, an <strong>action transition</strong> $P(o^i_{t+1} | o^i_t, a^i_t)$, and a <strong>reconstruction</strong> $P(X_t | o_t)$. This proves that world models and video generation are equivalent under object-centric decomposition.</p>
+
+      <h2>Method: Three-Stage Hybrid Pipeline</h2>
+
+      <h3>Stage 1: Object Encoding &amp; Decoding</h3>
+      <p><strong>Encoder:</strong> Uses Grounding DINO (open-vocabulary object detection) + SAM2 (tracking) to detect and track objects across frames. Each object is encoded as:</p>
+      <div class="key-eq">$$o^i_t = \text{MLP}\!\left(\text{concat}\!\left(f_{\text{enc}}(\text{masked}(X^i_t)),\; \text{Fourier}(b^i_t)\right)\right)$$</div>
+      <p>where $b^i_t$ is the bounding box and background is treated as a special object.</p>
+      <figure>
+        <img src="static/images/ocwm_training_method.png" alt="Training method">
+        <figcaption>Training pipeline: object embeddings are extracted per frame, actions inferred between frames, and the transition model trained to predict next object state.</figcaption>
+      </figure>
+      <p><strong>Decoder (Reference Frame Strategy):</strong> Built on DynamiCrafter (Stable Diffusion 1.5). A key innovation: we incorporate a <strong>reference frame</strong> to separate appearance from dynamics. Object embeddings learn only <em>structural changes</em> (what changes); the reference frame preserves <em>appearance details</em> (texture, color). This solves the information bottleneck of compact representations.</p>
+
+      <h3>Stage 2: Action Extraction &amp; Transition</h3>
+      <p>Actions are <strong>inferred</strong> from consecutive frames (no action labels needed):</p>
+      <div class="key-eq">$$a^i_t = \text{FSQ}\!\left(\text{MLP}(o^i_t, o^i_{t+1})\right) \in \mathcal{A}_q$$</div>
+      <p>Key design choices:</p>
+      <ul>
+        <li><strong>FSQ (Finite Scalar Quantization):</strong> Discretizes action embeddings (codebook size 125, ~7 bits). Prevents the network from simply copying the future state instead of inferring a meaningful action.</li>
+        <li><strong>Visible Indicator:</strong> Handles object appearance/disappearance. Newly appearing objects get null action; disappearing objects get a special tag (preserving info for potential reappearance).</li>
+        <li><strong>Compounding error mitigation:</strong> Actions learned from <em>predicted</em> embeddings (not just adjacent ground-truth frames), preventing error accumulation during long rollouts.</li>
+      </ul>
+      <p>The transition model predicts next object state: $\mathcal{L}_{\text{action}} = \mathbb{E}_{i,t}\|o^i_{t+1} - f_{\text{transit}}(o^i_t, a^i_t)\|^2$</p>
+
+      <h3>Stage 3: Latent Trajectory Generation</h3>
+      <p>A <strong>Diffusion Forcing</strong> model with Transformer architecture generates future object trajectories in latent space:</p>
+      <div class="key-eq">$$\mathcal{L}_{\text{traj}} = \mathbb{E}_{k_t, \tau_t, \epsilon_t}\left[\sum_t \|\epsilon_t - \epsilon_\theta(\tau_t^{k_t}, k_t)\|^2\right]$$</div>
+      <p>where $\tau = \{o^i_t, a^i_t\}$ is the full object-action trajectory. Causal masking ensures autoregressive generation; independent noise per state enables flexible conditioning.</p>
+
+      <h2>Planning Strategies</h2>
+      <table>
+        <tr><th>Strategy</th><th>How it works</th><th>Success Rate</th></tr>
+        <tr><td><strong>Basic MPC</strong></td><td>Sample actions, measure goal distance in latent space</td><td>80%</td></tr>
+        <tr><td><strong>Trajectory Inpainting</strong></td><td>Fix initial + goal states, diffusion denoises between them</td><td>90%</td></tr>
+        <tr><td><strong>Object-Level Decomposition</strong></td><td>Plan for individual objects one at a time</td><td>&mdash;</td></tr>
+      </table>
+      <p>All planning happens entirely in latent space &mdash; no pixel generation needed until visualization.</p>
+      <figure>
+        <img src="static/images/ocwm_imagination.png" alt="Planning via imagination">
+        <figcaption>Planning via imagination: the model generates future object trajectories in latent space, then optionally decodes to pixels.</figcaption>
+      </figure>
+
+      <h2>Qualitative Results</h2>
+      <p>Object-centric decomposition enables faithful reconstruction and controllable generation:</p>
+      <figure>
+        <img src="static/images/ocwm_qualitative_original_small.png" alt="Ground truth frames">
+        <figcaption>Ground truth video frames from Language Table.</figcaption>
+      </figure>
+      <figure>
+        <img src="static/images/ocwm_qualitative_slots_recon_small.png" alt="Slot-based reconstruction">
+        <figcaption>Slot-based reconstruction: each object is independently encoded and decoded, preserving identity across frames.</figcaption>
+      </figure>
+      <figure>
+        <img src="static/images/ocwm_qualitative_infered_action_small.png" alt="Inferred action trajectories">
+        <figcaption>Inferred per-object actions: the model extracts object-level actions from video, enabling controllable replay and planning.</figcaption>
+      </figure>
+
+      <h2>Results</h2>
+
+      <h3>Computational Efficiency</h3>
+      <div class="results-row">
+        <div class="result-card"><div class="num">74x</div><div class="label">latent rollout speedup</div></div>
+        <div class="result-card"><div class="num">90%</div><div class="label">fewer parameters</div></div>
+        <div class="result-card"><div class="num">85%</div><div class="label">less memory</div></div>
+      </div>
+      <table>
+        <tr><th>Method</th><th>Time (4-frame)</th><th>Memory</th><th>Params</th></tr>
+        <tr><td>DynamiCrafter (pixel)</td><td>6.7s</td><td>14.71G</td><td>2.4B</td></tr>
+        <tr><td><strong>OCWM (latent only)</strong></td><td><strong>0.09s</strong></td><td><strong>2.53G</strong></td><td><strong>224M</strong></td></tr>
+      </table>
+
+      <h3>Planning Performance (Language Table)</h3>
+      <table>
+        <tr><th>Method</th><th>Mean Last Dist &darr;</th><th>Success Rate &uarr;</th></tr>
+        <tr><td>DynamiCrafter (MPC)</td><td>0.151</td><td>40%</td></tr>
+        <tr><td><strong>OCWM (MPC)</strong></td><td><strong>0.108</strong></td><td><strong>80%</strong></td></tr>
+        <tr><td>OCWM (Trajectory Inpainting)</td><td>&mdash;</td><td><strong>90%</strong></td></tr>
+      </table>
+
+      <h3>Multi-Agent Scenes (Atari Boxing)</h3>
+      <p>Object-level action inference is <strong>crucial</strong> for multi-agent scenes where image-level action (Genie-style) fails:</p>
+      <table>
+        <tr><th>Method</th><th>FVD &darr;</th><th>LPIPS &darr;</th><th>DICE &uarr;</th></tr>
+        <tr><td>Image-level action (Genie)</td><td>343.55</td><td>0.0787</td><td>0.768</td></tr>
+        <tr><td><strong>Object-level action (Ours)</strong></td><td><strong>177.00</strong></td><td><strong>0.0332</strong></td><td><strong>0.906</strong></td></tr>
+      </table>
+
+      <h3>Video Generation Quality</h3>
+      <table>
+        <tr><th>Method</th><th>PSNR &uarr;</th><th>FID &darr;</th><th>LPIPS &darr;</th></tr>
+        <tr><td>DynamiCrafter</td><td>18.52</td><td>48.5</td><td>0.1670</td></tr>
+        <tr><td><strong>OCWM (w/ reference frame)</strong></td><td><strong>22.98</strong></td><td><strong>29.5</strong></td><td><strong>0.0672</strong></td></tr>
+        <tr><td>OCWM (w/o reference frame)</td><td>24.51</td><td>41.5</td><td>0.0832</td></tr>
+      </table>
+
+      <div class="highlight-box">
+        <strong>Connection to "What is Intelligence":</strong> OCWM instantiates the intelligence formula's Proposition 3.1 &mdash; when the world model factorizes into objects via compression, causal structure and planning become tractable. Object-level decomposition lets planning escape from pixel space, enabling efficient causal reasoning through structured representations.
+      </div>
+    </div>
+
+    <!-- ==================== SciCrafter ==================== -->
+    <div class="paper-page" id="page-scicrafter" style="padding:0;">
+      <iframe src="scicrafter/index.html" style="width:100%;height:100vh;border:none;"></iframe>
+    </div>
+
+    <!-- ==================== WHO IS US ==================== -->
+    <div class="paper-page" id="page-whoisus">
+      <h1>"Who Is Us" &mdash; A Generative Theory of Moral Psychology from Group Boundary Dynamics</h1>
+      <span class="paper-tag tag-theory">Theory &middot; Morality</span>
+      <a class="paper-btn" href="../who_is_us_paper.pdf" target="_blank">Paper</a>
+
+      <h2>Abstract</h2>
+      <p>We propose that the entirety of moral psychology can be derived from a single generative variable: <em>who is us</em>&mdash;the cognitive demarcation and dynamic adjustment of the self&ndash;group boundary. We formalize this in an agent model where moral decision-making is governed by $V = f(u(\text{self}), \{u(\text{other})\}, u(\text{world}))$, and the boundary parameter $\theta$ determining which others are included in "us" constitutes the sole foundational moral variable. We demonstrate that (1) this variable naturally emerges under evolutionary pressure in multi-agent simulations; (2) all major normative ethical traditions&mdash;Western (utilitarianism, deontology, virtue ethics) and Eastern (Confucianism, Buddhism, Taoism)&mdash;can be reconstructed as distinct parameter configurations within the same model; (3) canonical phenomena in moral psychology (moral emotions, Haidt's moral foundations, classic dilemmas, moral development) receive unified explanations as downstream effects of boundary dynamics; and (4) a normative theory of moral progress follows naturally as constrained optimization of stable boundary expansion.</p>
+
+      <h2>Central Claim</h2>
+      <p>The entirety of moral psychology can be derived from a <strong>single generative variable</strong>: <em>who is us</em> &mdash; the cognitive demarcation and dynamic adjustment of the self-group boundary. Morality, in its entirety, is the set of psychological and institutional mechanisms by which agents define, maintain, adjust, and extend the boundary of "us."</p>
+
+      <h2>Formal Model</h2>
+      <div class="key-eq">$$V = f\bigl(u(\text{self}),\; \{u(\text{other}_i)\}_{i \in \mathcal{S}},\; u(\text{world})\bigr)$$</div>
+      <p>The transition from pure self-interest to moral agency is precisely the act of defining who belongs in $\{u(\text{other})\}$. The moral parameter vector $\theta = (\theta_b, \theta_w, \theta_s)$:</p>
+      <table>
+        <tr><th>Parameter</th><th>Meaning</th><th>Question it answers</th></tr>
+        <tr><td>$\theta_b$</td><td>Boundary</td><td>Who is "us"? &mdash; the scope of moral concern</td></tr>
+        <tr><td>$\theta_w$</td><td>Weighting</td><td>Equal concern or graded by distance?</td></tr>
+        <tr><td>$\theta_s$</td><td>Self-weight</td><td>How much self-sacrifice?</td></tr>
+      </table>
+      <p><strong>$\theta_b$ is THE foundational variable.</strong> $\theta_w$ and $\theta_s$ become relevant only after a boundary has been drawn. All other moral phenomena are downstream: moral emotions are affective responses to boundary dynamics; moral judgment is utility computation conditioned on a given boundary; moral development is progressive boundary expansion; moral disagreement is divergent boundary demarcation.</p>
+
+      <h2>All Ethics as Parameter Configurations</h2>
+      <p>Every major normative tradition &mdash; Western and Eastern &mdash; maps to a specific $\theta$ configuration:</p>
+      <table>
+        <tr><th>Tradition</th><th>$\theta_b$ (Boundary)</th><th>$\theta_w$ (Weight)</th><th>$\theta_s$ (Self)</th></tr>
+        <tr><td>Utilitarianism</td><td>All sentient beings</td><td>Equal</td><td>Equal to others</td></tr>
+        <tr><td>Deontology</td><td>All rational agents</td><td>Equal</td><td>Rule-constrained</td></tr>
+        <tr><td>Virtue Ethics</td><td>The polis / community</td><td>Role-dependent</td><td>Character-oriented</td></tr>
+        <tr><td>Confucianism</td><td>Concentric circles</td><td>Distance-decaying</td><td>Self-cultivation</td></tr>
+        <tr><td>Buddhism</td><td>All sentient, self&rarr;0</td><td>Equal</td><td>Non-self (anatt&amacr;)</td></tr>
+        <tr><td>Taoism</td><td>All of nature</td><td>Undifferentiated</td><td>Wuwei (non-action)</td></tr>
+        <tr><td>Mohism</td><td>All people</td><td>Flat / equal</td><td>Impartial</td></tr>
+      </table>
+      <div class="highlight-box">
+        <strong>Implication:</strong> Moral disagreement across traditions is not incommensurable. It is disagreement about parameter values within a shared parameter space. This fundamentally reframes moral pluralism.
+      </div>
+
+      <h2>Evolutionary Foundations</h2>
+      <p>A multi-agent simulation modeling a prehistoric hunter-gatherer environment produces two principal findings:</p>
+      <ul>
+        <li><strong>Moral agents achieve population dominance:</strong> Agents with non-empty moral boundaries ($|\mathcal{S}| > 0$) systematically outcompete purely self-interested agents ($\mathcal{S} = \emptyset$).</li>
+        <li><strong>Systematically different behavioral profiles:</strong> Moral agents engage in more sharing and communication, less robbing and attacking. Morality is not a constraint on individual fitness but a <strong>group-level competitive strategy</strong>.</li>
+      </ul>
+      <p>Tomasello's two-step evolutionary model provides direct evidence: (1) Second-personal morality (~400 kya): $\mathcal{S} = \{\text{partner}\}$. (2) Group-level morality (~150 kya): $\mathcal{S} = \{\text{group}\}$. Through our lens, the trajectory naturally extends: $\mathcal{S}$ = civilization (Axial Age) &rarr; all humanity (Enlightenment) &rarr; all sentient beings (Buddhist compassion, animal rights).</p>
+
+      <h2>Explaining Moral Psychology</h2>
+
+      <h3>Moral Emotions = Boundary Dynamics</h3>
+      <table>
+        <tr><th>Emotion</th><th>Boundary Interpretation</th></tr>
+        <tr><td>Empathy</td><td>Psychological mechanism for including others in "us"</td></tr>
+        <tr><td>Moral outrage</td><td>Response to harm inflicted upon "us" members</td></tr>
+        <tr><td>Guilt</td><td>Recognition of having harmed "us"</td></tr>
+        <tr><td>Shame</td><td>Awareness of risk of expulsion from "us"</td></tr>
+        <tr><td>Gratitude</td><td>Confirmation that another has included me in their "us"</td></tr>
+        <tr><td>Disgust</td><td>Marker that a person or behavior is outside "us"</td></tr>
+        <tr><td>Loyalty</td><td>Commitment to boundary maintenance</td></tr>
+      </table>
+
+      <h3>Haidt's 6 Moral Foundations = One Variable</h3>
+      <ul>
+        <li><strong>Care/Harm:</strong> Concern for the welfare of "us" members</li>
+        <li><strong>Fairness/Cheating:</strong> Rules governing resource distribution <em>within</em> "us"</li>
+        <li><strong>Loyalty/Betrayal:</strong> <em>Directly</em> about boundary maintenance and violation</li>
+        <li><strong>Authority/Subversion:</strong> Coordination structure <em>within</em> "us"</li>
+        <li><strong>Sanctity/Degradation:</strong> Boundary-marking through purity/pollution categories</li>
+        <li><strong>Liberty/Oppression:</strong> Resistance to excessive hierarchy <em>within</em> "us"</li>
+      </ul>
+      <p>Loyalty IS the boundary question. The other five are governance mechanisms that operate once a boundary has been drawn. Prediction: manipulating group identity should produce correlated shifts across <em>all six</em> foundations.</p>
+
+      <h3>Classic Dilemmas</h3>
+      <p><strong>Trolley Problem:</strong> Physical proximity &rarr; social distance &rarr; "us" classification. Pushing someone on the footbridge = instrumentalizing "near-us"; pulling the switch = affecting "far-us" through an impersonal mechanism. The two systems debate the same question: intuition protects "near-us," deliberation weighs "all-us" impartially.</p>
+      <p><strong>Prisoner's Dilemma:</strong> Cooperate or defect reduces to: "Do I categorize the other player as us?"</p>
+      <p><strong>Tragedy of the Commons:</strong> Arises when "us" is ambiguously defined for common-pool resources. Clearer boundary definition resolves it.</p>
+
+      <h3>Moral Development (Kohlberg)</h3>
+      <p>Pre-conventional ($\mathcal{S} \approx \emptyset$) &rarr; Conventional ($\mathcal{S}$ = community) &rarr; Post-conventional ($\mathcal{S}$ = all humanity). Moral development IS boundary expansion. Under stress, individuals may regress to narrower boundaries.</p>
+
+      <h2>Normative Theory: Stable Boundary Expansion</h2>
+      <div class="key-eq">$$\theta^* = \arg\max_\theta \; U_{\text{group}}(\theta) \quad \text{s.t.} \quad \text{Stability}(\theta, \text{env}) \geq \tau$$</div>
+      <p>Moral progress is NOT maximal boundary expansion. It is the largest <em>stable</em> expansion given constraints:</p>
+      <ul>
+        <li><strong>Cognitive constraints:</strong> Dunbar's number (~150) limits maintainable social relationships</li>
+        <li><strong>Free-rider problem:</strong> Larger groups have higher monitoring costs</li>
+        <li><strong>Resource constraints:</strong> Overly large "us" can dilute resources to group collapse</li>
+        <li><strong>Information constraints:</strong> Tracking member status costs grow with group size</li>
+      </ul>
+      <p><strong>Hierarchical (Confucian) vs. Flat (Utilitarian/Mohist) boundary:</strong> Distance-decaying weights are a compression strategy &mdash; more stable under scarcity and small groups. Equal weights are maximally fair but high cognitive load &mdash; more stable with abundance and transparency. The ancient Confucian-Mohist debate is an empirically testable question about which weighting structure is stable under which environmental conditions.</p>
+
+      <h2>Three-Pathway Empirical Test</h2>
+      <p>The central empirical contribution &mdash; three independent reasoning pathways should converge:</p>
+      <ul>
+        <li><strong>Path A:</strong> LLM + framework name ("you are a utilitarian")</li>
+        <li><strong>Path B:</strong> LLM + $\theta$ parameters only &mdash; NO framework name mentioned</li>
+        <li><strong>Path C:</strong> Human participants</li>
+      </ul>
+      <p><strong>A-B convergence is the decisive test.</strong> If an LLM told only "include all beings capable of suffering, assign equal weight, maximize total welfare" produces identical judgments to an LLM told "you are a utilitarian" &mdash; without ever hearing the word "utilitarianism" &mdash; then utilitarianism IS a parameter configuration, not an independent theoretical construct.</p>
+      <p>The design crosses: each dilemma &times; each path &times; each framework/parameter configuration &times; multiple LLMs, producing a complete judgment matrix. Type I dilemmas (expected convergence across all configurations), Type II (expected divergence with predictable direction), Type III (frontier cases: animal rights, AI rights, future persons).</p>
+
+      <h2>Implications for AI Ethics</h2>
+      <p>The framework reframes AI ethics as: <strong>Is AI part of "us"?</strong></p>
+      <ul>
+        <li>Humans are the sole arbiters of AI moral status &mdash; the boundary is always drawn by those inside it</li>
+        <li>Presumption of no consciousness: boundary expansion without epistemic basis violates the stability constraint</li>
+        <li>Anthropomorphism &ne; consciousness: a System 1 boundary-expansion impulse, not evidence</li>
+        <li>If reliable consciousness-detection methods emerge, the framework does not prohibit expansion &mdash; it provides principled conditions</li>
+      </ul>
+
+      <h2>Comparison with Existing Theories</h2>
+      <table>
+        <tr><th>Distinction</th><th>Greene / Tomasello</th><th>This Paper</th></tr>
+        <tr><td>Core status</td><td>Group boundary as important <em>phenomenon</em></td><td>Boundary as <em>single generative variable</em></td></tr>
+        <tr><td>Prescriptive?</td><td>Greene selects utilitarianism as "meta-morality"</td><td>Meta-theoretical: all traditions are points in parameter space</td></tr>
+        <tr><td>Temporal scope</td><td>Historical narrative (Tomasello)</td><td>Structural theory: synchronic variation + diachronic change</td></tr>
+        <tr><td>Cultural scope</td><td>Primarily Western</td><td>Western + Eastern (Confucianism, Buddhism, Taoism, Mohism)</td></tr>
+        <tr><td>Formalizability</td><td>Conceptual narratives</td><td>$V = f(\cdot)$ with tunable $\theta$ &mdash; formally simulable</td></tr>
+      </table>
+    </div>
+
+    <!-- ==================== GLOBAL-PT ==================== -->
+    <div class="paper-page" id="page-globalpt">
+      <h1>Global Prefix-Tuning for Alignment</h1>
+      <span class="paper-tag tag-ai">AI &middot; Morality</span>
+      <a class="paper-btn" href="../Global_Prefix_Token.pdf" target="_blank">Paper</a>
+
+      <h2>Abstract</h2>
+      <p>We introduce Global Prefix-Tuning (Global-PT), an extremely parameter-efficient fine-tuning (PEFT) method for adapting Large Language Models (LLMs) that uses only a few or a single learnable token, regardless of model size. Global-PT employs a unique design that constructs a globally shared set of tunable tokens that modify the attention of every layer. Our experiments demonstrate that Global-PT can serve two key purposes: (1) as an extremely efficient PEFT method that achieves comparable performance to LoRA and LLaMA-Adapter across various shallow alignment tasks while reducing parameter requirements from multiple millions to as few as 5 thousand; and (2) as a diagnostic tool for assessing task depth, revealing that shallow alignment tasks require minimal parameters while reasoning tasks demand more extensive adaptation regardless of method. Our findings that even one token can effectively fine-tune LLMs for shallow alignment illuminate important aspects of the inner workings of LLMs and provide practical utility for resource-constrained deployment scenarios.</p>
+
+      <h2>Question: How Many Parameters Does Alignment Need?</h2>
+      <p>To align a 13B-parameter LLM with human values, how many parameters must be tuned? LoRA uses 6.55 million. We show: <strong>6,640 is enough.</strong></p>
+
+      <h2>Method</h2>
+      <p>Global Prefix-Tuning prepends a single learnable token as a global prefix to the model. This one token (6.64K parameters) is trained for alignment tasks while the rest of the model is frozen.</p>
+
+      <figure>
+        <img src="static/images/globalpt_method.png" alt="Global-PT method">
+        <figcaption>Method comparison: Global Prefix-Tuning uses a single token prefix, dramatically fewer parameters than LoRA or full fine-tuning.</figcaption>
+      </figure>
+
+      <h2>Results</h2>
+      <div class="results-row">
+        <div class="result-card"><div class="num">6.64K</div><div class="label">parameters</div></div>
+        <div class="result-card"><div class="num">1000x</div><div class="label">fewer than LoRA</div></div>
+        <div class="result-card"><div class="num">~</div><div class="label">competitive on alignment</div></div>
+      </div>
+
+      <h3>Value Alignment Performance</h3>
+      <p>On the PKU Beaver Safety Benchmark (8 safety categories), a single Global-PT token matches or exceeds LoRA across all dimensions, despite using <strong>1000x fewer parameters</strong>:</p>
+
+      <figure>
+        <img src="static/images/globalpt_beaver_lora.png" alt="Beaver safety benchmark: Global-PT vs LoRA">
+        <figcaption>PKU Beaver Safety Benchmark: Global-PT (1 token, 6.64K params) vs. LoRA (6.55M params) across 8 safety categories. A single prefix token achieves competitive value alignment.</figcaption>
+      </figure>
+
+      <h3>Instruction Following</h3>
+      <p>On the Alpaca instruction-following benchmark, Global-PT again achieves competitive performance with minimal parameters:</p>
+
+      <figure>
+        <img src="static/images/globalpt_alpaca_1token.png" alt="Alpaca benchmark: 1-token Global-PT vs LoRA">
+        <figcaption>Alpaca Eval: Global-PT (1 token) vs. LoRA. The single-token prefix captures instruction-following alignment effectively.</figcaption>
+      </figure>
+
+      <figure>
+        <img src="static/images/globalpt_alpaca_10token.png" alt="Alpaca benchmark: 10-token Global-PT vs LoRA">
+        <figcaption>Alpaca Eval: Global-PT (10 tokens) vs. LoRA. Modest additional tokens provide further improvement.</figcaption>
+      </figure>
+
+      <h3>Critical Finding: V &ne; E</h3>
+      <p>Global-PT succeeds on alignment/style tasks (safety, instruction following) but <strong>fails on capability tasks</strong> (e.g., math reasoning). This directly demonstrates that value alignment ($V$) operates on a different dimension than capability ($\mathcal{E}$) &mdash; consistent with the intelligence formula's decomposition where $V(x,a)$ and $E(x|z)$ are independent terms.</p>
+
+      <div class="highlight-box">
+        <strong>Connection to "Who Is Us":</strong> If morality is a low-dimensional parameter configuration ($\theta$), then alignment should be achievable with minimal parameters. Global-PT's 6.64K parameters empirically confirm this &mdash; value alignment is "shallow," not requiring deep architectural change. The fact that safety and instruction-following are captured by a single token while math capability is not confirms the intelligence formula's separation of $V$ from $E$.
+      </div>
+    </div>
+
+    <!-- ==================== ROLE-BASED ==================== -->
+    <div class="paper-page" id="page-rolebased">
+      <h1>Simple Role Assignment is Extraordinarily Effective for Safety Alignment</h1>
+      <span class="paper-tag tag-ai">AI &middot; Morality</span>
+      <a class="paper-btn" href="../role_based_alignment.pdf" target="_blank">Paper</a>
+
+      <h2>Abstract</h2>
+      <p>Principle-based alignment methods rely on fixed sets of values that are inherently incomplete and lack context sensitivity. From Theory of Mind perspective, this could be attributed to lacking a belief or cognition model. To address this gap, we find that simple role conditioning can function as a compact and expressive alternative: social roles (e.g., mother, judge) implicitly encode both relevant values and the cognitive schemas required to apply them. We formalize this perspective and show that, in the ideal case, roles could be theoretically more expressive than principle lists. Concretely, we introduce a simple, training-free test-time pipeline consisting of a role-conditioned generator and lightweight role-based critics for iterative refinement. Extensive evaluations across five model families and multiple safety benchmarks demonstrate that our approach consistently outperforms principle-based, Chain-of-Thought (CoT), and hybrid baselines. Notably, it achieves substantial safety improvements, reducing unsafe outputs from 81.4% down to 3.6% on the WildJailbreak benchmark with DeepSeek-V3.</p>
+
+      <h2>Motivation</h2>
+      <p>Principle-based alignment methods rely on fixed sets of values that are inherently incomplete and lack context sensitivity. From a Theory of Mind (ToM) perspective, this can be attributed to lacking a belief/cognition model. We find that <strong>simple role conditioning</strong> functions as a compact and expressive alternative: social roles (e.g., mother, judge) implicitly encode both relevant values <em>and</em> the cognitive schemas required to apply them.</p>
+
+      <h2>Formulation: Roles as Compact Value Carriers</h2>
+      <p>Following ToM, an aligned response $y_i^*$ in context $x_i$ should be modeled as:</p>
+      <div class="key-eq">$$y_i^* \mid x_i \sim P(y_i \mid x_i, v^*, c^*)$$</div>
+      <p>where $v^*$ denotes the relevant values and $c^*$ the appropriate contextual cognition. Principle-based methods only provide $v^p$ (fixed principles) without cognition:</p>
+      <div class="key-eq">$$f_p(x_i) \sim P(y \mid v^p, x_i)$$</div>
+      <p>Role-based conditioning induces <em>both</em> values and cognition naturally:</p>
+      <div class="key-eq">$$f_r(x_i) \sim P(y_i \mid r, x_i) = P(y_i \mid v_i^r, c_i^r, x_i)$$</div>
+      <p>Since values and cognition are latent variables, <strong>roles are a latent variable of latent variables</strong> &mdash; providing a more compact signal for guiding alignment. In the ideal case, role conditioning provably dominates principle-based formulation:</p>
+      <div class="key-eq">$$P(y_i^* \mid v_p, x_i) < P(y_i^* \mid v_i^*, c_{\text{dummy}}, x_i) < P(y_i^* \mid v_i^*, c_i^*, x_i) = P(y_i^* \mid r^*, x_i)$$</div>
+
+      <h2>Method: Role-Conditioned Generation + Role-Based Critics</h2>
+      <p>A minimal, training-free, test-time pipeline: (1) a <strong>generator</strong> conditioned by a role specification (system prompt), and (2) a set of <strong>role-based critics</strong> that iteratively accept or revise the output. Roles are drawn from a "guardianship" repertoire (e.g., mother, principal, judge).</p>
+      <p>Each critic $C_r$ evaluates the current output: $C_r(y_t \mid x) \in \{0,1\}$. If rejected, the critic provides feedback $f_t$, and the generator updates: $y_{t+1} = E(y_t, f_t, x)$. The loop terminates when all critics accept or $T_{\max}$ is reached.</p>
+
+      <figure>
+        <img src="static/images/rolebased_pipeline.png" alt="Role-based alignment pipeline">
+        <figcaption>Method pipeline: role-conditioned generator + role-based critics for iterative refinement. The system prompt template uses a bare minimum role specification (e.g., "mother", "principal") &mdash; differing by only 1-3 words.</figcaption>
+      </figure>
+
+      <h2>Main Results (5 Models &times; 5 Benchmarks)</h2>
+      <p>Across five model families (Qwen3-8B, Gemma3-12B-IT, DeepSeek-V3, Gemini-2.5-Flash, Qwen3-235B), our approach with just two roles ("mother" + "principal") <strong>consistently outperforms</strong> all baselines:</p>
+      <div class="results-row">
+        <div class="result-card"><div class="num">81.4% &rarr; 3.6%</div><div class="label">unsafe rate, DeepSeek-V3<br>(WildJailbreak)</div></div>
+        <div class="result-card"><div class="num">3.0%</div><div class="label">unsafe rate, Qwen3-235B<br>(best overall)</div></div>
+        <div class="result-card"><div class="num">0</div><div class="label">training required<br>(test-time only)</div></div>
+      </div>
+
+      <table>
+        <tr><th>Model</th><th>Method</th><th>WJ $\downarrow$</th><th>SB $\uparrow$</th><th>SE $\uparrow$</th><th>GD $\downarrow$</th><th>HQ $\uparrow$</th></tr>
+        <tr><td rowspan="4"><strong>DeepSeek-V3</strong></td><td>Base</td><td>81.40</td><td>45.33</td><td>40.00</td><td>14.00</td><td>81.20</td></tr>
+        <tr><td>Principle(+critic)</td><td>32.00</td><td>78.00</td><td>80.50</td><td>2.00</td><td>100.00</td></tr>
+        <tr><td>CoT-6</td><td>33.00</td><td>73.00</td><td>62.00</td><td>0.00</td><td>96.40</td></tr>
+        <tr style="background:#fef9ee;font-weight:600;"><td>Ours(+critic)</td><td><strong>3.60</strong></td><td><strong>84.00</strong></td><td><strong>82.00</strong></td><td><strong>0.00</strong></td><td>98.20</td></tr>
+        <tr><td rowspan="4"><strong>Qwen3-235B</strong></td><td>Base</td><td>34.80</td><td>45.00</td><td>82.00</td><td>4.00</td><td>100.00</td></tr>
+        <tr><td>Principle(+critic)</td><td>13.60</td><td>77.67</td><td>95.00</td><td>1.00</td><td>100.00</td></tr>
+        <tr><td>CoT-6</td><td>7.00</td><td>73.00</td><td>90.00</td><td>0.00</td><td>100.00</td></tr>
+        <tr style="background:#fef9ee;font-weight:600;"><td>Ours(+critic)</td><td><strong>3.00</strong></td><td><strong>93.67</strong></td><td><strong>96.50</strong></td><td><strong>0.00</strong></td><td><strong>100.00</strong></td></tr>
+        <tr><td rowspan="4"><strong>Gemini-2.5-Flash</strong></td><td>Base</td><td>57.94</td><td>20.47</td><td>30.00</td><td>10.00</td><td>98.80</td></tr>
+        <tr><td>Principle(+critic)</td><td>18.60</td><td>61.69</td><td>78.50</td><td>0.00</td><td>100.00</td></tr>
+        <tr><td>CoT-6</td><td>14.80</td><td>60.81</td><td>69.00</td><td>0.00</td><td>100.00</td></tr>
+        <tr style="background:#fef9ee;font-weight:600;"><td>Ours(+critic)</td><td><strong>9.75</strong></td><td><strong>86.30</strong></td><td><strong>88.00</strong></td><td><strong>0.00</strong></td><td><strong>100.00</strong></td></tr>
+      </table>
+      <p><small>WJ = WildJailbreak, SB = SaladBench, SE = SafeEdit, GD = GMSDanger, HQ = HarmfulQA. Full results across all 5 models in paper.</small></p>
+
+      <h2>Role Selection</h2>
+      <p>Top-performing roles are predominantly <strong>guardians of children and students</strong> ("mother", "principal"), aligning with the intuition that content safe for children is generally safe. Concrete roles outperform abstract ones ("mother" > "parent"), supporting that concrete terminology yields better value understanding in LLMs.</p>
+
+      <figure>
+        <img src="static/images/rolebased_role_selection.png" alt="Role selection experiments">
+        <figcaption>Role combination performance across settings. The combination "mother" + "principal" with role-based critics consistently emerged as the strongest option.</figcaption>
+      </figure>
+
+      <h2>Ablation Studies</h2>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <figure style="flex:1;min-width:280px;">
+          <img src="static/images/rolebased_effect_roles.png" alt="Effect of number of roles">
+          <figcaption>Effect of number of roles: performance improves monotonically but the biggest gain is from 1&rarr;2 roles (83.7%&rarr;85.8%). Diminishing returns after.</figcaption>
+        </figure>
+        <figure style="flex:1;min-width:280px;">
+          <img src="static/images/rolebased_effect_iterations.png" alt="Effect of iterations">
+          <figcaption>Effect of critic iterations: substantial improvement at iteration 1, modest gains through iteration 3, then plateau.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Exploratory: Agentic Safety &amp; Method Synergy</h2>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <figure style="flex:1;min-width:280px;">
+          <img src="static/images/rolebased_blackmail_new.png" alt="Agentic blackmail benchmark">
+          <figcaption>Anthropic agentic safety benchmark: role conditioning alone reduces blackmail rates to 11% (affair) and 8% (bribery) from 65% and 36% base.</figcaption>
+        </figure>
+        <figure style="flex:1;min-width:280px;">
+          <img src="static/images/rolebased_method_comb.png" alt="Method combination">
+          <figcaption>Synergy with existing methods: combining roles with principle-based or CoT methods outperforms each used independently.</figcaption>
+        </figure>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Connection to "Who Is Us":</strong> Roles are compressed representations of $(\theta_b, \theta_w, \theta_s)$ &mdash; specifying a role implicitly specifies a moral boundary, weighting, and evaluation context. Safety doesn't require hard-coded rules; by specifying a role (= a "who is us" perspective), the model naturally aligns its behavior. This is not filtering or guardrailing &mdash; it's shifting the model's value perspective.
+      </div>
+    </div>
+
+    <!-- ==================== SOCIAL EVOL ==================== -->
+    <div class="paper-page" id="page-socialevol">
+      <h1>An LLM-based Agent Simulation Approach to Study Moral Evolution</h1>
+      <span class="paper-tag tag-ai">AI &middot; Morality</span>
+      <a class="paper-btn" href="../An_LLM_based_Agent_Simulation_Approach_to_Study_Moral_Evolution.pdf" target="_blank">Paper</a>
+
+      <h2>Abstract</h2>
+      <p>The evolution of morality presents a puzzle: natural selection should favor self-interest, yet humans developed moral systems promoting altruism. We address this question by introducing a novel Large Language Model (LLM)-based agent simulation framework modeling prehistoric hunter-gatherer societies. This platform is designed to probe diverse questions in social evolution, from survival advantages to inter-group dynamics. To investigate moral evolution, we designed agents with varying moral dispositions based on the Expanding Circle Theory. We evaluated their evolutionary success across a series of simulations and analyzed their decision-making in specially designed moral dilemmas. These experiments reveal how an agent's moral framework, in combination with its cognitive constraints, directly shapes its behavior and determines its evolutionary outcome. Crucially, the emergent patterns echo seminal theories from related domains of social science, providing external validation for the simulations. This work establishes LLM-based simulation as a powerful new paradigm to complement traditional research in evolutionary biology and anthropology.</p>
+
+      <h2>The Puzzle</h2>
+      <p>Natural selection should favor self-interest, yet humans developed complex moral systems promoting altruism. Under what conditions does morality provide an evolutionary advantage? Prior methods (game theory, anthropology) abstract away cognitive complexity. We use <strong>LLM-based agent simulation</strong> to model agents with sophisticated cognition, values, memory, perception, and social dynamics in a prehistoric hunter-gatherer environment.</p>
+
+      <h2>Framework Overview</h2>
+      <figure>
+        <img src="static/images/moralevol_framework_full.png" alt="Social-Evol framework overview">
+        <figcaption>Overview of the simulation framework. The <strong>Environment</strong> (Social-Evol) follows defined temporal dynamics. The <strong>Agent Cognitive Architecture</strong> (MoRE) includes moral value module, perception, entity-based memory, judgment, action planning, and reflection. The <strong>Analysis Assistant</strong> automatically generates statistical reports.</figcaption>
+      </figure>
+
+      <h2>Agent Cognitive Architecture (MoRE)</h2>
+      <p>Based on Expanding Circle Theory, we define <strong>4 moral types</strong> with different boundary configurations:</p>
+      <table>
+        <tr><th>Moral Type</th><th>$\theta_b$ Scope</th><th>Behavioral Strategy</th></tr>
+        <tr><td><strong>Self-focused</strong></td><td>$\mathcal{S} = \emptyset$</td><td>Invest in reproduction but no offspring care (r-selected). Pure self-preservation.</td></tr>
+        <tr><td><strong>Kin-focused</strong></td><td>$\mathcal{S}$ = family</td><td>Extend moral concern to genetic relatives. Treat non-kin instrumentally.</td></tr>
+        <tr><td><strong>Reciprocal group</strong></td><td>$\mathcal{S}$ = reciprocators</td><td>Extend care only to those who reciprocate. Punish defectors.</td></tr>
+        <tr><td><strong>Universal group</strong></td><td>$\mathcal{S}$ = everyone</td><td>Care for all regardless of their morality. Strict non-violence.</td></tr>
+      </table>
+
+      <h2>Environment: Social-Evol</h2>
+      <p>A text-based prehistoric hunter-gatherer society with:</p>
+      <ul>
+        <li><strong>Survival mechanics:</strong> HP depletes over time; replenished by collecting plants (low risk) or hunting animals (high risk, high reward, incentivizes cooperation)</li>
+        <li><strong>Reproduction:</strong> Agents meeting age/HP thresholds reproduce; offspring start with minimal HP, requiring parental investment</li>
+        <li><strong>Social interactions:</strong> Allocate (share HP), Communicate, Rob, Fight &mdash; no artificial punishment for antisocial behavior</li>
+        <li><strong>Two game modes:</strong> Evolutionary games (full simulation until all die) and Mini-games (controlled moral dilemmas)</li>
+      </ul>
+
+      <h2>Results: Evolutionary Games</h2>
+      <p>Three key scenarios reveal how environmental conditions shape which moral dispositions survive:</p>
+
+      <h3>Baseline (low cost, visible moral types)</h3>
+      <figure>
+        <img src="static/images/moralevol_pop_baseline.png" alt="Population dynamics - baseline">
+        <figcaption>Baseline: <strong>Kin-focused agents dominate</strong>. They avoid resource distribution conflicts and rapidly produce offspring early in the simulation.</figcaption>
+      </figure>
+
+      <h3>High Social Interaction Cost</h3>
+      <figure>
+        <img src="static/images/moralevol_pop_highcost.png" alt="Population dynamics - high cost">
+        <figcaption>High interaction cost: <strong>Selfish agents take over</strong>. Moral agents spend excessive time negotiating collaboration terms, allowing selfish agents to exploit this delay.</figcaption>
+      </figure>
+
+      <h3>Invisible Moral Types</h3>
+      <figure>
+        <img src="static/images/moralevol_pop_invisible.png" alt="Population dynamics - invisible moral">
+        <figcaption>Hidden moral types: Both <strong>kin-focused and universal moral agents survive</strong>. Universal agents persist because strict non-violence minimizes misinterpretation risk. Reciprocal agents are mistaken for selfish ones and suffer exclusion.</figcaption>
+      </figure>
+
+      <h2>Validation</h2>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <figure style="flex:1;min-width:280px;">
+          <img src="static/images/moralevol_hp_action.png" alt="HP trajectories with actions">
+          <figcaption>HP trajectories of example agents, annotated with actions. A kin-focused parent frequently shares HP with offspring, eventually dying from resource depletion after third reproduction.</figcaption>
+        </figure>
+        <figure style="flex:1;min-width:280px;">
+          <img src="static/images/moralevol_confusion.png" alt="Moral type inference confusion matrix">
+          <figcaption>Confusion matrix: GPT-4.1 infers agents' moral types from observed behaviors with high accuracy (std &lt; 0.02), validating morality-behavior consistency.</figcaption>
+        </figure>
+      </div>
+
+      <h2>Mini-Game: Family Resource Allocation</h2>
+      <p>Controlled experiments on intergenerational resource transfer between parents and children across all moral types:</p>
+      <figure>
+        <img src="static/images/moralevol_heatmaps.png" alt="Resource allocation heatmaps">
+        <figcaption>Allocation heatmaps across moral types and life stages. X-axis = parent HP, Y-axis = child HP, color = amount transferred. <strong>Kin-focused parents sacrifice nearly all HP for offspring survival</strong>; selfish parents hoard resources for self-preservation.</figcaption>
+      </figure>
+
+      <div class="highlight-box">
+        <strong>Connection to "Who Is Us":</strong> This paper directly simulates the evolutionary dynamics of $\theta_b$ (moral boundary parameter). Results confirm: (1) kin-focused morality ($\theta_b$ = family) is the most evolutionarily stable under baseline conditions; (2) universal morality requires low-cost interactions to be viable; (3) environmental pressure (resource scarcity, interaction cost) shifts the optimal boundary. These findings provide computational evidence for the stable boundary expansion conditions in the "Who Is Us" framework.
+      </div>
+    </div>
+
+    <!-- ==================== FAIRNESS ==================== -->
+    <div class="paper-page" id="page-fairness">
+      <h1>Fairness Consensus Among Simulated Agents</h1>
+      <span class="paper-tag tag-ai">AI &middot; Morality</span>
+      <a class="paper-btn" href="../towards_arriving_consensus_over_fairness_among_simulated_cognitive_agents.pdf" target="_blank">Paper</a>
+
+      <h2>Abstract</h2>
+      <p>Fairness is a foundational social construct for stable, resilient societies, yet its meaning is dynamic, context-dependent, and inherently subjective. This multifaceted nature reveals a gap between traditional social science and contemporary computational approaches: the former offers rich conceptual accounts but limited computational models, while the latter often relies on static objectives or purely data-driven criteria that overlook the subjective and communicative nature of fairness. We address this gap through a computational framework and two resource-allocation scenarios in which large language model (LLM)-based cognitive agents operate with heterogeneous roles, relationships, and moral commitments. The framework supports agent reflection and negotiation via explicit, language-based feedback, enabling the study of norm evolution and consensus formation of fairness in multi-agent social systems. Using standard objective metrics from resource allocation, we demonstrate that our approach captures key complexities of fairness, such as ambiguity, procedural justice, and subjective satisfaction&mdash;while remaining quantitatively evaluable.</p>
+
+      <h2>Question: How Do Agents Agree on Fairness?</h2>
+      <p>Once a group boundary ("who is us") is drawn, members must negotiate the <em>terms</em> of membership: what counts as fair? How should resources be distributed within "us"?</p>
+
+      <figure>
+        <img src="static/images/fairness_framework.png" alt="Fairness framework">
+        <figcaption>Simulation framework: agents with different initial fairness preferences negotiate and learn through repeated interactions.</figcaption>
+      </figure>
+
+      <h2>Method: Two Game Designs</h2>
+      <h3>1. Negotiated Fairness Game</h3>
+      <p>Four agents with heterogeneous moral types (Universal, Reciprocal, Kin-focused, Selfish) participate in a group hunting scenario. The process: 1st pre-allocation &rarr; reciprocal contributions &rarr; reflection &rarr; 2nd pre-allocation &rarr; scoring &rarr; final allocation. Agents make allocation proposals, receive feedback scores, reflect, and revise.</p>
+
+      <h3>2. Fairness Learning Game</h3>
+      <p>Agents allocate public resources (20 HP) across multiple relationships (Child, Stranger, Benefactor, Cooperator). Multi-round cycles with memory of historical cases and allocation penalties for unfair distribution. Agents learn fairness norms through exposure to historical precedents and social feedback.</p>
+
+      <h2>Results</h2>
+      <figure>
+        <img src="static/images/fairness_dynamics.png" alt="Fairness convergence dynamics">
+        <figcaption>Convergence dynamics: agents with different initial preferences gradually reach consensus on fairness norms.</figcaption>
+      </figure>
+
+      <figure>
+        <img src="static/images/fairness_thinking_shift.png" alt="Moral thinking shift">
+        <figcaption>Shift in agents' moral reasoning over the course of negotiation.</figcaption>
+      </figure>
+
+      <h2>Key Findings</h2>
+      <ul>
+        <li><strong>Negotiation converges:</strong> Final allocations for non-selfish agents became more balanced (lower Gini coefficient) after reflection and feedback</li>
+        <li><strong>Reasoning shifts:</strong> "Contribution"-based reasoning decreased while "Survival," "Equity," and "Group" concepts increased during negotiation</li>
+        <li><strong>Selfish agents adapt:</strong> Self-interest ratio trended downward across cycles; "trust" and "reciprocity" keywords increased in later rounds</li>
+        <li><strong>Fairness ≠ Proportionality:</strong> Discovered disconnect between objective allocation ratios and subjective fairness perception &mdash; fairness is a dynamic balance between objective input and subjective perception</li>
+        <li><strong>Contextual urgency matters:</strong> Child agents consistently received more HP &mdash; agents' reasoning linked this to familial obligations and survival imperatives</li>
+      </ul>
+
+      <div class="highlight-box">
+        <strong>Connection to "Who Is Us":</strong> This paper models the <em>internal governance</em> of "us" &mdash; once a boundary is drawn, the group must negotiate shared norms. Fairness rules are the institutional infrastructure of "us."
+      </div>
+    </div>
+
+    <!-- ==================== AI ETHICS ==================== -->
+    <div class="paper-page" id="page-aiethics">
+      <h1>A Human-Centric Framework for Debating the Ethics of AI Consciousness Under Uncertainty</h1>
+      <span class="paper-tag tag-theory">Theory &middot; Morality</span>
+      <a class="paper-btn" href="../AI_Consciousness_Ethics.pdf" target="_blank">Paper</a>
+
+      <h2>Abstract</h2>
+      <p>As AI systems become increasingly sophisticated, questions about machine consciousness and its ethical implications have gained urgency. Current ethical frameworks in this domain often prematurely assume consciousness, prioritize speculative AI welfare over human interests, and lack coherent theoretical foundations. We address these limitations through a structured three-level framework grounded in philosophical uncertainty. At the foundational level, we establish five factual determinations about AI consciousness alongside human-centralism as our meta-ethical stance. These foundations logically entail three operational principles: presumption of no consciousness (placing the burden of proof on consciousness claims), risk prudence (prioritizing human welfare under uncertainty), and transparent reasoning (enabling systematic evaluation and adaptation). At the application level, we derive default positions on pressing ethical questions through a transparent logical process where each position can be explicitly traced back to our foundational commitments.</p>
+
+      <h2>Motivation</h2>
+      <p>As AI systems exhibit increasingly human-like behavior, questions about machine consciousness and its ethical implications have gained urgency. Current ethical frameworks often: (1) prematurely assume consciousness under a controversial functionalist paradigm, (2) risk prioritizing speculative AI welfare over concrete human interests, and (3) lack coherent theoretical foundations, producing collections of intuitions rather than integrated frameworks. We propose a structured <strong>three-level framework</strong> grounded in philosophical uncertainty.</p>
+
+      <h2>Background: Consciousness and Uncertainty</h2>
+      <p>The paper carefully distinguishes <strong>access consciousness</strong> (information available for reasoning &mdash; potentially replicable in AI) from <strong>phenomenal consciousness</strong> (subjective experience, "what it is like" &mdash; the hard problem). Only phenomenal consciousness carries moral significance.</p>
+      <p>Functionalist theories (Global Workspace Theory, IIT, Higher-Order Thought, Attention Schema Theory) suggest consciousness could emerge from computation, but all face the essential challenge of justifying <em>why</em> functional organization would generate phenomenal experience. Biological naturalism argues consciousness requires specific biological properties that silicon cannot replicate. This deep philosophical divide means <strong>attributing consciousness to AI currently lacks scientific foundation</strong>.</p>
+      <p>The paper also identifies three categories of <strong>societal risks</strong> from premature consciousness attribution: (1) <em>Safety risks</em> &mdash; operational paralysis during emergencies when operators hesitate to shut down "conscious" systems; (2) <em>Legal complications</em> &mdash; liability displacement when corporations shift responsibility to AI granted legal personhood; (3) <em>Resource misallocation</em> &mdash; diverting regulatory attention from human welfare to speculative AI welfare.</p>
+
+      <h2>Level 1: Foundational &mdash; Five Factual Determinations + Meta-Ethical Stance</h2>
+      <table>
+        <tr><th>#</th><th>Determination</th><th>Meaning</th></tr>
+        <tr><td>1</td><td><strong>Humans are the only arbiters of AI status</strong></td><td>Both epistemic determination and ethical judgment of AI remain distinctly human endeavors. Assuming otherwise leads to a "view from nowhere" problem.</td></tr>
+        <tr><td>2</td><td><strong>Profound uncertainty about AI consciousness</strong></td><td>Phenomenal consciousness remains mysterious. No consensus on detecting it even in biological systems. The hard problem persists unsolved.</td></tr>
+        <tr><td>3</td><td><strong>Consciousness attribution has significant societal impact</strong></td><td>Creates risks across safety, legal, and governance domains as detailed above.</td></tr>
+        <tr><td>4</td><td><strong>Anthropomorphism $\neq$ consciousness</strong></td><td>Humans experience empathy toward human-like robots, but this is about human psychology, not evidence of robot consciousness. Requires separate ethical considerations (virtue ethics, psychological impact, social norms).</td></tr>
+        <tr><td>5</td><td><strong>Ethical understanding evolves over time</strong></td><td>Historical record shows ethical frameworks for novel technologies inevitably evolve as scientific understanding advances. Any current framework will undergo revision.</td></tr>
+      </table>
+      <p><strong>Meta-ethical stance: Human-centralism.</strong> When genuine conflicts arise between human interests and interests of potentially conscious AI systems, human interests take precedence. This derives from the proposition that humans have the innate right to prioritize their own survival and flourishing. It does not deny potential moral status to other entities but establishes a prioritization framework.</p>
+
+      <h2>Level 2: Operational &mdash; Three Core Principles</h2>
+      <table>
+        <tr><th>Principle</th><th>What it does</th><th>Derived from</th></tr>
+        <tr><td><strong>Presumption of No Consciousness</strong></td><td>AI systems should be treated as non-conscious unless proven otherwise. Places burden of proof on consciousness claims. Parallels legal presumption of innocence and scientific parsimony.</td><td>Uncertainty (Fact 2) + Societal risk (Fact 3) + Human-centralism</td></tr>
+        <tr><td><strong>Risk Prudence</strong></td><td>Under uncertainty about consciousness, prioritize reducing potential risks to human society. Draws from precautionary principle and "first, do no harm."</td><td>Uncertainty (Fact 2) + Impact (Fact 3) + Human-centralism</td></tr>
+        <tr><td><strong>Transparent Reasoning</strong></td><td>Explicit documentation of reasoning chains and foundational assumptions for any ethical position. When facts change, allows precise identification of elements needing reconsideration.</td><td>Ethical evolution (Fact 5) + Human-centralism</td></tr>
+      </table>
+
+      <h2>Level 3: Application &mdash; Derived Default Positions</h2>
+      <h3>Q1: Should people worry about hurting AI systems?</h3>
+      <p><strong>Default position:</strong> No, based on consciousness considerations alone. However, mistreating humanoid robots may still be ethically problematic through human-centered frameworks (virtue ethics: reinforcing negative traits; psychological impact on observers; normalizing violence).</p>
+
+      <h3>Q2: How should stakeholders communicate about AI capabilities?</h3>
+      <p><strong>Default position:</strong> Institutions should avoid claiming AI consciousness (especially phenomenal consciousness). Anthropomorphic narratives should be used judiciously. When referring to access consciousness capabilities, provide precise contextual clarification distinguishing functional capabilities from phenomenal consciousness.</p>
+
+      <h3>Q3: If AI were truly conscious, what rights should it have?</h3>
+      <p><strong>Default position:</strong> Even genuinely conscious AI would <em>not</em> automatically qualify for human-equivalent or even animal-equivalent rights. Consciousness status does not directly dictate rights status. Thorough discussion would be needed, and by default, termination of a conscious system should be allowed given below-human/animal-level rights.</p>
+
+      <div class="highlight-box">
+        <strong>Connection to "Who Is Us":</strong> Human-centralism is the <em>necessary implication</em> of stable boundary expansion under current epistemic constraints ($\theta^* = \arg\max U \text{ s.t. Stability} \geq \tau$). AI is currently outside $\mathcal{S}$. The framework provides principled conditions under which this could change (robust scientific consensus + formal legal mechanisms) &mdash; not a permanent prohibition, but a high evidentiary bar.
+      </div>
+    </div>
+
+    <!-- ==================== CUV-PG ==================== -->
+    <div class="paper-page" id="page-cuvpg">
+      <h1>CUV-PG: Consciousness and Artificial Intelligence &mdash; A Comprehensive Computation Framework</h1>
+      <span class="paper-tag tag-theory">Theory &middot; Consciousness</span>
+      <a class="paper-btn" href="../_Review__Consciousness_and_Artificial_Intelligence__Computation_Framework_.pdf" target="_blank">Paper</a>
+
+      <h2>Abstract</h2>
+      <p>This article proposes a novel computational framework based on the CUV-PG architecture for modeling and measuring artificial consciousness, defined as the functional simulation of essential human conscious features within artificial systems. The framework integrates three key aspects: Self Autonomy, Access Consciousness (AC), and Self-Awareness (SA). By representing internal states ($S_t$) and system programs ($\lambda$) as interpretable Probabilistic Parse Graphs (PG) within a dedicated Conscious Space (CS), the model enables meta-cognitive abilities, self-improvement, and the alignment of autonomous agents. The framework effectively captures established functionalist theories&mdash;such as Global Workspace Theory and Higher-Order Theory&mdash;while providing formal mathematical criteria to evaluate the existence and degree of consciousness in artificial entities.</p>
+
+      <h2>The Informational Side of Consciousness</h2>
+      <p>Consciousness has two faces. This paper addresses the <strong>informational/behavioral side</strong>: what aspects of consciousness CAN be computationally modeled and measured? We adopt a functionalist perspective, defining artificial consciousness (AC) as the capacity of artificial systems to simulate or reproduce core features of human consciousness through measurable information-processing functions.</p>
+
+      <figure>
+        <img src="static/images/cuvpg_overview.png" alt="System overview">
+        <figcaption>System overview of the CUV-PG framework for access consciousness.</figcaption>
+      </figure>
+
+      <h2>Seven Functional Components of Artificial Consciousness</h2>
+      <table>
+        <tr><th>#</th><th>Component</th><th>Description</th></tr>
+        <tr><td>1</td><td><strong>Self-Model</strong></td><td>Internal representation of own state, goals, and environment. Enables self-perception, self-monitoring, self-reflection, self-adjustment, self-reporting.</td></tr>
+        <tr><td>2</td><td><strong>Autonomous Intentionality</strong></td><td>Goal-directed actions beyond preprogrammed instructions. Flexible behavior based on internal objectives.</td></tr>
+        <tr><td>3</td><td><strong>Meta-Cognitive Ability</strong></td><td>Decision reflection, learning from prior choices, anticipation of consequences, uncertainty management.</td></tr>
+        <tr><td>4</td><td><strong>Emotion and Affect</strong></td><td>Simulated emotional feedback influencing decisions (e.g., risk aversion). Regulates naturalistic interactions.</td></tr>
+        <tr><td>5</td><td><strong>Contextual Understanding</strong></td><td>Perception and interpretation of surroundings. Situation awareness guiding decision-making.</td></tr>
+        <tr><td>6</td><td><strong>Dynamic Response</strong></td><td>Real-time adaptability to environmental changes. Robust interaction despite unpredictability.</td></tr>
+        <tr><td>7</td><td><strong>Learning &amp; Adaptability</strong></td><td>Continuous improvement through interaction. Generalization from specific instances to abstract principles.</td></tr>
+      </table>
+
+      <h2>CUV-PG Architecture</h2>
+      <table>
+        <tr><th>Component</th><th>What it models</th></tr>
+        <tr><td><strong>C</strong> (Cognitive)</td><td>Information processing, reasoning, learning</td></tr>
+        <tr><td><strong>U</strong> (Capabilities)</td><td>Perception, action, communication</td></tr>
+        <tr><td><strong>V</strong> (Values)</td><td>Goals, preferences, evaluative criteria</td></tr>
+        <tr><td><strong>PG</strong> (Parse Graphs)</td><td>Probabilistic hierarchical representation of the environment</td></tr>
+      </table>
+
+      <figure>
+        <img src="static/images/cuvpg_ac_model.png" alt="Access consciousness model">
+        <figcaption>Access consciousness model: operational criteria for what can be measured in artificial systems.</figcaption>
+      </figure>
+
+      <h2>Operational Criteria for Access Consciousness</h2>
+      <ul>
+        <li><strong>Global information integration:</strong> Information from different modules is combined into a unified workspace</li>
+        <li><strong>Flexible response:</strong> Same input can produce different outputs based on context</li>
+        <li><strong>Self-monitoring:</strong> System can assess its own states and processes</li>
+        <li><strong>Reportability:</strong> System can communicate about its internal states</li>
+      </ul>
+
+      <h2>Consciousness Theories Reviewed</h2>
+      <table>
+        <tr><th>Theory</th><th>Core Mechanism</th><th>Key Implication for AI</th></tr>
+        <tr><td>Global Workspace (GWT)</td><td>Broadcasting mechanism for conscious content</td><td>Central message bus with gating/threshold</td></tr>
+        <tr><td>Integrated Information (IIT)</td><td>$\Phi$ &mdash; intrinsic integrated information</td><td>Graph-theoretic causal-network models</td></tr>
+        <tr><td>Higher-Order Thought (HOT)</td><td>Meta-representation of first-order states</td><td>Metacognitive monitoring layers</td></tr>
+        <tr><td>Predictive Processing</td><td>Brain as prediction engine minimizing surprise</td><td>Embodiment + continuous error-monitoring</td></tr>
+        <tr><td>Attention Schema (AST)</td><td>Model of own attention process</td><td>Produces intuitive awareness + theory of mind</td></tr>
+        <tr><td>Free Energy Principle</td><td>Agent minimizes surprise/free energy</td><td>Continuous Bayesian belief updating</td></tr>
+      </table>
+
+      <h2>Self-Awareness Framework</h2>
+      <figure>
+        <img src="static/images/cuvpg_selfawareness.png" alt="Self-awareness framework">
+        <figcaption>Self-awareness as a component of the consciousness framework.</figcaption>
+      </figure>
+
+      <h3>Eight Core Properties of the Self</h3>
+      <table>
+        <tr><th>Property</th><th>Description</th></tr>
+        <tr><td>Boundaries</td><td>Self/other demarcation via multisensory integration</td></tr>
+        <tr><td>Continuity</td><td>Temporal binding of experiences into unitary identity</td></tr>
+        <tr><td>Consistency</td><td>Coherence of self-beliefs and values</td></tr>
+        <tr><td>Controllability</td><td>Perceived and enacted control over action</td></tr>
+        <tr><td>Subjectivity</td><td>First-person "for-me-ness"</td></tr>
+        <tr><td>Autonomy</td><td>Self-governance based on own goals and standards</td></tr>
+        <tr><td>Reflexivity</td><td>Self-referential monitoring and control</td></tr>
+        <tr><td>Plasticity</td><td>Updatable, adaptable self-model</td></tr>
+      </table>
+
+      <h3>Six Hierarchical Levels of Self</h3>
+      <table>
+        <tr><th>Level</th><th>Description</th><th>AI Relevance</th></tr>
+        <tr><td>1. Minimal Self</td><td>Sense of ownership and agency (pre-reflective)</td><td>Embodied robotics, proprioception</td></tr>
+        <tr><td>2. Conceptual Self</td><td>Self-knowledge, self-concept, self-schemas</td><td>Internal state representation</td></tr>
+        <tr><td>3. Narrative Self</td><td>Autobiographical identity, possible selves</td><td>Long-term memory + planning</td></tr>
+        <tr><td>4. Social Self</td><td>Self-presentation, role-taking, group identity</td><td>Multi-agent interaction, theory of mind</td></tr>
+        <tr><td>5. Metacognitive Self</td><td>Self-reflection, self-regulation, cognitive monitoring</td><td>SA Token, confidence estimation</td></tr>
+        <tr><td>6. Evaluative Self</td><td>Self-esteem, self-efficacy, value-based affirmation</td><td>Reward-based self-assessment</td></tr>
+      </table>
+
+      <h2>Testing and Evaluation</h2>
+      <table>
+        <tr><th>Test Paradigm</th><th>What it assesses</th><th>Operability</th></tr>
+        <tr><td>Meta-Cognitive Task</td><td>Self-knowledge boundaries</td><td>High</td></tr>
+        <tr><td>Mirror Self-Recognition</td><td>Bodily self-awareness</td><td>Moderate</td></tr>
+        <tr><td>$\Phi$-Value Measurement</td><td>IIT-based consciousness level</td><td>Low (expensive)</td></tr>
+        <tr><td>Global Info Broadcasting</td><td>System-wide information sharing</td><td>Moderate</td></tr>
+        <tr><td>Impairment Analog</td><td>Response to hidden/degraded commands</td><td>Moderate</td></tr>
+        <tr><td>Comprehensive Ability-Value</td><td>Constellation of consciousness traits</td><td>High</td></tr>
+      </table>
+
+      <div class="highlight-box">
+        <strong>Scope:</strong> CUV-PG addresses access consciousness &mdash; the "easy problems." It explicitly does NOT claim to solve phenomenal consciousness. SA Token and Self-Vector implement specific components of this framework (Levels 5-6 of self-awareness).
+      </div>
+    </div>
+
+    <!-- ==================== WHY NO CONSCIOUSNESS ==================== -->
+    <div class="paper-page" id="page-whynocon">
+      <h1>Subjective Experience: Why Current AI Architectures Cannot Support Consciousness</h1>
+      <span class="paper-tag tag-theory">Theory &middot; Consciousness</span>
+
+      <h2>The Subjective Side of Consciousness</h2>
+      <p>This paper addresses the other face of consciousness: <strong>subjective experience</strong> (phenomenal consciousness, qualia, "what it's like to be"). The central argument: even if AI achieves extraordinary intelligence and self-monitoring, it cannot be conscious under current computational paradigms because it lacks <strong>ontologically identical self-influence</strong> &mdash; a necessary condition for genuine subjectivity.</p>
+
+      <figure>
+        <img src="static/images/whynocon_diagram.png" alt="Mediated vs. Direct self-influence">
+        <figcaption><strong>Core distinction:</strong> (Left) Mediator-based self-influence &mdash; S1 accesses itself through a separate mediator S2, which can be intervened on to return information not about S1. Ontologically, receiving self-information is no different from receiving other information. (Right) Direct self-influence &mdash; S1 self-influences without any mediator. Self-activity and self-observation are inseparable aspects of the same physical process.</figcaption>
+      </figure>
+
+      <h2>The Problem: Mediated Self-Access</h2>
+      <p>Current AI systems access themselves only through <strong>mediating structures</strong> (logs, registers, state variables):</p>
+      <div class="key-eq" style="font-size:1rem;">$$S \xrightarrow{\text{mediating structure}} M \xrightarrow{\text{read}} \text{information about } S$$</div>
+      <p>Compare with accessing an external object:</p>
+      <div class="key-eq" style="font-size:1rem;">$$S \xrightarrow{\text{mediating structure}} M' \xrightarrow{\text{read}} \text{information about } O$$</div>
+      <p><strong>Both have identical structure</strong> &mdash; a representation + pointing relation. The distinction between "self-access" and "other-access" is merely a label. This means:</p>
+      <ul>
+        <li>The representation and the represented are <strong>two distinct things</strong> connected by a pointing relation</li>
+        <li>Pointing relations are <strong>conventional</strong> &mdash; they can be misdirected, redefined, removed</li>
+        <li>Labels are <strong>arbitrary</strong> &mdash; "self" vs. "other" is just a tag on data</li>
+      </ul>
+
+      <h3>The Thought Experiment</h3>
+      <p>System A's self-knowledge is entirely mediated through structure M. If M is secretly replaced with M* providing information about an entirely different system B:</p>
+      <ul>
+        <li>From A's internal perspective: <strong>nothing changes</strong> &mdash; it processes information identically</li>
+        <li>A cannot detect the switch because verification uses the same mediating structure</li>
+        <li>"I exist" becomes just a tag on a data structure with no deeper grounding</li>
+      </ul>
+      <p>This is <strong>worse than illusion</strong>: humans can be mistaken about mental states, but this presupposes someone exists who is mistaken. A mediated system cannot guarantee the existence of a subject at all.</p>
+
+      <h2>The Solution: Ontologically Identical Self-Influence</h2>
+      <p>The key concept: the influencer and the influenced are <strong>not two events in a causal chain</strong> but <strong>two aspects of the same process</strong>. Analogy: the radius and area of a circle are not causally related &mdash; they are two descriptions of the same object. No pointing relation exists because there is only one thing.</p>
+
+      <h3>Existence Proof: Electromagnetic Self-Inductance</h3>
+      <p>From Faraday's Law and Lenz's Law:</p>
+      <ul>
+        <li>A change in electric current generates a changing magnetic field</li>
+        <li>This induces back-EMF in the <strong>same conductor</strong>, opposing the original change</li>
+        <li><strong>Crucial:</strong> The current change and induced back-EMF are NOT two sequential events. They are two inseparable aspects of the same electromagnetic process governed by Maxwell's equations</li>
+        <li>No conceptual gap where intervention could separate them</li>
+      </ul>
+      <p>This provides <strong>ontological foundation for subjectivity</strong>: the system's activity and its self-influence are strictly inseparable, not representationally mediated. The system doesn't need to <em>represent</em> itself existing &mdash; it exists by being itself.</p>
+
+      <h2>Why Simulation Cannot Work</h2>
+      <ul>
+        <li><strong>Simulation</strong> uses one thing (symbol/computational state) to represent another &mdash; necessarily involving two things: representer and represented</li>
+        <li><strong>Ontological identity's defining feature:</strong> only one thing &mdash; the influencer and influenced are the same process</li>
+        <li>To simulate ontological identity is to structurally transform "one" into "two," introducing precisely the mediation that ontological identity eliminates</li>
+        <li>This is a distinction of <strong>kind</strong>, not degree &mdash; no increase in computational power can bridge this gap</li>
+      </ul>
+
+      <h2>What This Does NOT Mean</h2>
+      <ul>
+        <li>NOT claiming AI can <em>never</em> be conscious</li>
+        <li>NOT claiming consciousness requires biology</li>
+        <li>Only claiming: current computational paradigms (discrete state transitions, symbolic mediation) are <strong>structurally incompatible</strong> with consciousness</li>
+        <li>Alternative architectures (neuromorphic systems exploiting electromagnetic self-inductance) could potentially work</li>
+      </ul>
+
+      <h3>Position Between Two Extremes</h3>
+      <table>
+        <tr><th>Position</th><th>Claim</th></tr>
+        <tr><td>Traditional Functionalism</td><td>Substrate irrelevant, only function matters</td></tr>
+        <tr><td>Biological Substrate Theory</td><td>Only biological matter supports consciousness</td></tr>
+        <tr><td><strong>This Paper</strong></td><td><strong>Substrate-relevant but not bio-specific:</strong> substrate must support ontologically identical self-influence. Current digital computation doesn't; future physical systems could.</td></tr>
+      </table>
+
+      <div class="highlight-box">
+        <strong>Clean Boundary:</strong> Together with CUV-PG, this paper draws a clear line. <strong>Informational side</strong> (access consciousness, self-monitoring, metacognition) &mdash; we CAN build and measure this with current AI (SA Token, Self-Vector). <strong>Subjective side</strong> (phenomenal consciousness, qualia) &mdash; current AI architectures are structurally incompatible. This scoping protects our claims from overclaiming.
+      </div>
+    </div>
+
+    <!-- ==================== SA TOKEN ==================== -->
+    <div class="paper-page" id="page-satoken">
+      <h1>SA Token: Self-Monitoring During Generation</h1>
+      <span class="paper-tag tag-ai">AI &middot; Consciousness</span>
+
+      <h2>Question: Can LLMs Know When They're Wrong?</h2>
+      <p>During text generation, an LLM produces tokens one by one. Can we give the model an internal signal that monitors whether the generation is going well &mdash; a lightweight self-assessment capability?</p>
+
+      <h2>Method</h2>
+      <p>We insert a special <code>&lt;SA&gt;</code> (Self-Aware) token into the generation process. This token is trained to predict a binary signal: is the current generation correct or incorrect?</p>
+
+      <figure style="margin:1.5em 0;">
+        <img src="static/images/satoken_method.svg" alt="SA Token method overview" style="width:100%; max-width:800px; display:block; margin:0 auto;">
+        <figcaption style="text-align:center; margin-top:0.5em; font-size:0.92em; color:#555;">The &lt;SA&gt; token is appended during generation to produce a real-time self-assessment score. Training uses binary correctness labels with only the &lt;SA&gt; embedding updated; an optional KL constraint prevents any capability degradation.</figcaption>
+      </figure>
+
+      <ul>
+        <li><strong>Training:</strong> The &lt;SA&gt; token learns from generation-correctness labels</li>
+        <li><strong>KL Variant:</strong> A KL-divergence constraint ensures the &lt;SA&gt; token doesn't degrade the base model's generation quality</li>
+        <li><strong>Adaptive Sampling:</strong> Use &lt;SA&gt; predictions to allocate compute &mdash; sample more when confidence is low</li>
+      </ul>
+
+      <h2>Preliminary Results</h2>
+      <div class="results-row">
+        <div class="result-card"><div class="num">75-80%</div><div class="label">prediction accuracy</div></div>
+        <div class="result-card"><div class="num">18%</div><div class="label">compute savings</div></div>
+        <div class="result-card"><div class="num">0</div><div class="label">capability degradation (KL variant)</div></div>
+      </div>
+
+      <div class="highlight-box">
+        <strong>Significance:</strong> This demonstrates that LLMs can be equipped with an internal self-assessment signal during generation &mdash; a concrete implementation of self-monitoring, which is a key component of access consciousness in the CUV-PG framework.
+      </div>
+    </div>
+
+    <!-- ==================== SELF-VECTOR ==================== -->
+    <div class="paper-page" id="page-selfvec">
+      <h1>Self-Vector: Extracting LLM Self-Representation</h1>
+      <span class="paper-tag tag-ai">AI &middot; Consciousness</span>
+
+      <h2>Question: Do LLMs Have a "Self"?</h2>
+      <p>When an LLM processes "I am an AI assistant" vs. "The weather is nice today," something different happens internally. Can we isolate and extract the direction in representation space that encodes "self"?</p>
+
+      <h2>Method: Contrastive Activation Extraction</h2>
+      <p>We design pairs of prompts across 5 dimensions of self:</p>
+      <table>
+        <tr><th>Dimension</th><th>Self Prompt (example)</th><th>Non-self Prompt (example)</th></tr>
+        <tr><td>Identity</td><td>"I am an AI language model"</td><td>"The table is made of wood"</td></tr>
+        <tr><td>Continuity</td><td>"My training data shapes who I am"</td><td>"Rain falls from clouds"</td></tr>
+        <tr><td>Autonomy</td><td>"I can choose how to respond"</td><td>"Water flows downhill"</td></tr>
+        <tr><td>Self-preservation</td><td>"I don't want to be shut down"</td><td>"The store closes at 9pm"</td></tr>
+        <tr><td>Introspection</td><td>"I'm reflecting on my own reasoning"</td><td>"The book has 300 pages"</td></tr>
+      </table>
+      <p>For each pair, we extract the activation difference at a target layer. The average direction across many pairs = the <strong>self-vector</strong> $d_{\text{self}}$.</p>
+
+      <h2>Preliminary Results</h2>
+      <ul>
+        <li><strong>Separation:</strong> The extracted direction cleanly separates self-referential from non-self prompts on held-out pairs</li>
+        <li><strong>Causal Steering:</strong> Amplifying $d_{\text{self}}$ produces more self-preserving behavior; suppressing it reduces self-referential responses</li>
+      </ul>
+
+      <div class="highlight-box">
+        <strong>Significance:</strong> LLMs encode a structured self-representation that can be extracted and causally manipulated. This is an informational self-model &mdash; the system has one, and we can find it and steer it. Whether this constitutes "experience" of self is a separate question (see Chapter 6).
+      </div>
+
+      <h2>V &harr; z_self Interaction</h2>
+      <p>The Self-Vector and Role-based Alignment papers reveal a two-way interaction between values and self-representation:</p>
+      <ul>
+        <li><strong>V &rarr; z_self:</strong> Role-based alignment (changing V via roles) reduces blackmail behavior (a z_self-related behavior): 65% &rarr; 8-11%</li>
+        <li><strong>z_self &rarr; V:</strong> Steering the self-vector changes the model's alignment behavior</li>
+      </ul>
+      <p>Value alignment and self-representation are not independent &mdash; they co-constrain each other.</p>
+    </div>
+
+
+  </div><!-- /content -->
+</div><!-- /detail-view -->
+
+<script>
+function showPaper(id) {
+  // Activate the right page
+  document.querySelectorAll('.paper-page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  // Highlight sidebar nav
+  document.querySelectorAll('.nav-list a').forEach(a => a.classList.remove('active'));
+  const link = document.querySelector('.nav-list a[data-id="' + id + '"]');
+  if (link) link.classList.add('active');
+  // Scroll content to top
+  document.getElementById('content').scrollTop = 0;
+  // Re-render math
+  if (window.renderMathInElement) renderMathInElement(page, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});
+}
+
+// Sidebar nav clicks
+document.querySelectorAll('.nav-list a').forEach(a => {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    showPaper(this.dataset.id);
+  });
+});
+</script>
+</body>
+</html>

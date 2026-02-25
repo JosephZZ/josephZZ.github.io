@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://josephzz.github.io/sitemap.xml

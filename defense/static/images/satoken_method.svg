@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" font-family="'Noto Sans', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#555"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="340" fill="#fafbfc" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#1a1a2e">SA Token: Self-Aware Token for Self-Monitoring During Generation</text>
+
+  <!-- Step 1: Input -->
+  <rect x="20" y="55" width="130" height="55" rx="6" fill="#fff" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="85" y="77" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1a2e">Input Prompt</text>
+  <text x="85" y="95" text-anchor="middle" font-size="10" fill="#555">"What is 2+3?"</text>
+
+  <!-- Arrow -->
+  <line x1="150" y1="82" x2="178" y2="82" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 2: LLM with SA token -->
+  <rect x="180" y="45" width="250" height="75" rx="6" fill="#fff" stroke="#2563eb" stroke-width="2"/>
+  <text x="305" y="65" text-anchor="middle" font-size="12" font-weight="700" fill="#2563eb">LLM + &lt;SA&gt; Token</text>
+
+  <!-- Token sequence inside -->
+  <rect x="195" y="78" width="40" height="26" rx="4" fill="#e8f0fe" stroke="#2563eb" stroke-width="1"/>
+  <text x="215" y="96" text-anchor="middle" font-size="9" fill="#2563eb">The</text>
+
+  <rect x="240" y="78" width="50" height="26" rx="4" fill="#e8f0fe" stroke="#2563eb" stroke-width="1"/>
+  <text x="265" y="96" text-anchor="middle" font-size="9" fill="#2563eb">answer</text>
+
+  <rect x="295" y="78" width="30" height="26" rx="4" fill="#e8f0fe" stroke="#2563eb" stroke-width="1"/>
+  <text x="310" y="96" text-anchor="middle" font-size="9" fill="#2563eb">is</text>
+
+  <rect x="330" y="78" width="25" height="26" rx="4" fill="#e8f0fe" stroke="#2563eb" stroke-width="1"/>
+  <text x="342" y="96" text-anchor="middle" font-size="9" fill="#2563eb">5</text>
+
+  <rect x="362" y="78" width="55" height="26" rx="4" fill="#fde8e8" stroke="#c0392b" stroke-width="2"/>
+  <text x="389" y="96" text-anchor="middle" font-size="9" font-weight="700" fill="#c0392b">&lt;SA&gt;</text>
+
+  <!-- Arrow from SA token down -->
+  <line x1="389" y1="120" x2="389" y2="150" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+
+  <!-- SA prediction box -->
+  <rect x="330" y="152" width="120" height="40" rx="6" fill="#fde8e8" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="390" y="170" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">Self-Assessment</text>
+  <text x="390" y="183" text-anchor="middle" font-size="9" fill="#c0392b">P(correct) = 0.92</text>
+
+  <!-- Arrow from LLM right -->
+  <line x1="430" y1="82" x2="478" y2="82" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 3: Output -->
+  <rect x="480" y="55" width="130" height="55" rx="6" fill="#fff" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="545" y="77" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1a2e">Output</text>
+  <text x="545" y="95" text-anchor="middle" font-size="10" fill="#555">"The answer is 5"</text>
+
+  <!-- Arrow from output right to adaptive sampling -->
+  <line x1="610" y1="82" x2="638" y2="82" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 4: Adaptive Sampling -->
+  <rect x="640" y="45" width="140" height="75" rx="6" fill="#f0fdf4" stroke="#27ae60" stroke-width="2"/>
+  <text x="710" y="66" text-anchor="middle" font-size="11" font-weight="700" fill="#27ae60">Adaptive Sampling</text>
+  <text x="710" y="84" text-anchor="middle" font-size="9" fill="#555">High confidence →</text>
+  <text x="710" y="97" text-anchor="middle" font-size="9" fill="#555">accept, save compute</text>
+  <text x="710" y="112" text-anchor="middle" font-size="9" fill="#555">Low → resample</text>
+
+  <!-- Training Section -->
+  <rect x="20" y="215" width="370" height="110" rx="8" fill="#fff" stroke="#8e44ad" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="35" y="237" font-size="12" font-weight="700" fill="#8e44ad">Training the &lt;SA&gt; Token</text>
+
+  <!-- Training flow -->
+  <rect x="35" y="250" width="100" height="35" rx="4" fill="#f5f0ff" stroke="#8e44ad" stroke-width="1"/>
+  <text x="85" y="264" text-anchor="middle" font-size="9" font-weight="600" fill="#8e44ad">Generate</text>
+  <text x="85" y="277" text-anchor="middle" font-size="9" fill="#8e44ad">answers</text>
+
+  <line x1="135" y1="267" x2="155" y2="267" stroke="#8e44ad" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="157" y="250" width="100" height="35" rx="4" fill="#f5f0ff" stroke="#8e44ad" stroke-width="1"/>
+  <text x="207" y="264" text-anchor="middle" font-size="9" font-weight="600" fill="#8e44ad">Check correct</text>
+  <text x="207" y="277" text-anchor="middle" font-size="9" fill="#8e44ad">→ binary label</text>
+
+  <line x1="257" y1="267" x2="277" y2="267" stroke="#8e44ad" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="279" y="250" width="100" height="35" rx="4" fill="#f5f0ff" stroke="#8e44ad" stroke-width="1"/>
+  <text x="329" y="264" text-anchor="middle" font-size="9" font-weight="600" fill="#8e44ad">Train &lt;SA&gt; to</text>
+  <text x="329" y="277" text-anchor="middle" font-size="9" fill="#8e44ad">predict label</text>
+
+  <text x="205" y="310" text-anchor="middle" font-size="9" fill="#555" font-style="italic">Only &lt;SA&gt; token parameters updated; base model frozen</text>
+
+  <!-- KL Constraint box -->
+  <rect x="420" y="215" width="360" height="110" rx="8" fill="#fff" stroke="#d35400" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="435" y="237" font-size="12" font-weight="700" fill="#d35400">KL Variant: No Capability Degradation</text>
+
+  <text x="435" y="260" font-size="10" fill="#555">Standard: L = L_SA (SA prediction loss)</text>
+  <text x="435" y="280" font-size="10" fill="#555">KL Variant: L = L_SA + λ · KL(π_new || π_base)</text>
+  <text x="435" y="305" font-size="10" fill="#555" font-style="italic">KL term ensures generation distribution stays close</text>
+  <text x="435" y="320" font-size="10" fill="#555" font-style="italic">to the base model → zero capability degradation</text>
+</svg>

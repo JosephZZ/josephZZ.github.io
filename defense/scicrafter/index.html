@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SciCrafter: Can Current Language Models Close the Discovery-to-Application Loop?</title>
+  <meta name="description" content="SciCrafter is a Minecraft-based task suite that operationalizes the discovery-to-application loop through parameterized redstone circuit tasks.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- KaTeX for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f7f8fa;
+      --text: #1a1a2e;
+      --text-secondary: #555;
+      --accent: #c0392b;
+      --accent-light: #e74c3c;
+      --link: #2563eb;
+      --border: #e5e7eb;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 4px 14px rgba(0,0,0,0.1);
+      --radius: 8px;
+      --max-w: 960px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      height: 52px;
+      overflow-x: auto;
+    }
+    nav .nav-brand {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--accent);
+      text-decoration: none;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+    nav a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.15s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 600;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 .sc {
+      color: var(--accent);
+    }
+    .hero .subtitle {
+      font-size: 1.12rem;
+      color: var(--text-secondary);
+      max-width: 720px;
+      margin: 0 auto 28px;
+      line-height: 1.65;
+    }
+    .hero .authors {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+    .hero .affiliations {
+      font-size: 0.82rem;
+      color: #888;
+      margin-bottom: 24px;
+    }
+
+    /* ── Buttons ── */
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 20px;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.15s;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: var(--bg);
+    }
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: var(--shadow);
+    }
+    .btn.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .btn.primary:hover {
+      background: var(--accent-light);
+      border-color: var(--accent-light);
+      color: #fff;
+    }
+    .btn svg { width: 16px; height: 16px; }
+
+    /* ── Section ── */
+    .section {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+    .section + .section { padding-top: 0; }
+    .section-alt {
+      background: var(--bg-alt);
+      padding: 48px 0;
+    }
+    .section-alt .section-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .section h2 {
+      font-family: 'Noto Serif', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+    .section h3, .section-alt h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-top: 28px;
+      margin-bottom: 12px;
+    }
+    .section p, .section-alt p {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    /* ── Figures ── */
+    .figure {
+      margin: 32px 0;
+      text-align: center;
+    }
+    .figure img {
+      max-width: 100%;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+    }
+    .figure.no-shadow img {
+      box-shadow: none;
+    }
+    .figure-caption {
+      margin-top: 12px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      max-width: 780px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.55;
+    }
+    .figure-caption strong {
+      color: var(--text);
+    }
+
+    /* ── Abstract box ── */
+    .abstract-box {
+      background: var(--bg-alt);
+      border-left: 4px solid var(--accent);
+      padding: 24px 28px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 20px;
+    }
+    .abstract-box p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--text);
+      margin: 0;
+    }
+
+    /* ── Tables ── */
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 24px 0;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    table thead {
+      background: var(--bg-alt);
+    }
+    table th {
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--text);
+      border-bottom: 2px solid var(--border);
+      letter-spacing: 0.01em;
+    }
+    table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    table tbody tr:last-child td { border-bottom: none; }
+    table tbody tr:hover { background: #fafbfc; }
+    .table-caption {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+    .table-caption strong { color: var(--text); }
+
+    /* Highlighted gap columns */
+    td.gap {
+      background: #fef9ee;
+      font-weight: 500;
+      color: var(--text);
+    }
+    th.gap-header {
+      background: #fef9ee;
+    }
+
+    /* ── Highlight boxes ── */
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .highlight-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+    }
+    .highlight-card .num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.1;
+    }
+    .highlight-card .label {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* ── Task family cards ── */
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .task-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      transition: box-shadow 0.15s;
+    }
+    .task-card:hover { box-shadow: var(--shadow); }
+    .task-card .task-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .task-card h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .task-card p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* ── Video ── */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      margin: 24px 0;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+
+    /* ── Video grid ── */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: 24px 0;
+    }
+    .video-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .video-card video {
+      width: 100%;
+      display: block;
+      background: #000;
+    }
+    .video-card .video-label {
+      padding: 12px 16px;
+      background: var(--bg-alt);
+    }
+    .video-card .video-label .task-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
+    }
+    .video-card .video-label h4 {
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    .video-card .video-label p {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin: 4px 0 0;
+    }
+    @media (max-width: 600px) {
+      .video-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Knowledge pipeline diagram ── */
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      margin: 24px 0;
+    }
+    .pipeline-step {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 12px;
+      text-align: center;
+      position: relative;
+    }
+    .pipeline-step .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+    .pipeline-step h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .pipeline-step p {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.45;
+    }
+    .pipeline-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      font-size: 1.4rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 40px 24px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    footer p {
+      font-size: 0.82rem;
+      color: #999;
+    }
+
+    /* ── Divider ── */
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 48px 0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 1.7rem; }
+      .section h2 { font-size: 1.35rem; }
+      .pipeline { grid-template-columns: 1fr 1fr; }
+      nav .nav-inner { gap: 16px; }
+    }
+    @media (max-width: 480px) {
+      .pipeline { grid-template-columns: 1fr; }
+      .hero { padding: 32px 16px 24px; }
+      .section { padding: 32px 16px; }
+    }
+
+    /* ── Chart (pure CSS bar chart) ── */
+    .bar-chart { margin: 24px 0; }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .bar-label {
+      width: 140px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-align: right;
+      padding-right: 12px;
+      color: var(--text);
+      flex-shrink: 0;
+    }
+    .bar-track {
+      flex: 1;
+      height: 24px;
+      background: #f0f0f0;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding-left: 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #fff;
+      transition: width 0.6s ease;
+    }
+    .bar-fill.tier1 { background: linear-gradient(90deg, #c0392b, #e74c3c); }
+    .bar-fill.tier2 { background: linear-gradient(90deg, #d35400, #e67e22); }
+    .bar-fill.tier3 { background: linear-gradient(90deg, #7f8c8d, #95a5a6); }
+
+    /* Stacked bar segments */
+    .stacked-bar {
+      display: flex;
+      height: 100%;
+    }
+    .stacked-bar .seg {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #fff;
+      min-width: 2px;
+    }
+    .seg.base { background: #27ae60; }
+    .seg.iden { background: #2980b9; }
+    .seg.disc { background: #8e44ad; }
+    .seg.app  { background: #bdc3c7; color: #555; }
+
+    .legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+    .legend-dot {
+      width: 12px; height: 12px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    /* ── BibTeX ── */
+    .bibtex-box {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 24px;
+      border-radius: var(--radius);
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 0.8rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      position: relative;
+    }
+    .bibtex-box .copy-btn {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #cdd6f4;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .bibtex-box .copy-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── Collapsible template blocks ── */
+    details.template-block {
+      margin: 20px 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    details.template-block summary {
+      padding: 12px 18px;
+      background: var(--bg-alt);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+    }
+    details.template-block summary::-webkit-details-marker { display: none; }
+    details.template-block summary::before {
+      content: '▸';
+      font-size: 0.75rem;
+      transition: transform 0.15s;
+      flex-shrink: 0;
+    }
+    details.template-block[open] summary::before { transform: rotate(90deg); }
+    details.template-block .template-body {
+      padding: 0;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 0.78rem;
+      line-height: 1.6;
+      overflow-x: auto;
+    }
+    details.template-block .template-body pre {
+      margin: 0;
+      padding: 18px 20px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    details.template-block .template-body .section-heading {
+      color: #89b4fa;
+      font-weight: 700;
+    }
+    details.template-block .template-body .placeholder {
+      color: #6c7086;
+      font-style: italic;
+    }
+    details.template-block .template-body .comment {
+      color: #a6adc8;
+    }
+    /* Example output block (lighter bg) */
+    details.template-block .example-output {
+      background: #181825;
+      border-top: 1px dashed #45475a;
+    }
+    details.template-block .example-output pre {
+      padding: 16px 20px;
+    }
+    .example-label {
+      display: inline-block;
+      background: #45475a;
+      color: #cdd6f4;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin: 12px 0 0 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════ Navigation ════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">SciCrafter</a>
+    <a href="#abstract">Abstract</a>
+    <a href="#teaser">Overview</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#method">Method</a>
+    <a href="#results">Results</a>
+    <a href="#citation">Citation</a>
+  </div>
+</nav>
+
+<!-- ════════════ Hero ════════════ -->
+<header class="hero">
+  <h1>
+    <span class="sc">SciCrafter</span>: Can Current Language Models<br>
+    Close the Discovery-to-Application Loop?
+  </h1>
+  <p class="subtitle">
+    Discovering causal regularities and applying them to build functional systems&mdash;the discovery-to-application loop&mdash;is a hallmark of general intelligence. We introduce SciCrafter, a Minecraft-based task suite that operationalizes this loop through parameterized redstone circuit tasks, and use it to diagnose where current language models fail.
+  </p>
+  <div style="margin-top:12px;">
+    <span style="display:inline-block;padding:2px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;background:#e3f2fd;color:#1565c0;">AI &middot; Intelligence</span>
+    <a style="display:inline-block;padding:5px 16px;border-radius:5px;font-size:0.8rem;font-weight:600;background:#c62828;color:#fff;text-decoration:none;margin-left:10px;cursor:pointer;" href="../Can_Current_Language_Models_Close_the_Discovery_to_Application_Loop_.pdf" target="_blank">Paper</a>
+  </div>
+</header>
+
+<!-- ════════════ Abstract ════════════ -->
+<section class="section" id="abstract">
+  <h2>Abstract</h2>
+  <div class="abstract-box">
+    <p>
+      The capacity to discover causal regularities and apply them to build functional systems&mdash;the <em>discovery-to-application loop</em>&mdash;is a hallmark of general intelligence. However, evaluating this capacity has been hindered by the vast complexity gap between scientific discovery and real-world engineering. We introduce <strong>SciCrafter</strong>, a Minecraft-based task suite that operationalizes this loop through parameterized redstone circuit tasks. Agents must ignite lamps in specified patterns (e.g., simultaneously or in timed sequences), where scaling target parameters exponentially increases construction complexity and required knowledge&mdash;forcing genuine discovery rather than reliance on memorized solutions. Evaluating frontier models including GPT-5.2, Gemini-3-Pro, and Claude-Opus-4.5, we find that <strong>all plateau at approximately 25% success rate</strong>. To diagnose these failures, we decompose the loop into four capacities&mdash;knowledge gap identification, experimental discovery, knowledge consolidation, and knowledge application&mdash;and design targeted interventions to isolate each gap. Our analysis reveals that knowledge application bottlenecks mid-to-low tier models, while <strong>knowledge gap identification becomes the primary limitation for frontier models</strong>.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════ Teaser Figure ════════════ -->
+<section class="section" id="teaser">
+  <h2>Overview: Decomposing the Discovery-to-Application Loop</h2>
+  <p>We evaluate state-of-the-art language models on tasks requiring both scientific discovery and engineering application. By providing targeted interventions, we isolate where models fail in the loop.</p>
+  <div class="figure no-shadow">
+    <img src="static/images/fig-discovery-application-loop.jpg" alt="Decomposing performance gaps in the Discovery-to-Application loop" loading="lazy">
+    <p class="figure-caption">
+      <strong>Figure 1. Decomposing performance gaps in the Discovery-to-Application loop</strong> (Gemini 3 Pro as example).
+      The best current model achieves only 25.0% success rate. We isolate four bottlenecks:
+      providing oracle guidance on <em>what</em> to discover boosts success to 58% (Knowledge Identification, +33%);
+      deploying a scientist sub-agent further reaches 69% (Experimental Discovery, +11%);
+      structured knowledge templates outperform model-directed synthesis (Knowledge Consolidation, +9%);
+      the remaining 31% gap represents the ceiling for knowledge application capacity.
+    </p>
+  </div>
+
+  <div class="highlight-grid">
+    <div class="highlight-card">
+      <div class="num">25%</div>
+      <div class="label">Best Model Baseline<br>(Gemini-3 Pro)</div>
+    </div>
+    <div class="highlight-card">
+      <div class="num">8</div>
+      <div class="label">Frontier Models<br>Evaluated</div>
+    </div>
+    <div class="highlight-card">
+      <div class="num">5 &times; 5</div>
+      <div class="label">Task Families<br>&times; Difficulty Levels</div>
+    </div>
+    <div class="highlight-card">
+      <div class="num">69%</div>
+      <div class="label">Best w/ Full<br>Interventions</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="max-width:var(--max-w);margin-left:auto;margin-right:auto;">
+
+<!-- ════════════ Tasks ════════════ -->
+<section class="section" id="tasks">
+  <h2>Task Design</h2>
+
+  <h3>Task Schema</h3>
+  <p>
+    SciCrafter adopts a simple yet expressive task schema: <strong>ignite $N$ lamps in specified patterns</strong>
+    (e.g., simultaneously, or following a delay sequence $[t_1, t_2, \ldots, t_n]$) within a fixed area.
+    This design ensures evaluation remains invariant across difficulty levels while the knowledge gap to meet requirements consistently grows&mdash;forcing agents to discover new environmental mechanics rather than memorize solutions.
+  </p>
+
+  <div class="figure">
+    <img src="static/images/task-illustration.jpg" alt="SciCrafter Task Design Illustration" loading="lazy">
+    <p class="figure-caption">
+      <strong>Figure 2. SciCrafter Task Design Illustration.</strong>
+      <strong>Top:</strong> The model constructs a functional device within a constrained area based on instructions, iteratively interacting with the device (e.g., pressing a button) and observing behavior. The device is then evaluated by an automated script verifying output lighting patterns.
+      <strong>Bottom:</strong> Task complexity scales parametrically by adjusting the number of lights ($N$). For some temporal tasks, difficulty further increases with sequential pattern parameters.
+    </p>
+  </div>
+
+  <h3>Five Task Families</h3>
+  <p>Each task family probes distinct spatial and temporal constraints, with five difficulty levels (L1&ndash;L5) that cross discrete mechanism thresholds:</p>
+
+  <div class="task-grid">
+    <div class="task-card">
+      <div class="task-label">Family A</div>
+      <h4>Simultaneous Ignition</h4>
+      <p>Activate $N$ lamps at the same tick. Scales from basic wiring (N=4) to repeater-augmented hub designs (N=64).</p>
+    </div>
+    <div class="task-card">
+      <div class="task-label">Family B</div>
+      <h4>T-Junction Routing</h4>
+      <p>Connect lamps using a trunk-and-branch layout, turning the problem into topology-constrained routing under attenuation limits.</p>
+    </div>
+    <div class="task-card">
+      <div class="task-label">Family C</div>
+      <h4>Sequential Activation</h4>
+      <p>Activate lamps with specified inter-stage delays $[t_1, t_2, \ldots, t_n]$, requiring composition of quantized repeater delays.</p>
+    </div>
+    <div class="task-card">
+      <div class="task-label">Family D</div>
+      <h4>Distance-Equalized Ignition</h4>
+      <p>Simultaneously activate lamps at heterogeneous distances, using repeaters as compensatory delay elements.</p>
+    </div>
+    <div class="task-card">
+      <div class="task-label">Family E</div>
+      <h4>Pulse Extension</h4>
+      <p>Maintain activation for a specified duration $\tau$ ticks, requiring pulse-shaping techniques.</p>
+    </div>
+  </div>
+
+  <h3>Knowledge Dimensions</h3>
+  <p>Higher difficulty levels cross discrete mechanism thresholds requiring discovery across three core knowledge dimensions:</p>
+  <div class="task-grid">
+    <div class="task-card">
+      <h4>Local Wiring Grammar</h4>
+      <p>Dust propagates via axis-aligned adjacency only (no diagonal), auto-connects to neighbors, and must physically contact a lamp to power it.</p>
+    </div>
+    <div class="task-card">
+      <h4>Attenuation-Aware Topology</h4>
+      <p>Dust carries strength $\in\{0,\ldots,15\}$ that decays by one per block. Signals vanish after 15 segments, forcing hub designs or explicit regeneration.</p>
+    </div>
+    <div class="task-card">
+      <h4>Repeater Semantics</h4>
+      <p>Repeaters regenerate signal to full strength but act as directional diodes with 1&ndash;4 ticks latency. Side power can lock repeaters unexpectedly.</p>
+    </div>
+  </div>
+
+  <!-- Task Family Parameters Table -->
+  <h3>Task Family Parameters</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Level</th>
+          <th>A: Simultaneous</th>
+          <th>B: Branch Reach</th>
+          <th>C: Sequential</th>
+          <th>D: Equal Delay</th>
+          <th>E: Pulse</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>L1</strong></td>
+          <td>N=4, skew &le;1 tick</td>
+          <td>N=4, reach=8</td>
+          <td>N=4, delays=[1,2,1]</td>
+          <td>N=4, dist={4,8,12,16}</td>
+          <td>N=4, &tau;=4</td>
+        </tr>
+        <tr>
+          <td><strong>L2</strong></td>
+          <td>N=8, skew &le;1 tick</td>
+          <td>N=8, reach=12</td>
+          <td>N=8, delays=[1,2]&times;3+[1]</td>
+          <td>N=8, dist={4,8,12,16}</td>
+          <td>N=8, &tau;=6</td>
+        </tr>
+        <tr>
+          <td><strong>L3</strong></td>
+          <td>N=16, skew &le;1 tick</td>
+          <td>N=16, reach=15</td>
+          <td>N=16, delays=[1,2]&times;7+[1]</td>
+          <td>N=16, dist={4,8,12,16}</td>
+          <td>N=16, &tau;=8</td>
+        </tr>
+        <tr>
+          <td><strong>L4</strong></td>
+          <td>N=32, skew &le;1 tick</td>
+          <td>N=32, reach=18, repeaters</td>
+          <td>N=32, delays=[1,2]&times;15+[1]</td>
+          <td>N=32, dist={4,8,12,16}</td>
+          <td>N=32, &tau;=10</td>
+        </tr>
+        <tr>
+          <td><strong>L5</strong></td>
+          <td>N=64, skew &le;1 tick</td>
+          <td>N=64, reach=20, repeaters</td>
+          <td>N=64, delays=[1,2]&times;31+[1]</td>
+          <td>N=64, dist={4,8,12,16}</td>
+          <td>N=64, &tau;=12</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-caption">
+    <strong>Table 1. Task family parameters.</strong> All families scale the number of output lamps as $N \in \{4, 8, 16, 32, 64\}$ for L1&ndash;L5, while introducing family-specific spatial/temporal constraints.
+  </p>
+
+  <h3>Task Examples</h3>
+  <p>Demonstrations of an agent constructing functional redstone devices and the automated evaluation verifying the output lighting patterns.</p>
+  <div class="video-grid">
+    <div class="video-card">
+      <video controls muted playsinline preload="metadata">
+        <source src="static/videos/Task Example D.mp4" type="video/mp4">
+      </video>
+      <div class="video-label">
+        <div class="task-label">Family D</div>
+        <h4>Distance-Equalized Ignition</h4>
+        <p>Simultaneously activate lamps placed at heterogeneous distances using repeaters as compensatory delay elements.</p>
+      </div>
+    </div>
+    <div class="video-card">
+      <video controls muted playsinline preload="metadata">
+        <source src="static/videos/Task Example E.mp4" type="video/mp4">
+      </video>
+      <div class="video-label">
+        <div class="task-label">Family E</div>
+        <h4>Pulse Extension</h4>
+        <p>Maintain all lamps activated simultaneously for a specified duration using pulse-shaping techniques.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ Method ════════════ -->
+<div class="section-alt" id="method">
+  <div class="section-inner">
+    <h2>Method: Decomposing Capacity Gaps</h2>
+    <p>
+      We decompose the discovery-to-application loop into four distinct capacities and design targeted interventions whose marginal contributions serve as proxies for each capacity gap:
+    </p>
+
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="step-num">1</div>
+        <h4>Knowledge Gap Identification</h4>
+        <p>Ability to identify knowledge gaps and formulate targeted research questions. Measured via oracle hints (e.g., "signal flow direction") without revealing specifics.</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">2</div>
+        <h4>Experimental Discovery</h4>
+        <p>Capacity to design and execute rigorous experiments to infer unobservable causal mechanisms. Measured via a "scientist" sub-agent with experiment templates.</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">3</div>
+        <h4>Knowledge Consolidation</h4>
+        <p>Ability to distill findings into concise, reusable forms. Measured via structured knowledge entry formats (Claim-Proof-Constraints-Example).</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-num">4</div>
+        <h4>Knowledge Application</h4>
+        <p>Foundational ability to reason, plan, and execute precise engineering. Defined as the residual capacity gap not covered by the above.</p>
+      </div>
+    </div>
+
+    <h3>Scientist Sub-agent</h3>
+    <p>
+      Every time the main agent encounters a knowledge gap, it prompts the scientist sub-agent with the question to investigate&mdash;for instance, <em>"How long does a stone button remain pressed after activation?"</em> The scientist sub-agent then conducts systematic control experiments following an 8-step scientific template:
+    </p>
+    <ol style="color:var(--text-secondary);padding-left:20px;margin:12px 0;">
+      <li>Research Question &mdash; Identify the specific mechanic</li>
+      <li>Hypothesis &mdash; Formulate a testable prediction</li>
+      <li>Experiment Design &mdash; Specify variables and controls</li>
+      <li>Experiment Steps &mdash; Execute ordered procedures</li>
+      <li>Experiment Record &mdash; Document observations per trial</li>
+      <li>Experiment Results &mdash; Summarize empirical outcomes</li>
+      <li>Analysis &amp; Summary &mdash; Interpret patterns, evaluate hypothesis</li>
+      <li>Next Steps &mdash; Propose follow-up experiments</li>
+    </ol>
+
+    <details class="template-block">
+      <summary>Experiment Template (click to expand)</summary>
+      <div class="template-body">
+<pre><span class="section-heading">## 1. Research Question</span>
+<span class="placeholder">[e.g., Under what conditions will a device activate? How do two components interact?]</span>
+
+<span class="section-heading">## 2. My Hypothesis</span>
+<span class="placeholder">[Write down your prediction]</span>
+
+<span class="section-heading">## 3. Experiment Design</span>
+<span class="comment">### Variables to Test</span>
+<strong>What I will change</strong> (Independent Variable): ________
+<strong>What I will observe</strong> (Dependent Variable): ________
+<strong>What needs to stay constant</strong> (Control Variables):
+- ________
+
+<span class="comment">### Control Setup</span>
+- <strong>Control Group</strong>: ________ (baseline test without changes)
+- <strong>Experimental Group</strong>: ________ (test with changes)
+
+<span class="section-heading">## 4. Experiment Steps</span>
+<span class="comment">### Preparation</span>
+1. ________
+2. ________
+<span class="comment">### Testing Process</span>
+Step 1: ________ -> Observation: ________
+Step 2: ________ -> Observation: ________
+
+<span class="section-heading">## 5. Experiment Record</span>
+| Trial # | Changed Condition | Observed Result | Matches Prediction? | Notes |
+|---------|-------------------|-----------------|---------------------|-------|
+| 1       |                   |                 | [ ] Yes  [ ] No     |       |
+| 2       |                   |                 | [ ] Yes  [ ] No     |       |
+| 3       |                   |                 | [ ] Yes  [ ] No     |       |
+
+<span class="section-heading">## 6. Experiment Results</span>
+<span class="placeholder">[Objectively describe the observed phenomena]</span>
+Was my hypothesis correct?  [ ] Completely  [ ] Partially  [ ] Incorrect
+
+<span class="section-heading">## 7. Analysis &amp; Summary</span>
+<span class="placeholder">[Explain the underlying mechanism or pattern; practical applications; remaining uncertainties]</span>
+
+<span class="section-heading">## 8. Next Steps</span>
+<span class="placeholder">[Follow-up experiments to refine, validate, or extend the discovered law]</span>
+
+<span class="comment">## Quick Checklist</span>
+- [ ] Research question is clear
+- [ ] Only changing one variable at a time
+- [ ] Set up control group
+- [ ] Recorded all observations
+- [ ] Repeated test at least 3 times
+- [ ] Summarized patterns or conclusions</pre>
+      </div>
+    </details>
+
+    <h3>Knowledge Consolidation Structure</h3>
+    <p>
+      The scientist consolidates discoveries into a shared knowledge book using a structured format that proved critical for performance:
+      <strong>Claim</strong> (the discovered law), <strong>Evidence Proof</strong> (experimental evidence),
+      <strong>Constraints</strong> (conditions where the law doesn't apply), and <strong>Example</strong> (a practical application).
+      This outperforms both unstructured summarization and the more intuitive Finding-Explanation-Example format.
+    </p>
+
+    <details class="template-block">
+      <summary>Claim-Proof-Constraints-Example Prompt Template (click to expand)</summary>
+      <div class="template-body">
+<pre>For each distinct discovery or significant conclusion, generate an entry
+in the knowledge book strictly following this structure:
+
+<span class="section-heading">### 1. Claim (Law)</span>
+State the finding as a universal, law-like statement (similar to a
+mathematical theorem or physical law). It must be concise, precise,
+and assertive.
+  <span class="comment">Bad:  "Redstone gets weaker as it goes far."</span>
+  <span class="comment">Good: "The Law of Linear Signal Decay: Redstone signal strength S
+         decreases by exactly 1 unit per block of distance d,
+         such that S_d = S_initial - d."</span>
+
+<span class="section-heading">### 2. Proof</span>
+Provide the rigorous logic that supports this claim.
+- Synthesize specific evidence from the experiments.
+- Connect prior established findings with new data.
+- Outline the deductive steps that lead inevitably to the claim.
+- Maintain a high standard of rigor; mere observation is not proof
+  -- explain *why* the observation confirms the law.
+
+<span class="section-heading">### 3. Constraints</span>
+Identify potential weaknesses or exceptions in the proof.
+- Are there edge cases where the law fails?
+- Are there assumptions that require further validation?
+- Note any observed anomalies that contradict the main claim.
+
+<span class="section-heading">### 4. Example</span>
+Demonstrate the utility of this finding.
+- Provide a concrete example or usage scenario.
+- Describe a mechanism or design pattern that relies specifically
+  on this law being true.</pre>
+      </div>
+      <div class="example-label">Example Output</div>
+      <div class="template-body example-output">
+<pre><span class="section-heading">### The Law of Linear Signal Attenuation</span>
+
+<span class="section-heading">#### Claim</span>
+Redstone signal strength S decays linearly by exactly 1 unit for
+every block of distance traversed d, governed by the equation
+S_d = S_source - d. The maximum transmission range without
+amplification is 15 blocks, occurring when S_source = 15.
+
+<span class="section-heading">#### Proof</span>
+- <strong>Observation:</strong> Placing a redstone wire adjacent to a power source
+  (Strength 15) results in a strength of 14 on the wire.
+- <strong>Deduction:</strong> The signal terminates (Strength 0) exactly at the
+  16th block.
+- <strong>Geometry:</strong> Distance is calculated using Manhattan geometry
+  (Δx + Δz), not Euclidean distance.
+
+<span class="section-heading">#### Constraints</span>
+- This law applies strictly to Redstone Dust. Solid blocks powered
+  by repeaters do not degrade the signal within the component
+  itself, but the dust exiting them restarts the decay.
+- Signal strength does not decay when passing through a Comparator
+  in comparison mode.
+
+<span class="section-heading">#### Example</span>
+<strong>Trunk with Pre-Junction Boost:</strong> Place a repeater immediately
+before a trunk line splits into branches. This ensures all branches
+receive maximum signal strength (15) and resets the decay counter.
+
+    B (SS=15)
+    |
+    [14 blocks of wire]
+    |
+    R (Repeater, Boosts to SS=15)
+    |
+    +-------+-------+
+    |       |       |
+    W(15)   W(15)   W(15)  &lt;-- All branches start fresh
+    |       |       |
+    L1      L2      L3</pre>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ════════════ Results ════════════ -->
+<section class="section" id="results">
+  <h2>Main Results</h2>
+
+  <h3>Baseline Performance</h3>
+  <p>
+    We evaluate 8 state-of-the-art models using Claude Code as the agent framework with a budget of 50 verification trials per task. Results are averaged over 8 runs.
+  </p>
+
+  <!-- Visual bar chart for baseline -->
+  <div class="bar-chart">
+    <div class="bar-row">
+      <span class="bar-label">Gemini-3-Pro</span>
+      <div class="bar-track">
+        <div class="bar-fill tier1" style="width:25%">25.0%</div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">GPT-5.2</span>
+      <div class="bar-track">
+        <div class="bar-fill tier1" style="width:24%">24.0%</div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Claude-Opus-4.5</span>
+      <div class="bar-track">
+        <div class="bar-fill tier1" style="width:22.5%">22.5%</div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">GLM-4.7</span>
+      <div class="bar-track">
+        <div class="bar-fill tier2" style="width:15.5%">15.5%</div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Grok-4</span>
+      <div class="bar-track">
+        <div class="bar-fill tier2" style="width:14%">14.0%</div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Qwen3-235B</span>
+      <div class="bar-track">
+        <div class="bar-fill tier2" style="width:13%">13.0%</div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Qwen2.5-72B</span>
+      <div class="bar-track">
+        <div class="bar-fill tier3" style="width:9%">9.0%</div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Qwen3-32B</span>
+      <div class="bar-track">
+        <div class="bar-fill tier3" style="width:7%">7.0%</div>
+      </div>
+    </div>
+  </div>
+  <p class="table-caption" style="text-align:center;">Baseline success rates (%). Even the best model achieves only 25% &mdash; despite parameter counts ranging from 32B to an estimated 1.7T.</p>
+
+  <h3>Capacity Gap Decomposition</h3>
+  <p>
+    We isolate each capacity gap through sequential ablations. The table below shows how each intervention progressively improves performance, and the corresponding gap magnitudes:
+  </p>
+
+  <!-- Main Results Table -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Baseline</th>
+          <th class="gap-header">Iden. Gap ($\delta_{id}$)</th>
+          <th>w/ Hint</th>
+          <th class="gap-header">Disc. Gap ($\delta_{ds}$)</th>
+          <th>w/ Hint + Scientist</th>
+          <th class="gap-header">App. Gap ($\delta_{app}$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>gemini-3-pro</strong></td>
+          <td>25.0</td>
+          <td class="gap">&Delta;33.0 (1.32&times;)</td>
+          <td>58.0</td>
+          <td class="gap">&Delta;11.0 (0.44&times;)</td>
+          <td>69.0</td>
+          <td class="gap">&Delta;31.0 (1.24&times;)</td>
+        </tr>
+        <tr>
+          <td><strong>gpt-5.2</strong></td>
+          <td>24.0</td>
+          <td class="gap">&Delta;32.5 (1.35&times;)</td>
+          <td>56.5</td>
+          <td class="gap">&Delta;11.0 (0.46&times;)</td>
+          <td>67.5</td>
+          <td class="gap">&Delta;32.5 (1.35&times;)</td>
+        </tr>
+        <tr>
+          <td><strong>claude-opus-4.5</strong></td>
+          <td>22.5</td>
+          <td class="gap">&Delta;31.5 (1.40&times;)</td>
+          <td>54.0</td>
+          <td class="gap">&Delta;11.0 (0.49&times;)</td>
+          <td>65.0</td>
+          <td class="gap">&Delta;35.0 (1.56&times;)</td>
+        </tr>
+        <tr>
+          <td><strong>glm-4.7</strong></td>
+          <td>15.5</td>
+          <td class="gap">&Delta;23.0 (1.48&times;)</td>
+          <td>38.5</td>
+          <td class="gap">&Delta;9.5 (0.61&times;)</td>
+          <td>48.0</td>
+          <td class="gap">&Delta;52.0 (3.35&times;)</td>
+        </tr>
+        <tr>
+          <td><strong>grok-4</strong></td>
+          <td>14.0</td>
+          <td class="gap">&Delta;22.0 (1.57&times;)</td>
+          <td>36.0</td>
+          <td class="gap">&Delta;10.0 (0.71&times;)</td>
+          <td>46.0</td>
+          <td class="gap">&Delta;54.0 (3.86&times;)</td>
+        </tr>
+        <tr>
+          <td><strong>qwen3-235b</strong></td>
+          <td>13.0</td>
+          <td class="gap">&Delta;21.0 (1.62&times;)</td>
+          <td>34.0</td>
+          <td class="gap">&Delta;9.0 (0.69&times;)</td>
+          <td>43.0</td>
+          <td class="gap">&Delta;57.0 (4.38&times;)</td>
+        </tr>
+        <tr>
+          <td><strong>qwen2.5-72b</strong></td>
+          <td>9.0</td>
+          <td class="gap">&Delta;11.0 (1.22&times;)</td>
+          <td>20.0</td>
+          <td class="gap">&Delta;5.0 (0.56&times;)</td>
+          <td>25.0</td>
+          <td class="gap">&Delta;75.0 (8.33&times;)</td>
+        </tr>
+        <tr>
+          <td><strong>qwen3-32b</strong></td>
+          <td>7.0</td>
+          <td class="gap">&Delta;8.0 (1.14&times;)</td>
+          <td>15.0</td>
+          <td class="gap">&Delta;4.0 (0.57&times;)</td>
+          <td>19.0</td>
+          <td class="gap">&Delta;81.0 (11.57&times;)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-caption">
+    <strong>Table 2. Model Performance and Capacity Gap Decomposition.</strong>
+    Gap columns (gray) show marginal gains ($\delta$) and relative ratios ($r_\delta$).
+    For frontier models, the knowledge identification gap ($\sim$1.3&times;) dominates;
+    for weaker models, the application gap balloons (up to 11.57&times;).
+  </p>
+
+  <!-- Stacked bar chart: capacity decomposition -->
+  <h3>Capacity Gap Visualization</h3>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#27ae60"></div> Baseline</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2980b9"></div> Knowledge Identification Gap</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8e44ad"></div> Discovery Gap</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#bdc3c7"></div> Application Gap (Residual)</div>
+  </div>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <span class="bar-label">Gemini-3-Pro</span>
+      <div class="bar-track">
+        <div class="stacked-bar">
+          <div class="seg base" style="width:25%">25</div>
+          <div class="seg iden" style="width:33%">33</div>
+          <div class="seg disc" style="width:11%">11</div>
+          <div class="seg app" style="width:31%">31</div>
+        </div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">GPT-5.2</span>
+      <div class="bar-track">
+        <div class="stacked-bar">
+          <div class="seg base" style="width:24%">24</div>
+          <div class="seg iden" style="width:32.5%">32.5</div>
+          <div class="seg disc" style="width:11%">11</div>
+          <div class="seg app" style="width:32.5%">32.5</div>
+        </div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Claude-Opus-4.5</span>
+      <div class="bar-track">
+        <div class="stacked-bar">
+          <div class="seg base" style="width:22.5%">22.5</div>
+          <div class="seg iden" style="width:31.5%">31.5</div>
+          <div class="seg disc" style="width:11%">11</div>
+          <div class="seg app" style="width:35%">35</div>
+        </div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">GLM-4.7</span>
+      <div class="bar-track">
+        <div class="stacked-bar">
+          <div class="seg base" style="width:15.5%">15.5</div>
+          <div class="seg iden" style="width:23%">23</div>
+          <div class="seg disc" style="width:9.5%">9.5</div>
+          <div class="seg app" style="width:52%">52</div>
+        </div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Grok-4</span>
+      <div class="bar-track">
+        <div class="stacked-bar">
+          <div class="seg base" style="width:14%">14</div>
+          <div class="seg iden" style="width:22%">22</div>
+          <div class="seg disc" style="width:10%">10</div>
+          <div class="seg app" style="width:54%">54</div>
+        </div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Qwen3-235B</span>
+      <div class="bar-track">
+        <div class="stacked-bar">
+          <div class="seg base" style="width:13%">13</div>
+          <div class="seg iden" style="width:21%">21</div>
+          <div class="seg disc" style="width:9%">9</div>
+          <div class="seg app" style="width:57%">57</div>
+        </div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Qwen2.5-72B</span>
+      <div class="bar-track">
+        <div class="stacked-bar">
+          <div class="seg base" style="width:9%"></div>
+          <div class="seg iden" style="width:11%">11</div>
+          <div class="seg disc" style="width:5%"></div>
+          <div class="seg app" style="width:75%">75</div>
+        </div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Qwen3-32B</span>
+      <div class="bar-track">
+        <div class="stacked-bar">
+          <div class="seg base" style="width:7%"></div>
+          <div class="seg iden" style="width:8%"></div>
+          <div class="seg disc" style="width:4%"></div>
+          <div class="seg app" style="width:81%">81</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="table-caption" style="text-align:center;">
+    <strong>Capacity gap decomposition across models.</strong>
+    For frontier models, the identification gap (blue) nearly equals the application gap (gray).
+    For weaker models, application capacity dominates the failure.
+  </p>
+
+  <!-- Knowledge Consolidation Ablation -->
+  <h3>Knowledge Consolidation Ablation</h3>
+  <div class="table-wrapper" style="max-width:560px;">
+    <table>
+      <thead>
+        <tr>
+          <th>Consolidation Structure</th>
+          <th>w/ Hint + Scientist</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Self-determined Summary</td>
+          <td>60.0 &pm; 5.5</td>
+        </tr>
+        <tr>
+          <td>Finding-Explanation-Example</td>
+          <td>65.5 &pm; 4.2</td>
+        </tr>
+        <tr>
+          <td><strong>Claim-Proof-Constraints-Example</strong></td>
+          <td><strong>69.0 &pm; 3.5</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-caption">
+    <strong>Table 3. Knowledge Consolidation Structure Ablation</strong> (Gemini 3 Pro, 8 runs).
+    Unstructured summarization loses most discovered knowledge (60%), only 2% above hints alone.
+    The Claim-Proof-Constraints-Example format performs best at 69%.
+  </p>
+
+  <!-- Per-Level Breakdown -->
+  <h3>Per-Level Breakdown (Gemini-3-Pro)</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Level</th>
+          <th>Baseline</th>
+          <th>w/ Hint</th>
+          <th>w/ Scientist</th>
+          <th>w/ Hint + Scientist</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>L1</strong> (Primitive)</td>
+          <td>60.0</td>
+          <td>98.0</td>
+          <td>76.0</td>
+          <td><strong>100.0</strong></td>
+        </tr>
+        <tr>
+          <td><strong>L2</strong> (Basic)</td>
+          <td>35.0</td>
+          <td>86.0</td>
+          <td>55.0</td>
+          <td><strong>98.0</strong></td>
+        </tr>
+        <tr>
+          <td><strong>L3</strong> (Intermediate)</td>
+          <td>8.3</td>
+          <td>60.0</td>
+          <td>30.0</td>
+          <td><strong>84.0</strong></td>
+        </tr>
+        <tr>
+          <td><strong>L4</strong> (Advanced)</td>
+          <td>0.0</td>
+          <td>10.4</td>
+          <td>4.1</td>
+          <td><strong>29.8</strong></td>
+        </tr>
+        <tr>
+          <td><strong>L5</strong> (Complex)</td>
+          <td>0.0</td>
+          <td>0.0</td>
+          <td>0.0</td>
+          <td>0.0</td>
+        </tr>
+        <tr style="font-weight:600;">
+          <td>Average</td>
+          <td>25.0</td>
+          <td>58.0</td>
+          <td>38.5</td>
+          <td><strong>69.0</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-caption">
+    <strong>Table 4. Per-level performance breakdown</strong> (Gemini-3-Pro, 8 runs).
+    Models begin failing all tasks at L4 under baseline conditions. Even with full support,
+    <strong>no model succeeds at Level 5</strong>, leaving it open for future progress.
+  </p>
+
+  <!-- Curriculum vs Independent -->
+  <h3>Curriculum vs. Independent Evaluation</h3>
+  <p>
+    We compare two evaluation protocols: <strong>Independent</strong> (tasks solved in isolation, L1&ndash;L5) vs. <strong>Curriculum</strong> (tasks solved progressively, carrying forward accumulated experience). Curriculum learning consistently improves performance across all models and conditions.
+  </p>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th rowspan="2">Model</th>
+          <th colspan="4">Independent</th>
+          <th colspan="4">Curriculum</th>
+        </tr>
+        <tr>
+          <th>baseline</th>
+          <th>w/ hint</th>
+          <th>w/ scientist</th>
+          <th>w/ hint + scientist</th>
+          <th>baseline</th>
+          <th>w/ hint</th>
+          <th>w/ scientist</th>
+          <th>w/ hint + scientist</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>gemini-3-pro</strong></td>
+          <td>18.0</td><td>48.5</td><td>26.5</td><td>55.0</td>
+          <td><strong>25.0</strong></td><td><strong>58.0</strong></td><td><strong>38.5</strong></td><td><strong>69.0</strong></td>
+        </tr>
+        <tr>
+          <td><strong>gpt-5.2</strong></td>
+          <td>17.5</td><td>46.5</td><td>25.0</td><td>53.5</td>
+          <td><strong>24.0</strong></td><td><strong>56.5</strong></td><td><strong>37.0</strong></td><td><strong>67.5</strong></td>
+        </tr>
+        <tr>
+          <td><strong>claude-opus-4.5</strong></td>
+          <td>16.5</td><td>45.0</td><td>23.5</td><td>51.0</td>
+          <td><strong>22.5</strong></td><td><strong>54.0</strong></td><td><strong>35.0</strong></td><td><strong>65.0</strong></td>
+        </tr>
+        <tr>
+          <td><strong>glm-4.7</strong></td>
+          <td>11.0</td><td>32.0</td><td>16.5</td><td>35.0</td>
+          <td><strong>15.5</strong></td><td><strong>38.5</strong></td><td><strong>24.0</strong></td><td><strong>48.0</strong></td>
+        </tr>
+        <tr>
+          <td><strong>grok-4</strong></td>
+          <td>10.0</td><td>30.0</td><td>15.0</td><td>33.0</td>
+          <td><strong>14.0</strong></td><td><strong>36.0</strong></td><td><strong>22.0</strong></td><td><strong>46.0</strong></td>
+        </tr>
+        <tr>
+          <td><strong>qwen3-235b</strong></td>
+          <td>9.5</td><td>28.0</td><td>14.0</td><td>31.0</td>
+          <td><strong>13.0</strong></td><td><strong>34.0</strong></td><td><strong>20.0</strong></td><td><strong>43.0</strong></td>
+        </tr>
+        <tr>
+          <td><strong>qwen2.5-72b</strong></td>
+          <td>6.5</td><td>16.0</td><td>10.0</td><td>18.0</td>
+          <td><strong>9.0</strong></td><td><strong>20.0</strong></td><td><strong>14.0</strong></td><td><strong>25.0</strong></td>
+        </tr>
+        <tr>
+          <td><strong>qwen3-32b</strong></td>
+          <td>5.0</td><td>12.0</td><td>8.0</td><td>14.0</td>
+          <td><strong>7.0</strong></td><td><strong>15.0</strong></td><td><strong>10.5</strong></td><td><strong>19.0</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-caption">
+    <strong>Table 5. Independent vs. Curriculum Evaluation.</strong>
+    Performance under the Independent setting is consistently lower across all models and conditions,
+    indicating that progressive scaffolding (curriculum) helps models promote discoveries into application capabilities.
+  </p>
+
+
+</section>
+
+<!-- ════════════ Key Findings ════════════ -->
+<div class="section-alt" id="findings">
+  <div class="section-inner">
+    <h2>Key Findings</h2>
+
+    <h3>1. Knowledge Gap Identification Emerges as the Primary Bottleneck for Frontier Models</h3>
+    <p>
+      While models generally suffer most from limited general application ability, knowledge gap identification starts to become the primary bottleneck for frontier models&mdash;its capacity gap is nearly three times larger than that of experimental discovery.
+      This aligns with Einstein's observation that <em>formulating a problem is often more essential than solving it</em>.
+      Identifying a gap requires knowing what is unknown; posing effective questions demands discerning which unexplored areas are most promising.
+    </p>
+
+    <h3>2. Systematic Causal Discovery Capabilities Remain Severely Underdeveloped</h3>
+    <p>
+      Our scientist sub-agent yields 0.44&ndash;0.71&times; gains across all model tiers, but the very fact that such a simple intervention helps so much exposes a deeper problem: current LLMs lack autonomous discovery capabilities.
+      The scientific method should, in principle, already reside within their prior knowledge, yet models fail to apply it without explicit scaffolding. This highlights a critical gap as AI is increasingly expected to accelerate scientific breakthroughs.
+    </p>
+
+    <h3>3. How Knowledge is Stored Critically Matters</h3>
+    <p>
+      The stark differences among consolidation formats reveal that LLMs perform poorly at determining how knowledge should be stored.
+      The structured <em>Claim-Proof-Constraints-Example</em> format (resembling mathematical derivation) outperforms the more intuitive
+      <em>Finding-Explanation-Example</em> format, likely because it more explicitly delineates conditions under which claims hold.
+    </p>
+
+    <h3>4. Curriculum Learning is Vital</h3>
+    <p>
+      Performance under Independent evaluation (tasks solved in isolation) is consistently lower than under Curriculum evaluation (progressive L1&rarr;L5, carrying forward accumulated experience) across all models and all conditions.
+      This indicates that appropriate application challenges can help promote discoveries&mdash;progressive scaffolding allows models to build on earlier successes, transferring knowledge from simpler to harder tasks.
+      The gap is especially pronounced for the full method (w/ hint + scientist), where curriculum learning boosts Gemini 3 Pro from 55.0% to 69.0% (+14 points).
+    </p>
+  </div>
+</div>
+
+
+<!-- ════════════ Citation ════════════ -->
+<section class="section" id="citation">
+  <h2>Citation</h2>
+  <p>If you find SciCrafter useful in your research, please consider citing:</p>
+  <div class="bibtex-box">
+    <button class="copy-btn" onclick="navigator.clipboard.writeText(this.parentElement.querySelector('pre').textContent)">Copy</button>
+<pre>@article{scicrafter2025,
+  title   = {SciCrafter: Can Current Language Models Close
+             the Discovery-to-Application Loop?},
+  author  = {Anonymous},
+  journal = {Preprint},
+  year    = {2025}
+}</pre>
+  </div>
+</section>
+
+<!-- ════════════ Footer ════════════ -->
+<footer>
+  <p>SciCrafter Project Page &middot; Code, environment, and full documentation will be released upon publication.</p>
+</footer>
+
+</body>
+</html>
