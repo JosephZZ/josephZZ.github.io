@@ -99,6 +99,8 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
   transition: background 0.15s; vertical-align: middle;
 }
 .paper-btn:hover { background: #b71c1c; }
+.cite-block { background: #f8f8f8; border: 1px solid #e0e0e0; border-radius: 8px; padding: 16px 20px; margin-top: 32px; font-size: 0.82rem; line-height: 1.5; overflow-x: auto; white-space: pre-wrap; word-break: break-all; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+.cite-block h3 { font-size: 0.95rem; margin: 0 0 8px 0; font-family: var(--font-sans); }
 </style>
 </head>
 <body>
@@ -475,6 +477,14 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Summary:</strong> The full intelligence framework $\min_{z,a} E(x \mid z) + V(x,a) + L(z) + L(a)$ decomposes into a closed cognitive loop (perception &rarr; world model &rarr; value &rarr; planning &rarr; action &rarr; memory). It mirrors the structure of physics (least action principle), and the path from current AI to general intelligence is, in this view, not a mystery but an optimization problem&mdash;one whose objective we can now write down. Each frontier unlocks the next, and all are unified by the same formula. The intelligence formula provides a unified language for all three: they are all about optimizing $\min E + V + L(z) + L(a)$, but at progressively deeper levels of the optimization hierarchy.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2025whatisint,
+  title   = {What is Intelligence},
+  author  = {Zhou, Ziheng},
+  journal = {josephzz.github.io},
+  year    = {2025},
+  url     = {https://josephzz.github.io/academic-work/#vpi}
+}</div>
     </div>
 
     <!-- ==================== DFT ==================== -->
@@ -581,6 +591,14 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Key Insight:</strong> The training objective itself matters as much as the training data. A one-line correction to SFT's gradient bias is enough to match or exceed methods that require reward models, preference data, or online sampling.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{wu2026sft,
+  title   = {On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification},
+  author  = {Wu, Yongliang and Zhou, Yizhou and Zhou, Ziheng and Peng, Yingzhe and Ye, Xinyu and Hu, Xinting and Zhu, Wenbo and Qi, Lu and Yang, Ming-Hsuan and Yang, Xu},
+  journal = {International Conference on Learning Representations (ICLR)},
+  year    = {2026},
+  url     = {https://josephzz.github.io/academic-work/#dft}
+}</div>
     </div>
 
     <!-- ==================== OCWM ==================== -->
@@ -711,6 +729,14 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Connection to "What is Intelligence":</strong> OCWM instantiates the intelligence formula's Proposition 3.1 &mdash; when the world model factorizes into objects via compression, causal structure and planning become tractable. Object-level decomposition lets planning escape from pixel space, enabling efficient causal reasoning through structured representations.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2025oawm,
+  title   = {A Hybrid Approach to Video World Modeling: Bridging Pixel and Latent Spaces},
+  author  = {Zhou, Ziheng and others},
+  journal = {josephzz.github.io},
+  year    = {2025},
+  url     = {https://josephzz.github.io/academic-work/#ocwm}
+}</div>
     </div>
 
     <!-- ==================== SciCrafter ==================== -->
@@ -819,6 +845,14 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
         <tr><td>Cultural scope</td><td>Primarily Western</td><td>Western + Eastern (Confucianism, Buddhism, Taoism, Mohism)</td></tr>
         <tr><td>Formalizability</td><td>Conceptual narratives</td><td>$V = f(\cdot)$ with tunable $\theta$ &mdash; formally simulable</td></tr>
       </table>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2025whoisus,
+  title   = {Who Is Us: A Generative Theory of Moral Psychology from Group Boundary Dynamics},
+  author  = {Zhou, Ziheng},
+  journal = {josephzz.github.io},
+  year    = {2025},
+  url     = {https://josephzz.github.io/academic-work/#whoisus}
+}</div>
     </div>
 
     <!-- ==================== GLOBAL-PT ==================== -->
@@ -877,6 +911,14 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Connection to "Who Is Us":</strong> If morality is a low-dimensional parameter configuration ($\theta$), then alignment should be achievable with minimal parameters. Global-PT's 6.64K parameters empirically confirm this &mdash; value alignment is "shallow," not requiring deep architectural change. The fact that safety and instruction-following are captured by a single token while math capability is not confirms the intelligence formula's separation of $V$ from $E$.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2023aligner,
+  title   = {Aligner: One Global Token is Worth Millions of Parameters When Aligning Large Language Models},
+  author  = {Zhou, Ziheng and Wu, Yingnian and Zhu, Song-Chun and Terzopoulos, Demetri},
+  journal = {arXiv preprint arXiv:2312.05503},
+  year    = {2023},
+  url     = {https://josephzz.github.io/academic-work/#globalpt}
+}</div>
     </div>
 
     <!-- ==================== ROLE-BASED ==================== -->
@@ -973,6 +1015,14 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Connection to "Who Is Us":</strong> Roles are compressed representations of $(\theta_b, \theta_w, \theta_s)$ &mdash; specifying a role implicitly specifies a moral boundary, weighting, and evaluation context. Safety doesn't require hard-coded rules; by specifying a role (= a "who is us" perspective), the model naturally aligns its behavior. This is not filtering or guardrailing &mdash; it's shifting the model's value perspective.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2026rolesafety,
+  title   = {Simple Role Assignment is Extraordinarily Effective for Safety Alignment},
+  author  = {Zhou, Ziheng and Ding, Jiakun and Zhang, Zhaowei and Gao, Ruosen and Wu, Yingnian and Terzopoulos, Demetri and Kang, Yipeng and Zhong, Fangwei and Wang, Junqi},
+  journal = {arXiv preprint arXiv:2602.00061},
+  year    = {2026},
+  url     = {https://josephzz.github.io/academic-work/#rolebased}
+}</div>
     </div>
 
     <!-- ==================== SOCIAL EVOL ==================== -->
@@ -1059,6 +1109,14 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Connection to "Who Is Us":</strong> This paper directly simulates the evolutionary dynamics of $\theta_b$ (moral boundary parameter). Results confirm: (1) kin-focused morality ($\theta_b$ = family) is the most evolutionarily stable under baseline conditions; (2) universal morality requires low-cost interactions to be viable; (3) environmental pressure (resource scarcity, interaction cost) shifts the optimal boundary. These findings provide computational evidence for the stable boundary expansion conditions in the "Who Is Us" framework.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2025moralevolution,
+  title   = {An LLM-based Agent Simulation Approach to Study Moral Evolution},
+  author  = {Zhou, Ziheng and Tang, Huacong and Bi, Mingjie and Kang, Yipeng and He, Wanying and Sun, Fang and Sun, Yizhou and Wu, Ying Nian and Terzopoulos, Demetri and Zhong, Fangwei},
+  journal = {arXiv preprint arXiv:2509.17703},
+  year    = {2025},
+  url     = {https://josephzz.github.io/academic-work/#socialevol}
+}</div>
     </div>
 
     <!-- ==================== FAIRNESS ==================== -->
@@ -1109,6 +1167,14 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Connection to "Who Is Us":</strong> This paper models the <em>internal governance</em> of "us" &mdash; once a boundary is drawn, the group must negotiate shared norms. Fairness rules are the institutional infrastructure of "us."
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2025fairness,
+  title   = {Learning to Be Fair: Modeling Fairness Dynamics by Simulating Moral-Based Multi-Agent Resource Allocation},
+  author  = {Zhou, Ziheng and others},
+  journal = {josephzz.github.io},
+  year    = {2025},
+  url     = {https://josephzz.github.io/academic-work/#fairness}
+}</div>
     </div>
 
     <!-- ==================== AI ETHICS ==================== -->
@@ -1162,13 +1228,21 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Connection to "Who Is Us":</strong> Human-centralism is the <em>necessary implication</em> of stable boundary expansion under current epistemic constraints ($\theta^* = \arg\max U \text{ s.t. Stability} \geq \tau$). AI is currently outside $\mathcal{S}$. The framework provides principled conditions under which this could change (robust scientific consensus + formal legal mechanisms) &mdash; not a permanent prohibition, but a high evidentiary bar.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2025consciousness,
+  title   = {A Human-centric Framework for Debating the Ethics of AI Consciousness Under Uncertainty},
+  author  = {Zhou, Ziheng and Dai, Haiqiang and Ling, Bin and Wu, Ying Nian and Terzopoulos, Demetri},
+  journal = {arXiv preprint arXiv:2512.02544},
+  year    = {2025},
+  url     = {https://josephzz.github.io/academic-work/#aiethics}
+}</div>
     </div>
 
     <!-- ==================== Computational Framework ==================== -->
     <div class="paper-page" id="page-cuvpg">
-      <h1>Consciousness and Artificial Intelligence &mdash; A Comprehensive Computational Framework</h1>
+      <h1>Computational Framework</h1>
       <span class="paper-tag tag-theory">To Release</span>
-      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Ziheng Zhou</strong>, Haiqiang Dai, Demetri Terzopoulos</p>
+      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Ziheng Zhou</strong> et al.</p>
       <p style="margin-top:32px; font-size:1.05rem; color:var(--text-sec);">This paper is currently being prepared and will be released soon.</p>
     </div>
 
@@ -1247,6 +1321,14 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Clean Boundary:</strong> Together with CUV-PG, this paper draws a clear line. <strong>Informational side</strong> (access consciousness, self-monitoring, metacognition) &mdash; we CAN build and measure this with current AI (SA Token, Self-Vector). <strong>Subjective side</strong> (phenomenal consciousness, qualia) &mdash; current AI architectures are structurally incompatible. This scoping protects our claims from overclaiming.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2026whynocon,
+  title   = {Why Current AI Architectures Cannot Support Consciousness: Mediated Self-Access and the Need for Ontological Identity},
+  author  = {Gao, Ruosen and Zhou, Ziheng},
+  journal = {josephzz.github.io},
+  year    = {2026},
+  url     = {https://josephzz.github.io/academic-work/#whynocon}
+}</div>
     </div>
 
     <!-- ==================== SA TOKEN ==================== -->
@@ -1336,6 +1418,8 @@ function showPaper(id) {
   document.querySelectorAll('.nav-list a').forEach(a => a.classList.remove('active'));
   const link = document.querySelector('.nav-list a[data-id="' + id + '"]');
   if (link) link.classList.add('active');
+  // Update URL hash
+  history.replaceState(null, '', '#' + id);
   // Scroll content to top
   document.getElementById('content').scrollTop = 0;
   // Re-render math
@@ -1348,6 +1432,22 @@ document.querySelectorAll('.nav-list a').forEach(a => {
     e.preventDefault();
     showPaper(this.dataset.id);
   });
+});
+
+// On page load, navigate to hash if present
+(function() {
+  var hash = window.location.hash.replace('#', '');
+  if (hash && document.getElementById('page-' + hash)) {
+    showPaper(hash);
+  }
+})();
+
+// Handle browser back/forward
+window.addEventListener('hashchange', function() {
+  var hash = window.location.hash.replace('#', '');
+  if (hash && document.getElementById('page-' + hash)) {
+    showPaper(hash);
+  }
 });
 </script>
 </body>
