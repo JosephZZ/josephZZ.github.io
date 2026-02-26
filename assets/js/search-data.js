@@ -9,8 +9,8 @@ ninja.data = [{
     handler: () => {
       window.location.href = "/";
     },
-  },{id: "nav-intelligence-morality-and-consciousness",
-          title: "Intelligence, Morality and Consciousness",
+  },{id: "nav-academic-works",
+          title: "academic works",
           description: "",
           section: "Navigation",
           handler: () => {
@@ -25,7 +25,7 @@ ninja.data = [{
           },
         },{id: "nav-cv",
           title: "CV",
-          description: "This is a description of the page. You can modify it in &#39;_pages/cv.md&#39;. You can also change or remove the top pdf download button.",
+          description: "",
           section: "Navigation",
           handler: () => {
             window.location.href = "/cv/";
@@ -382,9 +382,6 @@ ninja.data = [{
           section: "News",},{id: "news-paper-accepted-at-iclr-2026-on-the-generalization-of-sft-a-reinforcement-learning-perspective-with-reward-rectification",
           title: 'Paper accepted at ICLR 2026: “On the Generalization of SFT: A Reinforcement Learning...',
           description: "",
-          section: "News",},{id: "news-preparing-for-phd-defense-a-computational-enquiry-regarding-the-nature-of-intelligence-morality-and-consciousness",
-          title: 'Preparing for PhD defense: “A Computational Enquiry Regarding the Nature of Intelligence, Morality...',
-          description: "",
           section: "News",},{id: "projects-a-computational-enquiry-regarding-the-nature-of-intelligence-morality-and-consciousness",
           title: 'A Computational Enquiry Regarding the Nature of Intelligence, Morality and Consciousness',
           description: "My doctoral research exploring the computational foundations of intelligence, morality, and consciousness through AI systems.",
@@ -412,7 +409,21 @@ ninja.data = [{
         title: 'GitHub',
         section: 'Socials',
         handler: () => {
-          window.open("https://github.com/josephzhou", "_blank");
+          window.open("https://github.com/JosephZZ", "_blank");
+        },
+      },{
+        id: 'social-x',
+        title: 'X',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://twitter.com/JosephZiheng", "_blank");
+        },
+      },{
+        id: 'social-linkedin',
+        title: 'LinkedIn',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.linkedin.com/in/josephziheng", "_blank");
         },
       },{
       id: 'light-theme',

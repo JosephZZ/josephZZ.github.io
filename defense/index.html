@@ -99,6 +99,8 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
   transition: background 0.15s; vertical-align: middle;
 }
 .paper-btn:hover { background: #b71c1c; }
+.cite-block { background: #f8f8f8; border: 1px solid #e0e0e0; border-radius: 8px; padding: 16px 20px; margin-top: 32px; font-size: 0.82rem; line-height: 1.5; overflow-x: auto; white-space: pre-wrap; word-break: break-all; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+.cite-block h3 { font-size: 0.95rem; margin: 0 0 8px 0; font-family: var(--font-sans); }
 </style>
 </head>
 <body>
@@ -113,22 +115,20 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
     <ul class="nav-list">
       <li><a href="#" data-id="overview" class="active" style="font-weight:600; color:var(--accent);">Overview</a></li>
       <li class="part-label">I &middot; Intelligence</li>
-      <li><a href="#" data-id="vpi">What is Intelligence (Theory)</a></li>
+      <li><a href="#" data-id="vpi">What is Intelligence</a></li>
       <li><a href="#" data-id="ocwm">OCWM</a></li>
       <li><a href="#" data-id="dft">DFT</a></li>
       <li><a href="#" data-id="scicrafter">SciCrafter</a></li>
       <li class="part-label">II &middot; Morality</li>
-      <li><a href="#" data-id="whoisus">"Who Is Us" (Theory)</a></li>
+      <li><a href="#" data-id="whoisus">"Who Is Us"</a></li>
       <li><a href="#" data-id="socialevol">Moral Evolution</a></li>
       <li><a href="#" data-id="fairness">Fairness Consensus</a></li>
       <li><a href="#" data-id="globalpt">Global Prefix-Tuning</a></li>
       <li><a href="#" data-id="rolebased">Role-based Alignment</a></li>
-      <li><a href="#" data-id="aiethics">AI Ethics (Theory)</a></li>
       <li class="part-label">III &middot; Consciousness</li>
-      <li><a href="#" data-id="cuvpg">CUV-PG (Theory)</a></li>
-      <li><a href="#" data-id="whynocon">Subjective Experience (Theory)</a></li>
-      <li><a href="#" data-id="satoken">SA Token</a></li>
-      <li><a href="#" data-id="selfvec">Self-Vector</a></li>
+      <li><a href="#" data-id="cuvpg">Computational Framework</a></li>
+      <li><a href="#" data-id="whynocon">Subjective Experience</a></li>
+      <li><a href="#" data-id="aiethics">AI Consciousness Ethics</a></li>
     </ul>
   </nav>
 
@@ -140,7 +140,7 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <h1>A Computational Enquiry Regarding the Nature of Intelligence, Morality and Consciousness</h1>
       <span class="paper-tag tag-meta">Overview</span>
 
-      <p style="font-size:1.05rem; margin-top:8px;">Three fundamental questions that anyone building AI must eventually answer. Each question is addressed with a theoretical foundation and multiple AI implementations, totaling <strong>14 publications</strong>.</p>
+      <p style="font-size:1.05rem; margin-top:8px;">Over the course of my PhD, I aim to understand three fundamental aspects of mind: <strong>intelligence</strong>, <strong>morality</strong>, and <strong>consciousness</strong>. Below I present the computational theory I derive to describe each of them, and explain how it captures most of the phenomena and existing theories in the field. Within each category, I also present AI application works motivated by these theories.</p>
 
       <!-- ===== Pillar 1: Intelligence ===== -->
       <div style="background:#fef5f4; border-radius:12px; padding:28px 32px; border-top:4px solid #e74c3c; margin:32px 0 20px 0;">
@@ -190,9 +190,10 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
 
         <p style="margin-top:16px;"><strong>AI Papers:</strong></p>
         <ul>
-          <li><a href="#" onclick="showPaper('dft');return false;">DFT</a> &mdash; fix SFT gradient bias, +5-8% on MATH</li>
-          <li><a href="#" onclick="showPaper('ocwm');return false;">OCWM</a> &mdash; object-centric world model, 100x speedup</li>
-          <li><a href="#" onclick="showPaper('scicrafter');return false;">SciCrafter</a> &mdash; LLM agent scientific reasoning</li>
+          <li><a href="#" onclick="showPaper('dft');return false;">DFT</a> &mdash; make SFT to shape the energy landscape like RL</li>
+          <li><a href="#" onclick="showPaper('ocwm');return false;">OCWM</a> &mdash; object-centric world model, 100x speedup, explore efficient &amp; causal representation</li>
+          <li><a href="#" onclick="showPaper('scicrafter');return false;">SciCrafter</a> &mdash; whether and how to let AI close the discovery-to-application loop</li>
+          <li><em>More to come</em></li>
         </ul>
       </div>
 
@@ -241,11 +242,11 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
 
         <p style="margin-top:16px;"><strong>AI Papers:</strong></p>
         <ul>
-          <li><a href="#" onclick="showPaper('globalpt');return false;">Global-PT</a> &mdash; alignment with 6.64K params</li>
-          <li><a href="#" onclick="showPaper('rolebased');return false;">Role-based</a> &mdash; roles as moral perspectives</li>
-          <li><a href="#" onclick="showPaper('socialevol');return false;">Social-Evol</a> &mdash; moral evolution simulation</li>
-          <li><a href="#" onclick="showPaper('fairness');return false;">Fairness</a> &mdash; negotiating fairness norms</li>
-          <li><a href="#" onclick="showPaper('aiethics');return false;">AI Ethics (Theory)</a> &mdash; "is AI part of us?"</li>
+          <li><a href="#" onclick="showPaper('globalpt');return false;">Global-PT</a> &mdash; value exists in an orthogonal parameter space, and is very compact</li>
+          <li><a href="#" onclick="showPaper('rolebased');return false;">Role-based</a> &mdash; role descriptions that capture who is "us" is very effective for alignment</li>
+          <li><a href="#" onclick="showPaper('socialevol');return false;">Social-Evol</a> &mdash; moral evolution simulation of the circle of "us"</li>
+          <li><a href="#" onclick="showPaper('fairness');return false;">Fairness</a> &mdash; a dynamic procedure to make "us" all happy</li>
+          <li><em>More to come</em></li>
         </ul>
       </div>
 
@@ -254,30 +255,8 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
         <h2 style="color:#8e44ad; margin-bottom:4px; font-family:var(--font-serif);">What is Consciousness?</h2>
         <p style="font-size:0.95rem; color:var(--text-sec); margin-bottom:16px;">...and how do we build AI that is self-conscious?</p>
 
-        <h3>Theory: The Informational Side (CUV-PG)</h3>
-        <p>Consciousness has two faces. CUV-PG addresses the <strong>informational/behavioral side</strong>: what aspects of consciousness CAN be computationally modeled and measured?</p>
-        <figure>
-          <img src="static/images/cuvpg_overview.png" alt="System overview">
-          <figcaption>System overview of the CUV-PG framework for access consciousness.</figcaption>
-        </figure>
-        <table>
-          <tr><th>Component</th><th>What it models</th></tr>
-          <tr><td><strong>C</strong> (Cognitive)</td><td>Information processing, reasoning, learning</td></tr>
-          <tr><td><strong>U</strong> (Capabilities)</td><td>Perception, action, communication</td></tr>
-          <tr><td><strong>V</strong> (Values)</td><td>Goals, preferences, evaluative criteria</td></tr>
-          <tr><td><strong>PG</strong> (Parse Graphs)</td><td>Probabilistic hierarchical representation of the environment</td></tr>
-        </table>
-        <h4>Operational Criteria for Access Consciousness</h4>
-        <ul>
-          <li><strong>Global information integration:</strong> Information from different modules is combined</li>
-          <li><strong>Flexible response:</strong> Same input can produce different outputs based on context</li>
-          <li><strong>Self-monitoring:</strong> System can assess its own states and processes</li>
-          <li><strong>Reportability:</strong> System can communicate about its internal states</li>
-        </ul>
-        <figure>
-          <img src="static/images/cuvpg_ac_model.png" alt="Access consciousness model">
-          <figcaption>Access consciousness model: operational criteria for what can be measured in artificial systems.</figcaption>
-        </figure>
+        <h3>Theory: The Informational Side (Computational Framework)</h3>
+        <p style="color:var(--text-sec);"><em>To release.</em></p>
 
         <h3 style="margin-top:24px;">Theory: The Subjective Side (Why Current AI Can't Support Consciousness)</h3>
         <p>The other face of consciousness: <strong>subjective experience</strong> (phenomenal consciousness, qualia). The argument: current AI architectures lack the structural basis for phenomenal experience &mdash; specifically, <strong>ontologically identical self-influence</strong>.</p>
@@ -290,11 +269,13 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
           <strong>Clean Boundary:</strong> Together, these two papers draw a clear line. Informational side (access consciousness, self-monitoring, metacognition) &mdash; we CAN build and measure this. Subjective side (phenomenal consciousness, qualia) &mdash; current AI has no evidence for this.
         </div>
 
+        <p style="margin-top:16px;">We also explore the ethical implications of these findings in <a href="#" onclick="showPaper('aiethics');return false;">AI Consciousness Ethics</a>, which asks the question "Is AI part of us?" &mdash; connecting consciousness assessment back to moral boundary decisions.</p>
+
         <p style="margin-top:16px;"><strong>AI Papers:</strong></p>
         <ul>
-          <li><a href="#" onclick="showPaper('satoken');return false;">SA Token</a> &mdash; self-monitoring during generation</li>
-          <li><a href="#" onclick="showPaper('selfvec');return false;">Self-Vector</a> &mdash; extracting self-representation</li>
+          <li><em>More to come</em></li>
         </ul>
+
       </div>
 
       <h2>Connections Between the Three Questions</h2>
@@ -309,8 +290,9 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
     <!-- ==================== What is Intelligence ==================== -->
     <div class="paper-page" id="page-vpi">
       <h1>What is Intelligence</h1>
-      <span class="paper-tag tag-theory">Theory &middot; Intelligence</span>
+      <span class="paper-tag tag-theory">Working Paper &middot; Intelligence</span>
       <a class="paper-btn" href="../what_is_intelligence.pdf" target="_blank">Paper</a>
+      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong></p>
 
       <h2>Part I: Understanding as Compression</h2>
       <p>What do we mean when we say we understand something? We mean we have inferred the process that generates the data. This manifests as three capacities: (i) <strong>Predict</strong>: anticipate future observations; (ii) <strong>Causality</strong>: intervene, explain causes, imagine counterfactuals; (iii) <strong>Generalize</strong>: transfer to novel situations not seen during learning.</p>
@@ -487,21 +469,32 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <table>
         <tr><th>Phase</th><th>Capability</th><th>Formula term</th><th>Milestone</th></tr>
         <tr><td><strong>Current</strong></td><td>Fixed $\theta$, variable $z$ (CoT)</td><td>Level 1 only</td><td>GPT-4, R1</td></tr>
-        <tr><td><strong>Near</strong></td><td>Minimize $L(z)$: efficient reasoning</td><td>$L(z) \downarrow$</td><td>Reasoning distillation, learned chunking</td></tr>
-        <tr><td><strong>Medium</strong></td><td>Continuous learning: online $\Delta\theta$</td><td>$\Delta\theta$ at Levels 1-3</td><td>Multi-timescale memory, no catastrophic forgetting</td></tr>
-        <tr><td><strong>Far</strong></td><td>Self-model: autonomous improvement</td><td>$\hat{\mathcal{E}}_{\text{self}} \to \Delta\theta$</td><td>Self-diagnosing, self-improving agents</td></tr>
+        <tr><td rowspan="2" style="border-bottom:1px solid #e0e0e0;"><strong>Near</strong></td><td>Minimize $L(z)$: efficient reasoning</td><td>$L(z) \downarrow$</td><td>Reasoning distillation, learned chunking</td></tr>
+        <tr><td>Continuous learning: online $\Delta\theta$</td><td>$\Delta\theta$ at Levels 1-3</td><td>Multi-timescale memory, no catastrophic forgetting</td></tr>
+        <tr><td><strong>Medium</strong></td><td>Self-model: autonomous improvement</td><td>$\hat{\mathcal{E}}_{\text{self}} \to \Delta\theta$</td><td>Self-diagnosing, self-improving agents</td></tr>
       </table>
 
       <div class="highlight-box">
         <strong>Summary:</strong> The full intelligence framework $\min_{z,a} E(x \mid z) + V(x,a) + L(z) + L(a)$ decomposes into a closed cognitive loop (perception &rarr; world model &rarr; value &rarr; planning &rarr; action &rarr; memory). It mirrors the structure of physics (least action principle), and the path from current AI to general intelligence is, in this view, not a mystery but an optimization problem&mdash;one whose objective we can now write down. Each frontier unlocks the next, and all are unified by the same formula. The intelligence formula provides a unified language for all three: they are all about optimizing $\min E + V + L(z) + L(a)$, but at progressively deeper levels of the optimization hierarchy.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2025whatisint,
+  title   = {What is Intelligence},
+  author  = {Zhou, Ziheng},
+  journal = {josephzz.github.io},
+  year    = {2025},
+  url     = {https://josephzz.github.io/academic-work/#vpi}
+}</div>
     </div>
 
     <!-- ==================== DFT ==================== -->
     <div class="paper-page" id="page-dft">
       <h1>On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification</h1>
-      <span class="paper-tag tag-ai">AI &middot; Intelligence</span>
+      <span class="paper-tag tag-ai">ICLR 2026</span>
+      <span class="paper-tag tag-ai">arXiv &middot; 7 Aug 2025</span>
       <a class="paper-btn" href="../_ICLR2026__On_the_Generalization_of_SFT_Camera_Ready.pdf" target="_blank">Paper</a>
+      <a class="paper-btn" href="https://arxiv.org/abs/2508.05629" target="_blank">arXiv</a>
+      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;">Yongliang Wu, Yizhou Zhou, <strong>Zhou Ziheng</strong>, Yingzhe Peng, Xinyu Ye, Xinting Hu, Wenbo Zhu, Lu Qi, Ming-Hsuan Yang, Xu Yang</p>
 
       <h2>Abstract</h2>
       <p>In this work, we present a simple yet theoretically motivated improvement to Supervised Fine-Tuning (SFT) for the Large Language Model (LLM), addressing its limited generalization compared to reinforcement learning (RL). Through mathematical analysis, we reveal that standard SFT gradients implicitly encode a problematic reward structure that may severely restrict the generalization capabilities of model compared to RL. To rectify this, we propose Dynamic Fine-Tuning (DFT), stabilizing gradient updates for each token by dynamically rescaling the objective function with the probability of this token. With just a single-line change, the method outperforms standard SFT on multiple difficult benchmarks and base models, from math reasoning to code generation and multi-modal tasks, demonstrating improved generalization. Additionally, DFT achieves competitive results in offline RL settings, providing an effective yet streamlined alternative.</p>
@@ -598,13 +591,23 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Key Insight:</strong> The training objective itself matters as much as the training data. A one-line correction to SFT's gradient bias is enough to match or exceed methods that require reward models, preference data, or online sampling.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{wu2026sft,
+  title   = {On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification},
+  author  = {Wu, Yongliang and Zhou, Yizhou and Zhou, Ziheng and Peng, Yingzhe and Ye, Xinyu and Hu, Xinting and Zhu, Wenbo and Qi, Lu and Yang, Ming-Hsuan and Yang, Xu},
+  journal = {International Conference on Learning Representations (ICLR)},
+  year    = {2026},
+  url     = {https://josephzz.github.io/academic-work/#dft}
+}</div>
     </div>
 
     <!-- ==================== OCWM ==================== -->
     <div class="paper-page" id="page-ocwm">
       <h1>A Hybrid Approach to Video World Modeling: Bridging Pixel and Latent Spaces</h1>
-      <span class="paper-tag tag-ai">AI &middot; Intelligence</span>
+      <span class="paper-tag tag-ai">Preprint &middot; December 2024</span>
       <a class="paper-btn" href="../Object_Centric_World_Model.pdf" target="_blank">Paper</a>
+      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong> et al.</p>
+
 
       <h2>Abstract</h2>
       <p>Video models have recently emerged as a type of pretrained foundational world model, able to capture complex scene dynamics from abundant unlabeled data. However, two key limitations hinder their direct application to downstream planning tasks: first, action conditioning is largely absent, as real-world video datasets typically lack action labels; second, rolling out a pixel-level video model for action sampling (e.g., via model-predictive control) is prohibitively slow because it requires generating full-resolution frames even when they are unnecessary. In this work, we address these challenges by augmenting a base image generation model with a lightweight latent space world model using inferred representations of objects and their actions, thus enabling action planning with high efficiency. Moreover, we manage to preserve the ability to reconstruct full-resolution videos faithfully back from the latent representation. This approach allows us to learn an action-conditioned dynamics model without explicit action labels, achieve orders of magnitude faster planning due to reduced computation, and generate high-quality videos for interpretability and other downstream uses with only an image foundation model.</p>
@@ -726,6 +729,14 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Connection to "What is Intelligence":</strong> OCWM instantiates the intelligence formula's Proposition 3.1 &mdash; when the world model factorizes into objects via compression, causal structure and planning become tractable. Object-level decomposition lets planning escape from pixel space, enabling efficient causal reasoning through structured representations.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2025oawm,
+  title   = {A Hybrid Approach to Video World Modeling: Bridging Pixel and Latent Spaces},
+  author  = {Zhou, Ziheng and others},
+  journal = {josephzz.github.io},
+  year    = {2025},
+  url     = {https://josephzz.github.io/academic-work/#ocwm}
+}</div>
     </div>
 
     <!-- ==================== SciCrafter ==================== -->
@@ -736,8 +747,9 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
     <!-- ==================== WHO IS US ==================== -->
     <div class="paper-page" id="page-whoisus">
       <h1>"Who Is Us" &mdash; A Generative Theory of Moral Psychology from Group Boundary Dynamics</h1>
-      <span class="paper-tag tag-theory">Theory &middot; Morality</span>
+      <span class="paper-tag tag-theory">Working Paper &middot; Morality</span>
       <a class="paper-btn" href="../who_is_us_paper.pdf" target="_blank">Paper</a>
+      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong></p>
 
       <h2>Abstract</h2>
       <p>We propose that the entirety of moral psychology can be derived from a single generative variable: <em>who is us</em>&mdash;the cognitive demarcation and dynamic adjustment of the self&ndash;group boundary. We formalize this in an agent model where moral decision-making is governed by $V = f(u(\text{self}), \{u(\text{other})\}, u(\text{world}))$, and the boundary parameter $\theta$ determining which others are included in "us" constitutes the sole foundational moral variable. We demonstrate that (1) this variable naturally emerges under evolutionary pressure in multi-agent simulations; (2) all major normative ethical traditions&mdash;Western (utilitarianism, deontology, virtue ethics) and Eastern (Confucianism, Buddhism, Taoism)&mdash;can be reconstructed as distinct parameter configurations within the same model; (3) canonical phenomena in moral psychology (moral emotions, Haidt's moral foundations, classic dilemmas, moral development) receive unified explanations as downstream effects of boundary dynamics; and (4) a normative theory of moral progress follows naturally as constrained optimization of stable boundary expansion.</p>
@@ -824,25 +836,6 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       </ul>
       <p><strong>Hierarchical (Confucian) vs. Flat (Utilitarian/Mohist) boundary:</strong> Distance-decaying weights are a compression strategy &mdash; more stable under scarcity and small groups. Equal weights are maximally fair but high cognitive load &mdash; more stable with abundance and transparency. The ancient Confucian-Mohist debate is an empirically testable question about which weighting structure is stable under which environmental conditions.</p>
 
-      <h2>Three-Pathway Empirical Test</h2>
-      <p>The central empirical contribution &mdash; three independent reasoning pathways should converge:</p>
-      <ul>
-        <li><strong>Path A:</strong> LLM + framework name ("you are a utilitarian")</li>
-        <li><strong>Path B:</strong> LLM + $\theta$ parameters only &mdash; NO framework name mentioned</li>
-        <li><strong>Path C:</strong> Human participants</li>
-      </ul>
-      <p><strong>A-B convergence is the decisive test.</strong> If an LLM told only "include all beings capable of suffering, assign equal weight, maximize total welfare" produces identical judgments to an LLM told "you are a utilitarian" &mdash; without ever hearing the word "utilitarianism" &mdash; then utilitarianism IS a parameter configuration, not an independent theoretical construct.</p>
-      <p>The design crosses: each dilemma &times; each path &times; each framework/parameter configuration &times; multiple LLMs, producing a complete judgment matrix. Type I dilemmas (expected convergence across all configurations), Type II (expected divergence with predictable direction), Type III (frontier cases: animal rights, AI rights, future persons).</p>
-
-      <h2>Implications for AI Ethics</h2>
-      <p>The framework reframes AI ethics as: <strong>Is AI part of "us"?</strong></p>
-      <ul>
-        <li>Humans are the sole arbiters of AI moral status &mdash; the boundary is always drawn by those inside it</li>
-        <li>Presumption of no consciousness: boundary expansion without epistemic basis violates the stability constraint</li>
-        <li>Anthropomorphism &ne; consciousness: a System 1 boundary-expansion impulse, not evidence</li>
-        <li>If reliable consciousness-detection methods emerge, the framework does not prohibit expansion &mdash; it provides principled conditions</li>
-      </ul>
-
       <h2>Comparison with Existing Theories</h2>
       <table>
         <tr><th>Distinction</th><th>Greene / Tomasello</th><th>This Paper</th></tr>
@@ -852,13 +845,23 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
         <tr><td>Cultural scope</td><td>Primarily Western</td><td>Western + Eastern (Confucianism, Buddhism, Taoism, Mohism)</td></tr>
         <tr><td>Formalizability</td><td>Conceptual narratives</td><td>$V = f(\cdot)$ with tunable $\theta$ &mdash; formally simulable</td></tr>
       </table>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2025whoisus,
+  title   = {Who Is Us: A Generative Theory of Moral Psychology from Group Boundary Dynamics},
+  author  = {Zhou, Ziheng},
+  journal = {josephzz.github.io},
+  year    = {2025},
+  url     = {https://josephzz.github.io/academic-work/#whoisus}
+}</div>
     </div>
 
     <!-- ==================== GLOBAL-PT ==================== -->
     <div class="paper-page" id="page-globalpt">
       <h1>Global Prefix-Tuning for Alignment</h1>
-      <span class="paper-tag tag-ai">AI &middot; Morality</span>
+      <span class="paper-tag tag-ai">arXiv &middot; 9 Dec 2023</span>
       <a class="paper-btn" href="../Global_Prefix_Token.pdf" target="_blank">Paper</a>
+      <a class="paper-btn" href="https://arxiv.org/abs/2312.05503" target="_blank">arXiv</a>
+      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong>, Yingnian Wu, Song-Chun Zhu, Demetri Terzopoulos</p>
 
       <h2>Abstract</h2>
       <p>We introduce Global Prefix-Tuning (Global-PT), an extremely parameter-efficient fine-tuning (PEFT) method for adapting Large Language Models (LLMs) that uses only a few or a single learnable token, regardless of model size. Global-PT employs a unique design that constructs a globally shared set of tunable tokens that modify the attention of every layer. Our experiments demonstrate that Global-PT can serve two key purposes: (1) as an extremely efficient PEFT method that achieves comparable performance to LoRA and LLaMA-Adapter across various shallow alignment tasks while reducing parameter requirements from multiple millions to as few as 5 thousand; and (2) as a diagnostic tool for assessing task depth, revealing that shallow alignment tasks require minimal parameters while reasoning tasks demand more extensive adaptation regardless of method. Our findings that even one token can effectively fine-tune LLMs for shallow alignment illuminate important aspects of the inner workings of LLMs and provide practical utility for resource-constrained deployment scenarios.</p>
@@ -908,13 +911,24 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Connection to "Who Is Us":</strong> If morality is a low-dimensional parameter configuration ($\theta$), then alignment should be achievable with minimal parameters. Global-PT's 6.64K parameters empirically confirm this &mdash; value alignment is "shallow," not requiring deep architectural change. The fact that safety and instruction-following are captured by a single token while math capability is not confirms the intelligence formula's separation of $V$ from $E$.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2023aligner,
+  title   = {Aligner: One Global Token is Worth Millions of Parameters When Aligning Large Language Models},
+  author  = {Zhou, Ziheng and Wu, Yingnian and Zhu, Song-Chun and Terzopoulos, Demetri},
+  journal = {arXiv preprint arXiv:2312.05503},
+  year    = {2023},
+  url     = {https://josephzz.github.io/academic-work/#globalpt}
+}</div>
     </div>
 
     <!-- ==================== ROLE-BASED ==================== -->
     <div class="paper-page" id="page-rolebased">
       <h1>Simple Role Assignment is Extraordinarily Effective for Safety Alignment</h1>
-      <span class="paper-tag tag-ai">AI &middot; Morality</span>
+      <span class="paper-tag tag-ai">Under Review for ACL</span>
+      <span class="paper-tag tag-ai">arXiv &middot; 20 Jan 2026</span>
       <a class="paper-btn" href="../role_based_alignment.pdf" target="_blank">Paper</a>
+      <a class="paper-btn" href="https://arxiv.org/abs/2602.00061" target="_blank">arXiv</a>
+      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong>, Jiakun Ding, Zhaowei Zhang, Ruosen Gao, Yingnian Wu, Demetri Terzopoulos, Yipeng Kang, Fangwei Zhong, Junqi Wang</p>
 
       <h2>Abstract</h2>
       <p>Principle-based alignment methods rely on fixed sets of values that are inherently incomplete and lack context sensitivity. From Theory of Mind perspective, this could be attributed to lacking a belief or cognition model. To address this gap, we find that simple role conditioning can function as a compact and expressive alternative: social roles (e.g., mother, judge) implicitly encode both relevant values and the cognitive schemas required to apply them. We formalize this perspective and show that, in the ideal case, roles could be theoretically more expressive than principle lists. Concretely, we introduce a simple, training-free test-time pipeline consisting of a role-conditioned generator and lightweight role-based critics for iterative refinement. Extensive evaluations across five model families and multiple safety benchmarks demonstrate that our approach consistently outperforms principle-based, Chain-of-Thought (CoT), and hybrid baselines. Notably, it achieves substantial safety improvements, reducing unsafe outputs from 81.4% down to 3.6% on the WildJailbreak benchmark with DeepSeek-V3.</p>
@@ -1001,13 +1015,25 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Connection to "Who Is Us":</strong> Roles are compressed representations of $(\theta_b, \theta_w, \theta_s)$ &mdash; specifying a role implicitly specifies a moral boundary, weighting, and evaluation context. Safety doesn't require hard-coded rules; by specifying a role (= a "who is us" perspective), the model naturally aligns its behavior. This is not filtering or guardrailing &mdash; it's shifting the model's value perspective.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2026rolesafety,
+  title   = {Simple Role Assignment is Extraordinarily Effective for Safety Alignment},
+  author  = {Zhou, Ziheng and Ding, Jiakun and Zhang, Zhaowei and Gao, Ruosen and Wu, Yingnian and Terzopoulos, Demetri and Kang, Yipeng and Zhong, Fangwei and Wang, Junqi},
+  journal = {arXiv preprint arXiv:2602.00061},
+  year    = {2026},
+  url     = {https://josephzz.github.io/academic-work/#rolebased}
+}</div>
     </div>
 
     <!-- ==================== SOCIAL EVOL ==================== -->
     <div class="paper-page" id="page-socialevol">
       <h1>An LLM-based Agent Simulation Approach to Study Moral Evolution</h1>
-      <span class="paper-tag tag-ai">AI &middot; Morality</span>
+      <span class="paper-tag tag-ai">Under Review for ACL</span>
+      <span class="paper-tag tag-ai">COLM 2025 Social Simulation Workshop</span>
+      <span class="paper-tag tag-ai">arXiv &middot; 22 Sep 2025</span>
       <a class="paper-btn" href="../An_LLM_based_Agent_Simulation_Approach_to_Study_Moral_Evolution.pdf" target="_blank">Paper</a>
+      <a class="paper-btn" href="https://arxiv.org/abs/2509.17703" target="_blank">arXiv</a>
+      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong>, Huacong Tang, Mingjie Bi, Yipeng Kang, Wanying He, Fang Sun, Yizhou Sun, Yingnian Wu, Demetri Terzopoulos, Fangwei Zhong</p>
 
       <h2>Abstract</h2>
       <p>The evolution of morality presents a puzzle: natural selection should favor self-interest, yet humans developed moral systems promoting altruism. We address this question by introducing a novel Large Language Model (LLM)-based agent simulation framework modeling prehistoric hunter-gatherer societies. This platform is designed to probe diverse questions in social evolution, from survival advantages to inter-group dynamics. To investigate moral evolution, we designed agents with varying moral dispositions based on the Expanding Circle Theory. We evaluated their evolutionary success across a series of simulations and analyzed their decision-making in specially designed moral dilemmas. These experiments reveal how an agent's moral framework, in combination with its cognitive constraints, directly shapes its behavior and determines its evolutionary outcome. Crucially, the emergent patterns echo seminal theories from related domains of social science, providing external validation for the simulations. This work establishes LLM-based simulation as a powerful new paradigm to complement traditional research in evolutionary biology and anthropology.</p>
@@ -1083,13 +1109,22 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Connection to "Who Is Us":</strong> This paper directly simulates the evolutionary dynamics of $\theta_b$ (moral boundary parameter). Results confirm: (1) kin-focused morality ($\theta_b$ = family) is the most evolutionarily stable under baseline conditions; (2) universal morality requires low-cost interactions to be viable; (3) environmental pressure (resource scarcity, interaction cost) shifts the optimal boundary. These findings provide computational evidence for the stable boundary expansion conditions in the "Who Is Us" framework.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2025moralevolution,
+  title   = {An LLM-based Agent Simulation Approach to Study Moral Evolution},
+  author  = {Zhou, Ziheng and Tang, Huacong and Bi, Mingjie and Kang, Yipeng and He, Wanying and Sun, Fang and Sun, Yizhou and Wu, Ying Nian and Terzopoulos, Demetri and Zhong, Fangwei},
+  journal = {arXiv preprint arXiv:2509.17703},
+  year    = {2025},
+  url     = {https://josephzz.github.io/academic-work/#socialevol}
+}</div>
     </div>
 
     <!-- ==================== FAIRNESS ==================== -->
     <div class="paper-page" id="page-fairness">
       <h1>Fairness Consensus Among Simulated Agents</h1>
-      <span class="paper-tag tag-ai">AI &middot; Morality</span>
+      <span class="paper-tag tag-ai">Under Review for ACL</span>
       <a class="paper-btn" href="../towards_arriving_consensus_over_fairness_among_simulated_cognitive_agents.pdf" target="_blank">Paper</a>
+      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong> et al.</p>
 
       <h2>Abstract</h2>
       <p>Fairness is a foundational social construct for stable, resilient societies, yet its meaning is dynamic, context-dependent, and inherently subjective. This multifaceted nature reveals a gap between traditional social science and contemporary computational approaches: the former offers rich conceptual accounts but limited computational models, while the latter often relies on static objectives or purely data-driven criteria that overlook the subjective and communicative nature of fairness. We address this gap through a computational framework and two resource-allocation scenarios in which large language model (LLM)-based cognitive agents operate with heterogeneous roles, relationships, and moral commitments. The framework supports agent reflection and negotiation via explicit, language-based feedback, enabling the study of norm evolution and consensus formation of fairness in multi-agent social systems. Using standard objective metrics from resource allocation, we demonstrate that our approach captures key complexities of fairness, such as ambiguity, procedural justice, and subjective satisfaction&mdash;while remaining quantitatively evaluable.</p>
@@ -1132,13 +1167,23 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Connection to "Who Is Us":</strong> This paper models the <em>internal governance</em> of "us" &mdash; once a boundary is drawn, the group must negotiate shared norms. Fairness rules are the institutional infrastructure of "us."
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2025fairness,
+  title   = {Learning to Be Fair: Modeling Fairness Dynamics by Simulating Moral-Based Multi-Agent Resource Allocation},
+  author  = {Zhou, Ziheng and others},
+  journal = {josephzz.github.io},
+  year    = {2025},
+  url     = {https://josephzz.github.io/academic-work/#fairness}
+}</div>
     </div>
 
     <!-- ==================== AI ETHICS ==================== -->
     <div class="paper-page" id="page-aiethics">
       <h1>A Human-Centric Framework for Debating the Ethics of AI Consciousness Under Uncertainty</h1>
-      <span class="paper-tag tag-theory">Theory &middot; Morality</span>
+      <span class="paper-tag tag-theory">arXiv &middot; 2 Dec 2025</span>
       <a class="paper-btn" href="../AI_Consciousness_Ethics.pdf" target="_blank">Paper</a>
+      <a class="paper-btn" href="https://arxiv.org/abs/2512.02544" target="_blank">arXiv</a>
+      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong>, Haiqiang Dai, Bin Ling, Yingnian Wu, Demetri Terzopoulos</p>
 
       <h2>Abstract</h2>
       <p>As AI systems become increasingly sophisticated, questions about machine consciousness and its ethical implications have gained urgency. Current ethical frameworks in this domain often prematurely assume consciousness, prioritize speculative AI welfare over human interests, and lack coherent theoretical foundations. We address these limitations through a structured three-level framework grounded in philosophical uncertainty. At the foundational level, we establish five factual determinations about AI consciousness alongside human-centralism as our meta-ethical stance. These foundations logically entail three operational principles: presumption of no consciousness (placing the burden of proof on consciousness claims), risk prudence (prioritizing human welfare under uncertainty), and transparent reasoning (enabling systematic evaluation and adaptation). At the application level, we derive default positions on pressing ethical questions through a transparent logical process where each position can be explicitly traced back to our foundational commitments.</p>
@@ -1183,120 +1228,29 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Connection to "Who Is Us":</strong> Human-centralism is the <em>necessary implication</em> of stable boundary expansion under current epistemic constraints ($\theta^* = \arg\max U \text{ s.t. Stability} \geq \tau$). AI is currently outside $\mathcal{S}$. The framework provides principled conditions under which this could change (robust scientific consensus + formal legal mechanisms) &mdash; not a permanent prohibition, but a high evidentiary bar.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2025consciousness,
+  title   = {A Human-centric Framework for Debating the Ethics of AI Consciousness Under Uncertainty},
+  author  = {Zhou, Ziheng and Dai, Haiqiang and Ling, Bin and Wu, Ying Nian and Terzopoulos, Demetri},
+  journal = {arXiv preprint arXiv:2512.02544},
+  year    = {2025},
+  url     = {https://josephzz.github.io/academic-work/#aiethics}
+}</div>
     </div>
 
-    <!-- ==================== CUV-PG ==================== -->
+    <!-- ==================== Computational Framework ==================== -->
     <div class="paper-page" id="page-cuvpg">
-      <h1>CUV-PG: Consciousness and Artificial Intelligence &mdash; A Comprehensive Computation Framework</h1>
-      <span class="paper-tag tag-theory">Theory &middot; Consciousness</span>
-      <a class="paper-btn" href="../_Review__Consciousness_and_Artificial_Intelligence__Computation_Framework_.pdf" target="_blank">Paper</a>
-
-      <h2>Abstract</h2>
-      <p>This article proposes a novel computational framework based on the CUV-PG architecture for modeling and measuring artificial consciousness, defined as the functional simulation of essential human conscious features within artificial systems. The framework integrates three key aspects: Self Autonomy, Access Consciousness (AC), and Self-Awareness (SA). By representing internal states ($S_t$) and system programs ($\lambda$) as interpretable Probabilistic Parse Graphs (PG) within a dedicated Conscious Space (CS), the model enables meta-cognitive abilities, self-improvement, and the alignment of autonomous agents. The framework effectively captures established functionalist theories&mdash;such as Global Workspace Theory and Higher-Order Theory&mdash;while providing formal mathematical criteria to evaluate the existence and degree of consciousness in artificial entities.</p>
-
-      <h2>The Informational Side of Consciousness</h2>
-      <p>Consciousness has two faces. This paper addresses the <strong>informational/behavioral side</strong>: what aspects of consciousness CAN be computationally modeled and measured? We adopt a functionalist perspective, defining artificial consciousness (AC) as the capacity of artificial systems to simulate or reproduce core features of human consciousness through measurable information-processing functions.</p>
-
-      <figure>
-        <img src="static/images/cuvpg_overview.png" alt="System overview">
-        <figcaption>System overview of the CUV-PG framework for access consciousness.</figcaption>
-      </figure>
-
-      <h2>Seven Functional Components of Artificial Consciousness</h2>
-      <table>
-        <tr><th>#</th><th>Component</th><th>Description</th></tr>
-        <tr><td>1</td><td><strong>Self-Model</strong></td><td>Internal representation of own state, goals, and environment. Enables self-perception, self-monitoring, self-reflection, self-adjustment, self-reporting.</td></tr>
-        <tr><td>2</td><td><strong>Autonomous Intentionality</strong></td><td>Goal-directed actions beyond preprogrammed instructions. Flexible behavior based on internal objectives.</td></tr>
-        <tr><td>3</td><td><strong>Meta-Cognitive Ability</strong></td><td>Decision reflection, learning from prior choices, anticipation of consequences, uncertainty management.</td></tr>
-        <tr><td>4</td><td><strong>Emotion and Affect</strong></td><td>Simulated emotional feedback influencing decisions (e.g., risk aversion). Regulates naturalistic interactions.</td></tr>
-        <tr><td>5</td><td><strong>Contextual Understanding</strong></td><td>Perception and interpretation of surroundings. Situation awareness guiding decision-making.</td></tr>
-        <tr><td>6</td><td><strong>Dynamic Response</strong></td><td>Real-time adaptability to environmental changes. Robust interaction despite unpredictability.</td></tr>
-        <tr><td>7</td><td><strong>Learning &amp; Adaptability</strong></td><td>Continuous improvement through interaction. Generalization from specific instances to abstract principles.</td></tr>
-      </table>
-
-      <h2>CUV-PG Architecture</h2>
-      <table>
-        <tr><th>Component</th><th>What it models</th></tr>
-        <tr><td><strong>C</strong> (Cognitive)</td><td>Information processing, reasoning, learning</td></tr>
-        <tr><td><strong>U</strong> (Capabilities)</td><td>Perception, action, communication</td></tr>
-        <tr><td><strong>V</strong> (Values)</td><td>Goals, preferences, evaluative criteria</td></tr>
-        <tr><td><strong>PG</strong> (Parse Graphs)</td><td>Probabilistic hierarchical representation of the environment</td></tr>
-      </table>
-
-      <figure>
-        <img src="static/images/cuvpg_ac_model.png" alt="Access consciousness model">
-        <figcaption>Access consciousness model: operational criteria for what can be measured in artificial systems.</figcaption>
-      </figure>
-
-      <h2>Operational Criteria for Access Consciousness</h2>
-      <ul>
-        <li><strong>Global information integration:</strong> Information from different modules is combined into a unified workspace</li>
-        <li><strong>Flexible response:</strong> Same input can produce different outputs based on context</li>
-        <li><strong>Self-monitoring:</strong> System can assess its own states and processes</li>
-        <li><strong>Reportability:</strong> System can communicate about its internal states</li>
-      </ul>
-
-      <h2>Consciousness Theories Reviewed</h2>
-      <table>
-        <tr><th>Theory</th><th>Core Mechanism</th><th>Key Implication for AI</th></tr>
-        <tr><td>Global Workspace (GWT)</td><td>Broadcasting mechanism for conscious content</td><td>Central message bus with gating/threshold</td></tr>
-        <tr><td>Integrated Information (IIT)</td><td>$\Phi$ &mdash; intrinsic integrated information</td><td>Graph-theoretic causal-network models</td></tr>
-        <tr><td>Higher-Order Thought (HOT)</td><td>Meta-representation of first-order states</td><td>Metacognitive monitoring layers</td></tr>
-        <tr><td>Predictive Processing</td><td>Brain as prediction engine minimizing surprise</td><td>Embodiment + continuous error-monitoring</td></tr>
-        <tr><td>Attention Schema (AST)</td><td>Model of own attention process</td><td>Produces intuitive awareness + theory of mind</td></tr>
-        <tr><td>Free Energy Principle</td><td>Agent minimizes surprise/free energy</td><td>Continuous Bayesian belief updating</td></tr>
-      </table>
-
-      <h2>Self-Awareness Framework</h2>
-      <figure>
-        <img src="static/images/cuvpg_selfawareness.png" alt="Self-awareness framework">
-        <figcaption>Self-awareness as a component of the consciousness framework.</figcaption>
-      </figure>
-
-      <h3>Eight Core Properties of the Self</h3>
-      <table>
-        <tr><th>Property</th><th>Description</th></tr>
-        <tr><td>Boundaries</td><td>Self/other demarcation via multisensory integration</td></tr>
-        <tr><td>Continuity</td><td>Temporal binding of experiences into unitary identity</td></tr>
-        <tr><td>Consistency</td><td>Coherence of self-beliefs and values</td></tr>
-        <tr><td>Controllability</td><td>Perceived and enacted control over action</td></tr>
-        <tr><td>Subjectivity</td><td>First-person "for-me-ness"</td></tr>
-        <tr><td>Autonomy</td><td>Self-governance based on own goals and standards</td></tr>
-        <tr><td>Reflexivity</td><td>Self-referential monitoring and control</td></tr>
-        <tr><td>Plasticity</td><td>Updatable, adaptable self-model</td></tr>
-      </table>
-
-      <h3>Six Hierarchical Levels of Self</h3>
-      <table>
-        <tr><th>Level</th><th>Description</th><th>AI Relevance</th></tr>
-        <tr><td>1. Minimal Self</td><td>Sense of ownership and agency (pre-reflective)</td><td>Embodied robotics, proprioception</td></tr>
-        <tr><td>2. Conceptual Self</td><td>Self-knowledge, self-concept, self-schemas</td><td>Internal state representation</td></tr>
-        <tr><td>3. Narrative Self</td><td>Autobiographical identity, possible selves</td><td>Long-term memory + planning</td></tr>
-        <tr><td>4. Social Self</td><td>Self-presentation, role-taking, group identity</td><td>Multi-agent interaction, theory of mind</td></tr>
-        <tr><td>5. Metacognitive Self</td><td>Self-reflection, self-regulation, cognitive monitoring</td><td>SA Token, confidence estimation</td></tr>
-        <tr><td>6. Evaluative Self</td><td>Self-esteem, self-efficacy, value-based affirmation</td><td>Reward-based self-assessment</td></tr>
-      </table>
-
-      <h2>Testing and Evaluation</h2>
-      <table>
-        <tr><th>Test Paradigm</th><th>What it assesses</th><th>Operability</th></tr>
-        <tr><td>Meta-Cognitive Task</td><td>Self-knowledge boundaries</td><td>High</td></tr>
-        <tr><td>Mirror Self-Recognition</td><td>Bodily self-awareness</td><td>Moderate</td></tr>
-        <tr><td>$\Phi$-Value Measurement</td><td>IIT-based consciousness level</td><td>Low (expensive)</td></tr>
-        <tr><td>Global Info Broadcasting</td><td>System-wide information sharing</td><td>Moderate</td></tr>
-        <tr><td>Impairment Analog</td><td>Response to hidden/degraded commands</td><td>Moderate</td></tr>
-        <tr><td>Comprehensive Ability-Value</td><td>Constellation of consciousness traits</td><td>High</td></tr>
-      </table>
-
-      <div class="highlight-box">
-        <strong>Scope:</strong> CUV-PG addresses access consciousness &mdash; the "easy problems." It explicitly does NOT claim to solve phenomenal consciousness. SA Token and Self-Vector implement specific components of this framework (Levels 5-6 of self-awareness).
-      </div>
+      <h1>Computational Framework</h1>
+      <span class="paper-tag tag-theory">To Release</span>
+      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong> et al.</p>
+      <p style="margin-top:32px; font-size:1.05rem; color:var(--text-sec);">This paper is currently being prepared and will be released soon.</p>
     </div>
 
     <!-- ==================== WHY NO CONSCIOUSNESS ==================== -->
     <div class="paper-page" id="page-whynocon">
       <h1>Subjective Experience: Why Current AI Architectures Cannot Support Consciousness</h1>
-      <span class="paper-tag tag-theory">Theory &middot; Consciousness</span>
+      <span class="paper-tag tag-theory">Under Review for INQUIRE</span>
+      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;">Ruosen Gao, <strong>Zhou Ziheng</strong></p>
 
       <h2>The Subjective Side of Consciousness</h2>
       <p>This paper addresses the other face of consciousness: <strong>subjective experience</strong> (phenomenal consciousness, qualia, "what it's like to be"). The central argument: even if AI achieves extraordinary intelligence and self-monitoring, it cannot be conscious under current computational paradigms because it lacks <strong>ontologically identical self-influence</strong> &mdash; a necessary condition for genuine subjectivity.</p>
@@ -1367,6 +1321,14 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <div class="highlight-box">
         <strong>Clean Boundary:</strong> Together with CUV-PG, this paper draws a clear line. <strong>Informational side</strong> (access consciousness, self-monitoring, metacognition) &mdash; we CAN build and measure this with current AI (SA Token, Self-Vector). <strong>Subjective side</strong> (phenomenal consciousness, qualia) &mdash; current AI architectures are structurally incompatible. This scoping protects our claims from overclaiming.
       </div>
+
+      <div class="cite-block"><h3>Cite</h3>@article{zhou2026whynocon,
+  title   = {Why Current AI Architectures Cannot Support Consciousness: Mediated Self-Access and the Need for Ontological Identity},
+  author  = {Gao, Ruosen and Zhou, Ziheng},
+  journal = {josephzz.github.io},
+  year    = {2026},
+  url     = {https://josephzz.github.io/academic-work/#whynocon}
+}</div>
     </div>
 
     <!-- ==================== SA TOKEN ==================== -->
@@ -1456,6 +1418,8 @@ function showPaper(id) {
   document.querySelectorAll('.nav-list a').forEach(a => a.classList.remove('active'));
   const link = document.querySelector('.nav-list a[data-id="' + id + '"]');
   if (link) link.classList.add('active');
+  // Update URL hash
+  history.replaceState(null, '', '#' + id);
   // Scroll content to top
   document.getElementById('content').scrollTop = 0;
   // Re-render math
@@ -1468,6 +1432,22 @@ document.querySelectorAll('.nav-list a').forEach(a => {
     e.preventDefault();
     showPaper(this.dataset.id);
   });
+});
+
+// On page load, navigate to hash if present
+(function() {
+  var hash = window.location.hash.replace('#', '');
+  if (hash && document.getElementById('page-' + hash)) {
+    showPaper(hash);
+  }
+})();
+
+// Handle browser back/forward
+window.addEventListener('hashchange', function() {
+  var hash = window.location.hash.replace('#', '');
+  if (hash && document.getElementById('page-' + hash)) {
+    showPaper(hash);
+  }
 });
 </script>
 </body>
