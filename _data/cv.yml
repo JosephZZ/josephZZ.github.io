@@ -4,7 +4,6 @@ cv:
   email: "josephziheng [at] ucla [dot] edu"
   location: Los Angeles, CA
   image: ""
-  summary: PhD candidate in Computer Science at UCLA, researching AI alignment, morality, and consciousness.
 
   social_networks:
     - network: GitHub
@@ -85,6 +84,6 @@ cv:
 
     Academic Professional Service:
       - name: "Reviewer"
-        keywords: "ICLR, NeurIPS, ICML, ACL, COLM"
+        keywords: "ICLR 2025, 2026; NeurIPS 2023, 2024, 2025; ICML 2025, 2026; ACL 2025; COLM 2025, 2026"
       - name: "Invited Talks"
         keywords: "14th National Analytical Philosophy Conference of China; 2nd Workshop on Philosophy and AI (Peking University); Foundational Meta-cognition Problem Workshop (Henan University)"
