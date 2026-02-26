@@ -469,9 +469,9 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <table>
         <tr><th>Phase</th><th>Capability</th><th>Formula term</th><th>Milestone</th></tr>
         <tr><td><strong>Current</strong></td><td>Fixed $\theta$, variable $z$ (CoT)</td><td>Level 1 only</td><td>GPT-4, R1</td></tr>
-        <tr><td><strong>Near</strong></td><td>Minimize $L(z)$: efficient reasoning</td><td>$L(z) \downarrow$</td><td>Reasoning distillation, learned chunking</td></tr>
-        <tr><td><strong>Medium</strong></td><td>Continuous learning: online $\Delta\theta$</td><td>$\Delta\theta$ at Levels 1-3</td><td>Multi-timescale memory, no catastrophic forgetting</td></tr>
-        <tr><td><strong>Far</strong></td><td>Self-model: autonomous improvement</td><td>$\hat{\mathcal{E}}_{\text{self}} \to \Delta\theta$</td><td>Self-diagnosing, self-improving agents</td></tr>
+        <tr><td rowspan="2" style="border-bottom:1px solid #e0e0e0;"><strong>Near</strong></td><td>Minimize $L(z)$: efficient reasoning</td><td>$L(z) \downarrow$</td><td>Reasoning distillation, learned chunking</td></tr>
+        <tr><td>Continuous learning: online $\Delta\theta$</td><td>$\Delta\theta$ at Levels 1-3</td><td>Multi-timescale memory, no catastrophic forgetting</td></tr>
+        <tr><td><strong>Medium</strong></td><td>Self-model: autonomous improvement</td><td>$\hat{\mathcal{E}}_{\text{self}} \to \Delta\theta$</td><td>Self-diagnosing, self-improving agents</td></tr>
       </table>
 
       <div class="highlight-box">
