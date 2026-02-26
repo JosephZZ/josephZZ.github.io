@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Academic Works
+title: academic works
 permalink: /academic-work/
 nav: true
 nav_order: 2
