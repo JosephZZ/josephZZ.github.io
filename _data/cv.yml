@@ -1,0 +1,90 @@
+cv:
+  name: Ziheng Zhou
+  label: PhD Candidate
+  email: "josephziheng [at] ucla [dot] edu"
+  location: Los Angeles, CA
+  image: ""
+  summary: PhD candidate in Computer Science at UCLA, researching AI alignment, morality, and consciousness.
+
+  social_networks:
+    - network: GitHub
+      username: JosephZZ
+    - network: Google Scholar
+      username: IH2wK1cAAAAJ
+
+  sections:
+    Education:
+      - institution: University of California, Los Angeles (UCLA)
+        location: Los Angeles, CA
+        url: https://www.ucla.edu/
+        area: Computer Science
+        studyType: Ph.D.
+        start_date: 2021
+        end_date: 2026
+        highlights:
+          - "Advisors: Demetri Terzopoulos (Distinguished Prof.), Song-Chun Zhu (Director of BIGAI), Yingnian Wu"
+          - "Committee: Judea Pearl (Turing Award), Kaiwei Chang"
+
+      - institution: University of California, Los Angeles (UCLA)
+        location: Los Angeles, CA
+        url: https://www.ucla.edu/
+        area: Computer Science
+        studyType: B.S.
+        start_date: 2012
+        end_date: 2017
+        highlights:
+          - "Minors in Philosophy & Cognitive Science"
+
+    Experience:
+      - company: "VoxelCloud \u4F53\u7D20\u79D1\u6280"
+        position: "Co-Founder & Head of Eye Department"
+        location: "Los Angeles<br>Shanghai"
+        url: https://www.voxelcloud.ai/
+        start_date: 2016
+        end_date: 2021
+        summary: "Co-founded AI medical imaging company (LA + Shanghai). Raised ~$100M from Sequoia China, Tencent, and other leading investors (Angel \u2192 Series B). Cross-functional oversight in a 100-person org. Board member; participated in fundraising, GTM expansion, and product roadmap decisions."
+        highlights:
+          - "Directly led Eye Department (5\u20137 direct reports, product + AI)"
+          - "Scaled Diabetic Retinopathy screening product to 300+ hospitals and 120k+ screening sessions"
+          - "Built clinical data acquisition & labeling engine to 2M+ records via partnerships with EyePACS, PUMCH, Zhongshan Eye Center, and other top hospitals"
+          - "Led model and pipeline R&D (team of 3\u20135, collaborations with UCLA & ASU) to reach regulatory-grade accuracy"
+          - "Designed clinical trial protocol and drove regulatory submission to CFDA approval; won First Place in Med-AI Challenge at World AI Conference Shanghai 2018"
+
+      - company: Manifield
+        position: Founder
+        location: "Los Angeles"
+        start_date: 2025-08
+        end_date: 2026-01
+        summary: "Founded an AI startup building a proactive, self-evolving, local-first agentic workspace with generative UI for knowledge workers (AI-native OS)."
+        highlights:
+          - "Assembled a team of five from University of Cambridge, Tsinghua University, UCLA and BIGAI Institute"
+          - "Built working prototype (downloadable github repo) and secured a term sheet of \u00A510M (RMB) at \u00A5100M valuation"
+          - "Paused to redeploy after competitive-landscape analysis forecast"
+
+      - company: Sistina
+        position: Co-founder
+        location: "Los Angeles"
+        start_date: 2015
+        end_date: 2015
+        summary: "Co-founded an AI-assisted photo curation and social platform. Built a working prototype; project ended due to inconclusive user testing results and disagreements over future direction."
+
+      - company: SingleFile
+        position: Co-founder
+        location: "Los Angeles"
+        start_date: 2014
+        end_date: 2014
+        summary: "Co-founded a startup attempting to solve the ticket-queuing problem by balancing financial and time investment. A student summer project; the team disbanded after the summer ended."
+
+    Skills:
+      - name: "AI & CS"
+        icon: fa-solid fa-code
+        keywords: "Python, PyTorch, LLM Training (RL/SFT, Diffusion, PEFT/LoRA), Distributed Training, Agent Systems (Multi-Agent, Agentic Workflow), Dataset, Benchmark & Evaluation, Multi-modal (Vision-Language)"
+      - name: "Product & Leadership"
+        icon: fa-solid fa-users
+        keywords: "AI roadmap & execution; 0\u21921\u2192scale delivery; cross-functional leadership; hiring & bar-raising; PRDs/specs; metrics/OKRs; GTM alignment"
+
+    Academic Professional Service:
+      - name: "Reviewer"
+        keywords: "ICLR, NeurIPS, ICML, ACL, COLM"
+      - name: "Invited Talks"
+        keywords: "14th National Analytical Philosophy Conference of China; 2nd Workshop on Philosophy and AI (Peking University); Foundational Meta-cognition Problem Workshop (Henan University)"
