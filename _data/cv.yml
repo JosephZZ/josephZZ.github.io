@@ -83,7 +83,7 @@ cv:
         keywords: "AI roadmap & execution; 0\u21921\u2192scale delivery; cross-functional leadership; hiring & bar-raising; PRDs/specs; metrics/OKRs; GTM alignment"
 
     Academic Professional Service:
-      - name: "Reviewer"
-        keywords: "ICLR 2025, 2026; NeurIPS 2023, 2024, 2025; ICML 2025, 2026; ACL 2025; COLM 2025, 2026"
-      - name: "Invited Talks"
-        keywords: "14th National Analytical Philosophy Conference of China; 2nd Workshop on Philosophy and AI (Peking University); Foundational Meta-cognition Problem Workshop (Henan University)"
+      - label: "Reviewer"
+        details: "ICLR 2025, 2026; NeurIPS 2023, 2024, 2025; ICML 2025, 2026; ACL 2025; COLM 2025, 2026"
+      - label: "Invited Talks"
+        details: "14th National Analytical Philosophy Conference of China; 2nd Workshop on Philosophy and AI (Peking University); Foundational Meta-cognition Problem Workshop (Henan University)"

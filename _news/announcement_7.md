@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Paper accepted at ACL 2026 main conference (Oral): "An LLM-based Agent Simulation Approach to Study Moral Evolution."
+Paper accepted at ACL 2026 main conference (Oral): "Why Are We Moral? An LLM-based Agent Simulation Approach to Study Moral Evolution."
