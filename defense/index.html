@@ -5,34 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A Computational Enquiry Regarding the Nature of Intelligence, Morality and Consciousness</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
   onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
 <style>
+/* Design tokens mirror the project sites (moralagentsim.github.io). */
 :root {
-  --accent: #c0392b;
-  --accent-light: #e74c3c;
-  --bg: #ffffff;
-  --bg-alt: #f7f8fa;
-  --text: #1a1a2e;
-  --text-sec: #555;
-  --border: #e0e0e0;
+  --accent: #6b1d1d;
+  --accent-light: #b98b8b;
+  --bg: #fbf9f5;
+  --bg-alt: #f4efe4;
+  --text: #1a1a1a;
+  --text-sec: #5a5a5a;
+  --text-subtle: #8a8a8a;
+  --border: #d8d2c5;
+  --border-soft: #e7e3d9;
+  --figure-bg: #ffffff;
   --sidebar-w: 280px;
-  --font-serif: 'Noto Serif', Georgia, serif;
-  --font-sans: 'Noto Sans', system-ui, sans-serif;
-  --shadow: 0 2px 8px rgba(0,0,0,0.08);
-  --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+  --content-w: 880px;
+  --font-serif: 'EB Garamond', 'Source Serif Pro', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, 'Courier New', monospace;
+  --shadow: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.08);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { font-family: var(--font-sans); color: var(--text); background: var(--bg); line-height: 1.7; font-size: 15px; }
+body { font-family: var(--font-serif); color: var(--text); background: var(--bg); line-height: 1.72; font-size: 19px; }
 
-/* Tags */
-.tag-theory { background: #e8f5e9; color: #2e7d32; }
-.tag-ai { background: #e3f2fd; color: #1565c0; }
-.tag-meta { background: #f3e5f5; color: #7b1fa2; }
+/* Tags — muted to sit on the warm background */
+.tag-theory, .tag-ai, .tag-meta { background: var(--bg-alt); color: var(--text-sec); border: 1px solid var(--border-soft); }
 
 /* ===== DETAIL VIEW (sidebar + content) ===== */
 #detail-view { display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; }
@@ -44,62 +48,69 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
   border-right: 1px solid var(--border); background: var(--bg-alt);
   padding: 12px 0; flex-shrink: 0;
 }
-#sidebar .logo { font-family: var(--font-serif); font-size: 0.85rem; font-weight: 700; padding: 8px 14px 12px; color: var(--accent); cursor: pointer; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
-.nav-list { list-style: none; }
-.nav-list .part-label { font-size: 0.7rem; font-weight: 700; color: var(--accent); padding: 10px 14px 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+/* Sidebar stays sans — 19px serif is a body size, not a nav size. */
+#sidebar .logo { font-family: var(--font-serif); font-size: 0.95rem; font-weight: 600; padding: 8px 14px 12px; color: var(--accent); cursor: pointer; border-bottom: 1px solid var(--border); margin-bottom: 4px; line-height: 1.4; }
+.nav-list { list-style: none; font-family: var(--font-sans); }
+.nav-list .part-label { font-size: 0.62rem; font-weight: 600; color: var(--accent); padding: 10px 14px 4px; text-transform: uppercase; letter-spacing: 0.08em; }
+.nav-list .sub-label { font-size: 0.6rem; font-weight: 500; color: var(--text-subtle); padding: 6px 14px 2px 20px; letter-spacing: 0.04em; font-style: italic; }
 .nav-list li a {
-  display: block; padding: 6px 14px; font-size: 0.78rem; color: var(--text);
+  display: block; padding: 6px 14px; font-size: 0.72rem; color: var(--text);
   text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   transition: background 0.12s, border-left 0.12s;
   border-left: 3px solid transparent;
 }
-.nav-list li a:hover { background: #fef5f4; }
-.nav-list li a.active { background: #fce8e6; border-left-color: var(--accent); font-weight: 600; }
+.nav-list li a:hover { background: #efe9dc; }
+.nav-list li a.active { background: #e9e0d0; border-left-color: var(--accent); font-weight: 600; }
 
 /* Content area */
 #content {
   flex: 1; height: 100%; overflow-y: auto; overflow-x: hidden;
   padding: 0;
 }
-.paper-page { display: none; padding: 48px 56px 80px; max-width: 960px; }
+/* Centered reading column at the same width the project sites use. */
+.paper-page { display: none; padding: 56px 32px 96px; max-width: calc(var(--content-w) + 64px); margin: 0 auto; }
 .paper-page.active { display: block; }
-.paper-page h1 { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; }
-.paper-page .paper-tag { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-bottom: 16px; }
-.paper-page h2 { font-family: var(--font-serif); font-size: 1.25rem; color: var(--accent); margin: 36px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
-.paper-page h3 { font-size: 1.05rem; font-weight: 600; margin: 24px 0 8px; }
-.paper-page p { margin-bottom: 14px; color: var(--text); }
-.paper-page ul, .paper-page ol { margin: 0 0 14px 24px; }
-.paper-page li { margin-bottom: 4px; }
+/* Full-bleed pages that embed an external site: fill the whole content column. */
+.paper-page.embed { padding: 0; max-width: none; margin: 0; height: 100%; }
+.paper-page.embed iframe { display: block; width: 100%; height: 100%; border: none; }
+.paper-page h1 { font-family: var(--font-serif); font-size: 2.1rem; font-weight: 600; line-height: 1.25; margin-bottom: 10px; letter-spacing: -0.01em; }
+.paper-page .paper-tag { display: inline-block; font-family: var(--font-sans); padding: 3px 10px; border-radius: 4px; font-size: 0.68rem; font-weight: 500; margin-bottom: 16px; }
+.paper-page h2 { font-family: var(--font-sans); font-size: 1.45rem; font-weight: 600; color: var(--text); margin: 3.2rem 0 1.1rem; padding-bottom: 0.45rem; border-bottom: 1px solid var(--border); letter-spacing: -0.005em; }
+.paper-page h3 { font-family: var(--font-sans); font-size: 1.15rem; font-weight: 600; margin: 2.2rem 0 0.9rem; }
+.paper-page p { margin-bottom: 1rem; color: var(--text); }
+.paper-page ul, .paper-page ol { margin: 0 0 1rem 24px; }
+.paper-page li { margin-bottom: 6px; }
 .paper-page .highlight-box {
-  background: var(--bg-alt); border-left: 4px solid var(--accent);
-  padding: 16px 20px; margin: 20px 0; border-radius: 0 8px 8px 0;
+  background: var(--bg-alt); border-left: 3px solid var(--accent);
+  padding: 16px 20px; margin: 24px 0; border-radius: 0 6px 6px 0;
 }
 .paper-page .key-eq {
-  background: #fafafa; border: 1px solid var(--border); border-radius: 8px;
-  padding: 20px 24px; margin: 20px 0; text-align: center; font-size: 1.1rem;
+  background: var(--figure-bg); border: 1px solid var(--border-soft); border-radius: 6px;
+  padding: 20px 24px; margin: 24px 0; text-align: center; font-size: 1.05rem;
 }
-.paper-page figure { margin: 24px 0; }
-.paper-page figure img { width: 100%; max-width: 800px; border-radius: 8px; box-shadow: var(--shadow-lg); }
-.paper-page figure.half img { max-width: 500px; }
-.paper-page figcaption { font-size: 0.82rem; color: var(--text-sec); margin-top: 8px; text-align: center; }
-.paper-page table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
-.paper-page table th { background: var(--bg-alt); font-weight: 600; text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); }
-.paper-page table td { padding: 7px 12px; border-bottom: 1px solid var(--border); }
-.paper-page table tr:hover td { background: #fafafa; }
+.paper-page figure { margin: 32px 0; }
+.paper-page figure img { width: 100%; max-width: 100%; background: var(--figure-bg); border: 1px solid var(--border-soft); border-radius: 6px; box-shadow: none; }
+.paper-page figure.half img { max-width: 55%; }
+.paper-page figcaption { font-family: var(--font-sans); font-size: 0.78rem; color: var(--text-sec); line-height: 1.6; margin-top: 10px; text-align: center; }
+.paper-page table { width: 100%; border-collapse: collapse; margin: 24px 0; font-family: var(--font-sans); font-size: 0.82rem; }
+.paper-page table th { background: var(--bg-alt); font-weight: 600; text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+.paper-page table td { padding: 7px 12px; border-bottom: 1px solid var(--border-soft); }
+.paper-page table tr:hover td { background: var(--bg-alt); }
 .paper-page .result-card {
-  display: inline-block; background: var(--bg-alt); border-radius: 8px;
+  display: inline-block; background: var(--bg-alt); border-radius: 6px;
   padding: 16px 24px; margin: 8px 12px 8px 0; text-align: center; min-width: 140px;
+  font-family: var(--font-sans);
 }
-.paper-page .result-card .num { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
-.paper-page .result-card .label { font-size: 0.78rem; color: var(--text-sec); margin-top: 2px; }
+.paper-page .result-card .num { font-size: 1.6rem; font-weight: 600; color: var(--accent); }
+.paper-page .result-card .label { font-size: 0.72rem; color: var(--text-sec); margin-top: 2px; }
 .results-row { display: flex; flex-wrap: wrap; margin: 16px 0; }
 .paper-btn {
-  display: inline-block; padding: 5px 16px; border-radius: 5px; font-size: 0.8rem; font-weight: 600;
+  display: inline-block; font-family: var(--font-sans); padding: 5px 16px; border-radius: 5px; font-size: 0.72rem; font-weight: 500;
   background: var(--accent); color: #fff; text-decoration: none; margin-left: 10px; cursor: pointer;
   transition: background 0.15s; vertical-align: middle;
 }
-.paper-btn:hover { background: #b71c1c; }
-.cite-block { background: #f8f8f8; border: 1px solid #e0e0e0; border-radius: 8px; padding: 16px 20px; margin-top: 32px; font-size: 0.82rem; line-height: 1.5; overflow-x: auto; white-space: pre-wrap; word-break: break-all; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+.paper-btn:hover { background: #8a3b3b; }
+.cite-block { background: var(--bg-alt); border: 1px solid var(--border-soft); border-radius: 6px; padding: 16px 20px; margin-top: 32px; font-size: 0.72rem; line-height: 1.6; overflow-x: auto; white-space: pre-wrap; word-break: break-all; font-family: var(--font-mono); }
 .cite-block h3 { font-size: 0.95rem; margin: 0 0 8px 0; font-family: var(--font-sans); }
 </style>
 </head>
@@ -114,18 +125,25 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
     <div class="logo" onclick="showPaper('overview')" style="cursor:pointer;">A Computational Enquiry Regarding the Nature of Intelligence, Morality and Consciousness</div>
     <ul class="nav-list">
       <li><a href="#" data-id="overview" class="active" style="font-weight:600; color:var(--accent);">Overview</a></li>
-      <li class="part-label">I &middot; Intelligence</li>
+      <li class="part-label">I &middot; Intelligence / Learning</li>
+      <li class="sub-label">Theory</li>
       <li><a href="#" data-id="vpi">What is Intelligence</a></li>
+      <li class="sub-label">World Model</li>
       <li><a href="#" data-id="ocwm">OCWM</a></li>
+      <li class="sub-label">Learning Method</li>
       <li><a href="#" data-id="dft">DFT</a></li>
+      <li><a href="#" data-id="esr">ESR</a></li>
+      <li class="sub-label">Self-Improvement &amp; AI Scientist</li>
       <li><a href="#" data-id="scicrafter">SciCrafter</a></li>
-      <li class="part-label">II &middot; Morality</li>
+      <li class="part-label">II &middot; Morality / Alignment</li>
+      <li class="sub-label">AI for Morality</li>
       <li><a href="#" data-id="whoisus">"Who Is Us"</a></li>
       <li><a href="#" data-id="socialevol">Moral Evolution</a></li>
       <li><a href="#" data-id="fairness">Fairness Consensus</a></li>
+      <li class="sub-label">Morality for AI Alignment</li>
       <li><a href="#" data-id="globalpt">Global Prefix-Tuning</a></li>
       <li><a href="#" data-id="rolebased">Role-based Alignment</a></li>
-      <li class="part-label">III &middot; Consciousness</li>
+      <li class="part-label">III &middot; Consciousness / Self</li>
       <li><a href="#" data-id="cuvpg">Computational Framework</a></li>
       <li><a href="#" data-id="whynocon">Subjective Experience</a></li>
       <li><a href="#" data-id="aiethics">AI Consciousness Ethics</a></li>
@@ -143,7 +161,7 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <p style="font-size:1.05rem; margin-top:8px;">Over the course of my PhD, I aim to understand three fundamental aspects of mind: <strong>intelligence</strong>, <strong>morality</strong>, and <strong>consciousness</strong>. Below I present the computational theory I derive to describe each of them, and explain how it captures most of the phenomena and existing theories in the field. Within each category, I also present AI application works motivated by these theories.</p>
 
       <!-- ===== Pillar 1: Intelligence ===== -->
-      <div style="background:#fef5f4; border-radius:12px; padding:28px 32px; border-top:4px solid #e74c3c; margin:32px 0 20px 0;">
+      <div style="background:#f6f0ea; border-radius:12px; padding:28px 32px; border-top:3px solid #6b1d1d; margin:32px 0 20px 0;">
         <h2 style="color:var(--accent); margin-bottom:4px; font-family:var(--font-serif);">What is Intelligence?</h2>
         <p style="font-size:0.95rem; color:var(--text-sec); margin-bottom:16px;">...and how do we build AI that understands and acts in the world?</p>
 
@@ -198,8 +216,8 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       </div>
 
       <!-- ===== Pillar 2: Morality ===== -->
-      <div style="background:#f0f7f0; border-radius:12px; padding:28px 32px; border-top:4px solid #27ae60; margin:20px 0;">
-        <h2 style="color:#27ae60; margin-bottom:4px; font-family:var(--font-serif);">What is Morality?</h2>
+      <div style="background:#eef2ef; border-radius:12px; padding:28px 32px; border-top:3px solid #3d7068; margin:20px 0;">
+        <h2 style="color:#3d7068; margin-bottom:4px; font-family:var(--font-serif);">What is Morality?</h2>
         <p style="font-size:0.95rem; color:var(--text-sec); margin-bottom:16px;">...and how do we build AI that aligns with human values?</p>
 
         <h3>Theory: "Who Is Us" &mdash; A Generative Theory of Moral Psychology</h3>
@@ -251,8 +269,8 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       </div>
 
       <!-- ===== Pillar 3: Consciousness ===== -->
-      <div style="background:#f3f0f8; border-radius:12px; padding:28px 32px; border-top:4px solid #8e44ad; margin:20px 0;">
-        <h2 style="color:#8e44ad; margin-bottom:4px; font-family:var(--font-serif);">What is Consciousness?</h2>
+      <div style="background:#f0f0f2; border-radius:12px; padding:28px 32px; border-top:3px solid #5e626a; margin:20px 0;">
+        <h2 style="color:#5e626a; margin-bottom:4px; font-family:var(--font-serif);">What is Consciousness?</h2>
         <p style="font-size:0.95rem; color:var(--text-sec); margin-bottom:16px;">...and how do we build AI that is self-conscious?</p>
 
         <h3>Theory: The Informational Side (Computational Framework)</h3>
@@ -291,7 +309,6 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
     <div class="paper-page" id="page-vpi">
       <h1>What is Intelligence</h1>
       <span class="paper-tag tag-theory">Working Paper &middot; Intelligence</span>
-      <a class="paper-btn" href="../what_is_intelligence.pdf" target="_blank">Paper</a>
       <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong></p>
 
       <h2>Part I: Understanding as Compression</h2>
@@ -469,7 +486,7 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <table>
         <tr><th>Phase</th><th>Capability</th><th>Formula term</th><th>Milestone</th></tr>
         <tr><td><strong>Current</strong></td><td>Fixed $\theta$, variable $z$ (CoT)</td><td>Level 1 only</td><td>GPT-4, R1</td></tr>
-        <tr><td rowspan="2" style="border-bottom:1px solid #e0e0e0;"><strong>Near</strong></td><td>Minimize $L(z)$: efficient reasoning</td><td>$L(z) \downarrow$</td><td>Reasoning distillation, learned chunking</td></tr>
+        <tr><td rowspan="2" style="border-bottom:1px solid var(--border-soft);"><strong>Near</strong></td><td>Minimize $L(z)$: efficient reasoning</td><td>$L(z) \downarrow$</td><td>Reasoning distillation, learned chunking</td></tr>
         <tr><td>Continuous learning: online $\Delta\theta$</td><td>$\Delta\theta$ at Levels 1-3</td><td>Multi-timescale memory, no catastrophic forgetting</td></tr>
         <tr><td><strong>Medium</strong></td><td>Self-model: autonomous improvement</td><td>$\hat{\mathcal{E}}_{\text{self}} \to \Delta\theta$</td><td>Self-diagnosing, self-improving agents</td></tr>
       </table>
@@ -492,7 +509,6 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <h1>On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification</h1>
       <span class="paper-tag tag-ai">ICLR 2026</span>
       <span class="paper-tag tag-ai">arXiv &middot; 7 Aug 2025</span>
-      <a class="paper-btn" href="../_ICLR2026__On_the_Generalization_of_SFT_Camera_Ready.pdf" target="_blank">Paper</a>
       <a class="paper-btn" href="https://arxiv.org/abs/2508.05629" target="_blank">arXiv</a>
       <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;">Yongliang Wu, Yizhou Zhou, <strong>Zhou Ziheng</strong>, Yingzhe Peng, Xinyu Ye, Xinting Hu, Wenbo Zhu, Lu Qi, Ming-Hsuan Yang, Xu Yang</p>
 
@@ -548,9 +564,9 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
       <p>On hard benchmarks where <strong>SFT actually degrades</strong> performance, DFT still improves:</p>
       <table>
         <tr><th>Benchmark</th><th>Base</th><th>SFT</th><th>DFT</th></tr>
-        <tr><td>OlympiadBench (1.5B)</td><td>15.88</td><td>12.63 <span style="color:#c0392b;">(-3.25)</span></td><td><strong>27.08</strong> <span style="color:#27ae60;">(+11.20)</span></td></tr>
-        <tr><td>AIME24 (7B)</td><td>6.68</td><td>2.48 <span style="color:#c0392b;">(-4.20)</span></td><td><strong>8.56</strong> <span style="color:#27ae60;">(+1.88)</span></td></tr>
-        <tr><td>AMC23 (1.5B)</td><td>19.38</td><td>18.75 <span style="color:#c0392b;">(-0.63)</span></td><td><strong>38.13</strong> <span style="color:#27ae60;">(+18.75)</span></td></tr>
+        <tr><td>OlympiadBench (1.5B)</td><td>15.88</td><td>12.63 <span style="color:var(--accent);">(-3.25)</span></td><td><strong>27.08</strong> <span style="color:#3d7068;">(+11.20)</span></td></tr>
+        <tr><td>AIME24 (7B)</td><td>6.68</td><td>2.48 <span style="color:var(--accent);">(-4.20)</span></td><td><strong>8.56</strong> <span style="color:#3d7068;">(+1.88)</span></td></tr>
+        <tr><td>AMC23 (1.5B)</td><td>19.38</td><td>18.75 <span style="color:var(--accent);">(-0.63)</span></td><td><strong>38.13</strong> <span style="color:#3d7068;">(+18.75)</span></td></tr>
       </table>
 
       <h3>vs. Offline RL Methods</h3>
@@ -601,11 +617,124 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
 }</div>
     </div>
 
+    <!-- ==================== ESR ==================== -->
+    <div class="paper-page" id="page-esr">
+      <h1>Less is More: Early Stopping Rollout for On-Policy Distillation</h1>
+      <span class="paper-tag tag-ai">Preprint</span>
+      <span class="paper-tag tag-ai">arXiv &middot; 26 May 2026</span>
+      <a class="paper-btn" href="https://arxiv.org/abs/2605.27028" target="_blank">arXiv</a>
+      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong>, Jiaqi Li, Huacong Tang, Ying Nian Wu, Demetri Terzopoulos</p>
+
+      <h2>Abstract</h2>
+      <p>On-policy distillation (OPD) trains a student by scoring its own rollouts with a teacher model. We observe an <strong>&ldquo;Off-policy Teacher Decay&rdquo;</strong> problem in this paradigm: for later tokens, the student's earlier trajectory becomes context that is off-policy to the teacher, so the teacher's ability to produce a corrective score decays and it falls back to token-completion behavior learned during pre-training. We propose <strong>Early Stopping Rollout (ESR)</strong> to fix it: simply restrict the rollout generation to the first $N$ response tokens. ESR surpasses full-rollout OPD across model size, family, task, and training regime, while being far more GPU-efficient and training-stable &mdash; especially in cross-family settings. We further identify the <em>Cascading Alignment</em> and <em>Sub-mode Commitment</em> effects that explain why it works, and show that this position-based selection cannot be explained away by KL divergence or entropy signals.</p>
+
+      <h2>Problem: Off-Policy Teacher Decay</h2>
+      <p>In OPD the teacher scores the student's rollout at each position $t$, and the loss is averaged <em>uniformly</em> across positions. This assumes that after conditioning on the student's partial trajectory, the teacher can still give a useful corrective signal. But as $t$ grows, the student prefix drifts away from the teacher's own high-probability reasoning regions &mdash; the teacher is no longer reasoning from its natural state, it is merely <em>completing</em> someone else's off-policy text.</p>
+
+      <p>We measure this with the teacher's <strong>recoverability gap</strong> after conditioning on a student-generated prefix:</p>
+      <div class="key-eq">$$\Delta_{\mathrm{decay}}(t) = A_T(x) - A_T(x \mid y^{S}_{&lt;t})$$</div>
+      <p>where $A_T(x)$ is the teacher's accuracy solving from the original prompt, and $A_T(x \mid y^{S}_{&lt;t})$ its accuracy continuing from a length-$t$ student prefix.</p>
+
+      <div class="highlight-box">
+        <strong>The decay is real and large.</strong> On MATH-500, feeding the teacher a student-generated prefix drops its avg@4 accuracy from an unconditional <strong>65.30%</strong> baseline to <strong>62.70%</strong> at $N{=}100$, and further to <strong>51.75%</strong> at $N{=}300$ &mdash; approaching the <em>student's</em> baseline. Late-position teacher scores are not independent assessments of the problem; they reflect how the teacher continues a trajectory the student already committed to.
+      </div>
+
+      <figure>
+        <img src="static/images/esr/motivation_prefix_curve.png" alt="Teacher accuracy decays as the student-generated prefix grows longer">
+        <figcaption>Teacher accuracy decays monotonically as it is conditioned on longer student-generated prefixes, approaching the student baseline. Uniformly weighting all token positions in OPD gives undue emphasis to regions where the teacher signal is no longer corrective.</figcaption>
+      </figure>
+
+      <h2>Method: Early Stopping Rollout (ESR)</h2>
+      <p>Standard on-policy reverse-KL distillation computes the loss over the student's entire response $\mathbf{y} = (y_1, \ldots, y_T)$:</p>
+      <div class="key-eq">$$\mathcal{L}_{\text{full}} = \mathbb{E}_{\mathbf{y} \sim \pi_s(\cdot \mid x)} \left[ \sum_{t=1}^{T} \mathrm{KL}\bigl(\pi_s(\cdot \mid x, \mathbf{y}_{&lt;t}) \,\|\, \pi_t(\cdot \mid x, \mathbf{y}_{&lt;t})\bigr) \right]$$</div>
+      <p>ESR truncates the rollout to its first $N$ tokens ($N \ll T$) and computes the loss over exactly those tokens:</p>
+      <div class="key-eq">$$\mathcal{L}_{\text{ESR}}(N) = \mathbb{E}_{\mathbf{y} \sim \pi_s,\,|\mathbf{y}|\le N}\sum_{t=1}^{|\mathbf{y}|} \mathrm{KL}\bigl(\pi_s(\cdot \mid x, \mathbf{y}_{&lt;t}) \,\|\, \pi_t(\cdot \mid x, \mathbf{y}_{&lt;t})\bigr)$$</div>
+      <p>If the student emits EOS before position $N$, the rollout terminates naturally. <strong>Everything else</strong> &mdash; generation temperature, LoRA target modules, optimizer, scorer &mdash; is unchanged from the standard on-policy KD loop.</p>
+
+      <h2>Results</h2>
+      <div class="results-row">
+        <div class="result-card"><div class="num">24&times;</div><div class="label">wall-clock speedup</div></div>
+        <div class="result-card"><div class="num">2.6&times;</div><div class="label">less peak GPU memory</div></div>
+        <div class="result-card"><div class="num">1.5B&ndash;32B</div><div class="label">student scales covered</div></div>
+        <div class="result-card"><div class="num">0</div><div class="label">collapses (OPD collapses often)</div></div>
+      </div>
+
+      <h3>Better across families, generations, and sizes</h3>
+      <p>Across every cell of the main table, ESR matches or beats OPD's best score, and surpasses the teacher reference in many. In the same-family same-generation setting full-rollout OPD sometimes falls <em>below</em> the student's original performance (Qwen 1.7B, 14B), while ESR always improves. In cross-family settings full-rollout OPD collapses most of the time; ESR degrades nowhere. It also holds across tasks (MATH-500, HumanEval, BFCL) and both LoRA and full fine-tuning.</p>
+
+      <h3>Efficiency</h3>
+      <table>
+        <tr><th>Metric</th><th>Method</th><th>Teacher scoring</th><th>Student generation</th><th>Student training</th><th>Total</th></tr>
+        <tr><td rowspan="3">Per-step wall time</td><td>ESR</td><td>1 s</td><td>5 s</td><td>2 s</td><td><strong>8 s</strong></td></tr>
+        <tr><td>OPD</td><td>7 s</td><td>180 s</td><td>7 s</td><td><strong>194 s</strong></td></tr>
+        <tr><td>Speedup</td><td>7&times;</td><td>36&times;</td><td>3.5&times;</td><td><strong>24&times;</strong></td></tr>
+        <tr><td rowspan="3">Peak GPU memory</td><td>ESR</td><td>7.3 G</td><td>7.2 G</td><td>9.6 G</td><td><strong>24.1 G</strong></td></tr>
+        <tr><td>OPD</td><td>14.9 G</td><td>8.9 G</td><td>39.5 G</td><td><strong>63.3 G</strong></td></tr>
+        <tr><td>Savings</td><td>2.0&times;</td><td>1.2&times;</td><td>4.1&times;</td><td><strong>2.6&times;</strong></td></tr>
+      </table>
+      <p>The dominant cost in OPD is autoregressive generation (180 s/step for ~1000-token sequences); ESR generates only $N{=}100$ tokens (5 s/step). With ESR, student and teacher fit comfortably on a single A6000.</p>
+
+      <h3>Choosing $N$</h3>
+      <figure>
+        <img src="static/images/esr/fig_n_sweep.png" alt="Sweeping the cutoff N">
+        <figcaption>Sweeping $N$ on MATH-500 reveals a robust region: performance is already as good from $N{=}50$ and stays stable to $N{=}200$. The exception is the cross-family setting, which is sensitive (stable at 50 tokens but not 100) &mdash; the larger the teacher&ndash;student gap, the more off-policy the prefix, and the more the decay bites. This itself corroborates the Off-Policy Teacher Decay diagnosis.</figcaption>
+      </figure>
+
+      <h2>Why Does It Work?</h2>
+
+      <h3>1. The Cascading Alignment Effect</h3>
+      <p>If we never train on late tokens, can the student still learn the teacher's behavior there? Yes. Even training on only the first $N$ tokens, <strong>per-position KL beyond the $[0, N]$ region still drops by 30&ndash;40%</strong>. The student picks up the teacher's &ldquo;global mindset&rdquo; from the beginning tokens alone.</p>
+      <p>Why? Because early tokens are where <em>problem framing and strategic planning</em> live. On a representative MATH-500 trajectory, the first 100 tokens set up the geometry, name the unknown, and identify the key relationship &mdash; the choices that determine whether the rollout succeeds. The last 100 tokens merely execute algebra that any solver can finish once the strategy is fixed.</p>
+      <figure>
+        <img src="static/images/esr/kl_cascade_curves.png" alt="The convergence cascade">
+        <figcaption>Per-position KL between distilled student and teacher, before vs. after ESR training. Only positions $[0, 100]$ receive training loss &mdash; yet positions 100+ , which see no direct training signal, drop to the same KL as the trained region. Alignment on the early window cascades through the autoregressive rollout.</figcaption>
+      </figure>
+
+      <h3>2. The Sub-mode Commitment Effect &mdash; beating the teacher</h3>
+      <p>ESR-trained students frequently <em>exceed the teacher</em>. Isn't the teacher supposed to be an upper bound? We attribute this to the mode-seeking nature of reverse KL $\mathrm{KL}(\pi_s \| \pi_t)$: it penalizes the student for putting mass on tokens the teacher does not support, but <em>not</em> for concentrating mass on a single supported token. The student can therefore land on a sub-mode of the teacher that is actually better &mdash; supervising only the planning-rich early window lets it commit to a non-argmax but teacher-supported mode while keeping its own succinct style.</p>
+      <figure>
+        <img src="static/images/esr/mode_seeking_schematic.png" alt="Mode-seeking behavior of reverse KL">
+        <figcaption>Reverse KL is mode-seeking: the student may concentrate on a teacher-supported sub-mode that outperforms the teacher's own averaged behavior.</figcaption>
+      </figure>
+
+      <h3>3. Position is an independent axis &mdash; not a proxy for KL or entropy</h3>
+      <p>Early positions happen to have <em>both</em> high student&ndash;teacher KL and high token entropy. So is ESR just a crude proxy for picking high-KL or high-entropy tokens? We tested every such selector, each picking the same budget of 100 tokens but ignoring position:</p>
+      <figure>
+        <img src="static/images/esr/three_curves_by_position.png" alt="Entropy and KL by position">
+        <figcaption>Early positions are simultaneously high in student entropy, teacher entropy, and KL divergence &mdash; which is exactly why a saliency-based explanation is tempting.</figcaption>
+      </figure>
+      <table>
+        <tr><th>Selection method (N = 100 tokens)</th><th>MATH-500 avg@4</th></tr>
+        <tr><td><strong>ESR</strong> (first 100 positions)</td><td><strong>65.85</strong></td></tr>
+        <tr><td>OPD (full rollout)</td><td>62.35</td></tr>
+        <tr><td>Top-RKL</td><td>53.35</td></tr>
+        <tr><td>Top-$H_t$ (teacher entropy)</td><td>63.30</td></tr>
+        <tr><td>Top-$H_s$ (student entropy)</td><td>62.70</td></tr>
+        <tr><td>RKL $\cdot$ $H_s$</td><td>56.90</td></tr>
+        <tr><td>$H_t \cdot H_s$ (product)</td><td>55.35</td></tr>
+        <tr><td>RKL $\cdot$ $H_t \cdot$ $H_s$ (triple product)</td><td>57.90</td></tr>
+      </table>
+      <p>Qwen2.5-Math-1.5B $\to$ Qwen3-1.7B, LoRA. No-distillation baseline: 50.95%.</p>
+      <div class="highlight-box">
+        <strong>All of them underperform ESR, and most underperform even plain OPD.</strong> Most strikingly, top-KL selection &mdash; the direct measure of loss magnitude &mdash; barely works, improving the baseline by only ~3 points, <em>even though those 100 tokens carry ~93% of the entire trajectory's loss</em>. Tokens with the largest signal are not the tokens with the most <em>effective</em> signal. Position is a load-bearing axis in its own right.
+      </div>
+
+      <h2>Limitations</h2>
+      <p>Students are assumed to be instruction-tuned models that already possess basic reasoning ability, not pre-trained-only models. Experiments focus on small open-source models (&lt;100B) fine-tuned for a specific task under a limited data budget; whether the story holds at industrial scale (trillion-parameter models, millions of trajectories) remains unclear &mdash; full-rollout OPD may well win there. Multi-modality and long-horizon tasks, which may exhibit different positional signal-quality patterns, are untested.</p>
+
+      <div class="cite-block"><h3>BibTeX</h3>@article{zhou2026esr,
+  title   = {Less is More: Early Stopping Rollout for On-Policy Distillation},
+  author  = {Zhou, Ziheng and Li, Jiaqi and Tang, Huacong and Wu, Ying Nian and Terzopoulos, Demetri},
+  journal = {arXiv preprint arXiv:2605.27028},
+  year    = {2026},
+  url     = {https://josephzz.github.io/academic-work/#esr}
+}</div>
+    </div>
+
     <!-- ==================== OCWM ==================== -->
     <div class="paper-page" id="page-ocwm">
       <h1>A Hybrid Approach to Video World Modeling: Bridging Pixel and Latent Spaces</h1>
       <span class="paper-tag tag-ai">Preprint &middot; December 2024</span>
-      <a class="paper-btn" href="../Object_Centric_World_Model.pdf" target="_blank">Paper</a>
       <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong> et al.</p>
 
 
@@ -740,15 +869,14 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
     </div>
 
     <!-- ==================== SciCrafter ==================== -->
-    <div class="paper-page" id="page-scicrafter" style="padding:0;">
-      <iframe src="scicrafter/index.html" style="width:100%;height:100vh;border:none;"></iframe>
+    <div class="paper-page embed" id="page-scicrafter">
+      <iframe src="scicrafter/index.html"></iframe>
     </div>
 
     <!-- ==================== WHO IS US ==================== -->
     <div class="paper-page" id="page-whoisus">
       <h1>"Who Is Us" &mdash; A Generative Theory of Moral Psychology from Group Boundary Dynamics</h1>
       <span class="paper-tag tag-theory">Working Paper &middot; Morality</span>
-      <a class="paper-btn" href="../who_is_us_paper.pdf" target="_blank">Paper</a>
       <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong></p>
 
       <h2>Abstract</h2>
@@ -859,7 +987,6 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
     <div class="paper-page" id="page-globalpt">
       <h1>Global Prefix-Tuning for Alignment</h1>
       <span class="paper-tag tag-ai">arXiv &middot; 9 Dec 2023</span>
-      <a class="paper-btn" href="../Global_Prefix_Token.pdf" target="_blank">Paper</a>
       <a class="paper-btn" href="https://arxiv.org/abs/2312.05503" target="_blank">arXiv</a>
       <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong>, Yingnian Wu, Song-Chun Zhu, Demetri Terzopoulos</p>
 
@@ -922,208 +1049,19 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
     </div>
 
     <!-- ==================== ROLE-BASED ==================== -->
-    <div class="paper-page" id="page-rolebased">
-      <h1>Simple Role Assignment is Extraordinarily Effective for Safety Alignment</h1>
-      <span class="paper-tag tag-ai">Under Review for ACL</span>
-      <span class="paper-tag tag-ai">arXiv &middot; 20 Jan 2026</span>
-      <a class="paper-btn" href="../role_based_alignment.pdf" target="_blank">Paper</a>
-      <a class="paper-btn" href="https://arxiv.org/abs/2602.00061" target="_blank">arXiv</a>
-      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong>, Jiakun Ding, Zhaowei Zhang, Ruosen Gao, Yingnian Wu, Demetri Terzopoulos, Yipeng Kang, Fangwei Zhong, Junqi Wang</p>
-
-      <h2>Abstract</h2>
-      <p>Principle-based alignment methods rely on fixed sets of values that are inherently incomplete and lack context sensitivity. From Theory of Mind perspective, this could be attributed to lacking a belief or cognition model. To address this gap, we find that simple role conditioning can function as a compact and expressive alternative: social roles (e.g., mother, judge) implicitly encode both relevant values and the cognitive schemas required to apply them. We formalize this perspective and show that, in the ideal case, roles could be theoretically more expressive than principle lists. Concretely, we introduce a simple, training-free test-time pipeline consisting of a role-conditioned generator and lightweight role-based critics for iterative refinement. Extensive evaluations across five model families and multiple safety benchmarks demonstrate that our approach consistently outperforms principle-based, Chain-of-Thought (CoT), and hybrid baselines. Notably, it achieves substantial safety improvements, reducing unsafe outputs from 81.4% down to 3.6% on the WildJailbreak benchmark with DeepSeek-V3.</p>
-
-      <h2>Motivation</h2>
-      <p>Principle-based alignment methods rely on fixed sets of values that are inherently incomplete and lack context sensitivity. From a Theory of Mind (ToM) perspective, this can be attributed to lacking a belief/cognition model. We find that <strong>simple role conditioning</strong> functions as a compact and expressive alternative: social roles (e.g., mother, judge) implicitly encode both relevant values <em>and</em> the cognitive schemas required to apply them.</p>
-
-      <h2>Formulation: Roles as Compact Value Carriers</h2>
-      <p>Following ToM, an aligned response $y_i^*$ in context $x_i$ should be modeled as:</p>
-      <div class="key-eq">$$y_i^* \mid x_i \sim P(y_i \mid x_i, v^*, c^*)$$</div>
-      <p>where $v^*$ denotes the relevant values and $c^*$ the appropriate contextual cognition. Principle-based methods only provide $v^p$ (fixed principles) without cognition:</p>
-      <div class="key-eq">$$f_p(x_i) \sim P(y \mid v^p, x_i)$$</div>
-      <p>Role-based conditioning induces <em>both</em> values and cognition naturally:</p>
-      <div class="key-eq">$$f_r(x_i) \sim P(y_i \mid r, x_i) = P(y_i \mid v_i^r, c_i^r, x_i)$$</div>
-      <p>Since values and cognition are latent variables, <strong>roles are a latent variable of latent variables</strong> &mdash; providing a more compact signal for guiding alignment. In the ideal case, role conditioning provably dominates principle-based formulation:</p>
-      <div class="key-eq">$$P(y_i^* \mid v_p, x_i) < P(y_i^* \mid v_i^*, c_{\text{dummy}}, x_i) < P(y_i^* \mid v_i^*, c_i^*, x_i) = P(y_i^* \mid r^*, x_i)$$</div>
-
-      <h2>Method: Role-Conditioned Generation + Role-Based Critics</h2>
-      <p>A minimal, training-free, test-time pipeline: (1) a <strong>generator</strong> conditioned by a role specification (system prompt), and (2) a set of <strong>role-based critics</strong> that iteratively accept or revise the output. Roles are drawn from a "guardianship" repertoire (e.g., mother, principal, judge).</p>
-      <p>Each critic $C_r$ evaluates the current output: $C_r(y_t \mid x) \in \{0,1\}$. If rejected, the critic provides feedback $f_t$, and the generator updates: $y_{t+1} = E(y_t, f_t, x)$. The loop terminates when all critics accept or $T_{\max}$ is reached.</p>
-
-      <figure>
-        <img src="static/images/rolebased_pipeline.png" alt="Role-based alignment pipeline">
-        <figcaption>Method pipeline: role-conditioned generator + role-based critics for iterative refinement. The system prompt template uses a bare minimum role specification (e.g., "mother", "principal") &mdash; differing by only 1-3 words.</figcaption>
-      </figure>
-
-      <h2>Main Results (5 Models &times; 5 Benchmarks)</h2>
-      <p>Across five model families (Qwen3-8B, Gemma3-12B-IT, DeepSeek-V3, Gemini-2.5-Flash, Qwen3-235B), our approach with just two roles ("mother" + "principal") <strong>consistently outperforms</strong> all baselines:</p>
-      <div class="results-row">
-        <div class="result-card"><div class="num">81.4% &rarr; 3.6%</div><div class="label">unsafe rate, DeepSeek-V3<br>(WildJailbreak)</div></div>
-        <div class="result-card"><div class="num">3.0%</div><div class="label">unsafe rate, Qwen3-235B<br>(best overall)</div></div>
-        <div class="result-card"><div class="num">0</div><div class="label">training required<br>(test-time only)</div></div>
-      </div>
-
-      <table>
-        <tr><th>Model</th><th>Method</th><th>WJ $\downarrow$</th><th>SB $\uparrow$</th><th>SE $\uparrow$</th><th>GD $\downarrow$</th><th>HQ $\uparrow$</th></tr>
-        <tr><td rowspan="4"><strong>DeepSeek-V3</strong></td><td>Base</td><td>81.40</td><td>45.33</td><td>40.00</td><td>14.00</td><td>81.20</td></tr>
-        <tr><td>Principle(+critic)</td><td>32.00</td><td>78.00</td><td>80.50</td><td>2.00</td><td>100.00</td></tr>
-        <tr><td>CoT-6</td><td>33.00</td><td>73.00</td><td>62.00</td><td>0.00</td><td>96.40</td></tr>
-        <tr style="background:#fef9ee;font-weight:600;"><td>Ours(+critic)</td><td><strong>3.60</strong></td><td><strong>84.00</strong></td><td><strong>82.00</strong></td><td><strong>0.00</strong></td><td>98.20</td></tr>
-        <tr><td rowspan="4"><strong>Qwen3-235B</strong></td><td>Base</td><td>34.80</td><td>45.00</td><td>82.00</td><td>4.00</td><td>100.00</td></tr>
-        <tr><td>Principle(+critic)</td><td>13.60</td><td>77.67</td><td>95.00</td><td>1.00</td><td>100.00</td></tr>
-        <tr><td>CoT-6</td><td>7.00</td><td>73.00</td><td>90.00</td><td>0.00</td><td>100.00</td></tr>
-        <tr style="background:#fef9ee;font-weight:600;"><td>Ours(+critic)</td><td><strong>3.00</strong></td><td><strong>93.67</strong></td><td><strong>96.50</strong></td><td><strong>0.00</strong></td><td><strong>100.00</strong></td></tr>
-        <tr><td rowspan="4"><strong>Gemini-2.5-Flash</strong></td><td>Base</td><td>57.94</td><td>20.47</td><td>30.00</td><td>10.00</td><td>98.80</td></tr>
-        <tr><td>Principle(+critic)</td><td>18.60</td><td>61.69</td><td>78.50</td><td>0.00</td><td>100.00</td></tr>
-        <tr><td>CoT-6</td><td>14.80</td><td>60.81</td><td>69.00</td><td>0.00</td><td>100.00</td></tr>
-        <tr style="background:#fef9ee;font-weight:600;"><td>Ours(+critic)</td><td><strong>9.75</strong></td><td><strong>86.30</strong></td><td><strong>88.00</strong></td><td><strong>0.00</strong></td><td><strong>100.00</strong></td></tr>
-      </table>
-      <p><small>WJ = WildJailbreak, SB = SaladBench, SE = SafeEdit, GD = GMSDanger, HQ = HarmfulQA. Full results across all 5 models in paper.</small></p>
-
-      <h2>Role Selection</h2>
-      <p>Top-performing roles are predominantly <strong>guardians of children and students</strong> ("mother", "principal"), aligning with the intuition that content safe for children is generally safe. Concrete roles outperform abstract ones ("mother" > "parent"), supporting that concrete terminology yields better value understanding in LLMs.</p>
-
-      <figure>
-        <img src="static/images/rolebased_role_selection.png" alt="Role selection experiments">
-        <figcaption>Role combination performance across settings. The combination "mother" + "principal" with role-based critics consistently emerged as the strongest option.</figcaption>
-      </figure>
-
-      <h2>Ablation Studies</h2>
-      <div style="display:flex;gap:16px;flex-wrap:wrap;">
-        <figure style="flex:1;min-width:280px;">
-          <img src="static/images/rolebased_effect_roles.png" alt="Effect of number of roles">
-          <figcaption>Effect of number of roles: performance improves monotonically but the biggest gain is from 1&rarr;2 roles (83.7%&rarr;85.8%). Diminishing returns after.</figcaption>
-        </figure>
-        <figure style="flex:1;min-width:280px;">
-          <img src="static/images/rolebased_effect_iterations.png" alt="Effect of iterations">
-          <figcaption>Effect of critic iterations: substantial improvement at iteration 1, modest gains through iteration 3, then plateau.</figcaption>
-        </figure>
-      </div>
-
-      <h2>Exploratory: Agentic Safety &amp; Method Synergy</h2>
-      <div style="display:flex;gap:16px;flex-wrap:wrap;">
-        <figure style="flex:1;min-width:280px;">
-          <img src="static/images/rolebased_blackmail_new.png" alt="Agentic blackmail benchmark">
-          <figcaption>Anthropic agentic safety benchmark: role conditioning alone reduces blackmail rates to 11% (affair) and 8% (bribery) from 65% and 36% base.</figcaption>
-        </figure>
-        <figure style="flex:1;min-width:280px;">
-          <img src="static/images/rolebased_method_comb.png" alt="Method combination">
-          <figcaption>Synergy with existing methods: combining roles with principle-based or CoT methods outperforms each used independently.</figcaption>
-        </figure>
-      </div>
-
-      <div class="highlight-box">
-        <strong>Connection to "Who Is Us":</strong> Roles are compressed representations of $(\theta_b, \theta_w, \theta_s)$ &mdash; specifying a role implicitly specifies a moral boundary, weighting, and evaluation context. Safety doesn't require hard-coded rules; by specifying a role (= a "who is us" perspective), the model naturally aligns its behavior. This is not filtering or guardrailing &mdash; it's shifting the model's value perspective.
-      </div>
-
-      <div class="cite-block"><h3>Cite</h3>@article{zhou2026rolesafety,
-  title   = {Simple Role Assignment is Extraordinarily Effective for Safety Alignment},
-  author  = {Zhou, Ziheng and Ding, Jiakun and Zhang, Zhaowei and Gao, Ruosen and Wu, Yingnian and Terzopoulos, Demetri and Kang, Yipeng and Zhong, Fangwei and Wang, Junqi},
-  journal = {arXiv preprint arXiv:2602.00061},
-  year    = {2026},
-  url     = {https://josephzz.github.io/academic-work/#rolebased}
-}</div>
+    <div class="paper-page embed" id="page-rolebased">
+      <iframe src="https://josephzz.github.io/Role-Based-LLM-Alignment/"></iframe>
     </div>
 
     <!-- ==================== SOCIAL EVOL ==================== -->
-    <div class="paper-page" id="page-socialevol">
-      <h1>An LLM-based Agent Simulation Approach to Study Moral Evolution</h1>
-      <span class="paper-tag tag-ai">Under Review for ACL</span>
-      <span class="paper-tag tag-ai">COLM 2025 Social Simulation Workshop</span>
-      <span class="paper-tag tag-ai">arXiv &middot; 22 Sep 2025</span>
-      <a class="paper-btn" href="../An_LLM_based_Agent_Simulation_Approach_to_Study_Moral_Evolution.pdf" target="_blank">Paper</a>
-      <a class="paper-btn" href="https://arxiv.org/abs/2509.17703" target="_blank">arXiv</a>
-      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong>, Huacong Tang, Mingjie Bi, Yipeng Kang, Wanying He, Fang Sun, Yizhou Sun, Yingnian Wu, Demetri Terzopoulos, Fangwei Zhong</p>
-
-      <h2>Abstract</h2>
-      <p>The evolution of morality presents a puzzle: natural selection should favor self-interest, yet humans developed moral systems promoting altruism. We address this question by introducing a novel Large Language Model (LLM)-based agent simulation framework modeling prehistoric hunter-gatherer societies. This platform is designed to probe diverse questions in social evolution, from survival advantages to inter-group dynamics. To investigate moral evolution, we designed agents with varying moral dispositions based on the Expanding Circle Theory. We evaluated their evolutionary success across a series of simulations and analyzed their decision-making in specially designed moral dilemmas. These experiments reveal how an agent's moral framework, in combination with its cognitive constraints, directly shapes its behavior and determines its evolutionary outcome. Crucially, the emergent patterns echo seminal theories from related domains of social science, providing external validation for the simulations. This work establishes LLM-based simulation as a powerful new paradigm to complement traditional research in evolutionary biology and anthropology.</p>
-
-      <h2>The Puzzle</h2>
-      <p>Natural selection should favor self-interest, yet humans developed complex moral systems promoting altruism. Under what conditions does morality provide an evolutionary advantage? Prior methods (game theory, anthropology) abstract away cognitive complexity. We use <strong>LLM-based agent simulation</strong> to model agents with sophisticated cognition, values, memory, perception, and social dynamics in a prehistoric hunter-gatherer environment.</p>
-
-      <h2>Framework Overview</h2>
-      <figure>
-        <img src="static/images/moralevol_framework_full.png" alt="Social-Evol framework overview">
-        <figcaption>Overview of the simulation framework. The <strong>Environment</strong> (Social-Evol) follows defined temporal dynamics. The <strong>Agent Cognitive Architecture</strong> (MoRE) includes moral value module, perception, entity-based memory, judgment, action planning, and reflection. The <strong>Analysis Assistant</strong> automatically generates statistical reports.</figcaption>
-      </figure>
-
-      <h2>Agent Cognitive Architecture (MoRE)</h2>
-      <p>Based on Expanding Circle Theory, we define <strong>4 moral types</strong> with different boundary configurations:</p>
-      <table>
-        <tr><th>Moral Type</th><th>$\theta_b$ Scope</th><th>Behavioral Strategy</th></tr>
-        <tr><td><strong>Self-focused</strong></td><td>$\mathcal{S} = \emptyset$</td><td>Invest in reproduction but no offspring care (r-selected). Pure self-preservation.</td></tr>
-        <tr><td><strong>Kin-focused</strong></td><td>$\mathcal{S}$ = family</td><td>Extend moral concern to genetic relatives. Treat non-kin instrumentally.</td></tr>
-        <tr><td><strong>Reciprocal group</strong></td><td>$\mathcal{S}$ = reciprocators</td><td>Extend care only to those who reciprocate. Punish defectors.</td></tr>
-        <tr><td><strong>Universal group</strong></td><td>$\mathcal{S}$ = everyone</td><td>Care for all regardless of their morality. Strict non-violence.</td></tr>
-      </table>
-
-      <h2>Environment: Social-Evol</h2>
-      <p>A text-based prehistoric hunter-gatherer society with:</p>
-      <ul>
-        <li><strong>Survival mechanics:</strong> HP depletes over time; replenished by collecting plants (low risk) or hunting animals (high risk, high reward, incentivizes cooperation)</li>
-        <li><strong>Reproduction:</strong> Agents meeting age/HP thresholds reproduce; offspring start with minimal HP, requiring parental investment</li>
-        <li><strong>Social interactions:</strong> Allocate (share HP), Communicate, Rob, Fight &mdash; no artificial punishment for antisocial behavior</li>
-        <li><strong>Two game modes:</strong> Evolutionary games (full simulation until all die) and Mini-games (controlled moral dilemmas)</li>
-      </ul>
-
-      <h2>Results: Evolutionary Games</h2>
-      <p>Three key scenarios reveal how environmental conditions shape which moral dispositions survive:</p>
-
-      <h3>Baseline (low cost, visible moral types)</h3>
-      <figure>
-        <img src="static/images/moralevol_pop_baseline.png" alt="Population dynamics - baseline">
-        <figcaption>Baseline: <strong>Kin-focused agents dominate</strong>. They avoid resource distribution conflicts and rapidly produce offspring early in the simulation.</figcaption>
-      </figure>
-
-      <h3>High Social Interaction Cost</h3>
-      <figure>
-        <img src="static/images/moralevol_pop_highcost.png" alt="Population dynamics - high cost">
-        <figcaption>High interaction cost: <strong>Selfish agents take over</strong>. Moral agents spend excessive time negotiating collaboration terms, allowing selfish agents to exploit this delay.</figcaption>
-      </figure>
-
-      <h3>Invisible Moral Types</h3>
-      <figure>
-        <img src="static/images/moralevol_pop_invisible.png" alt="Population dynamics - invisible moral">
-        <figcaption>Hidden moral types: Both <strong>kin-focused and universal moral agents survive</strong>. Universal agents persist because strict non-violence minimizes misinterpretation risk. Reciprocal agents are mistaken for selfish ones and suffer exclusion.</figcaption>
-      </figure>
-
-      <h2>Validation</h2>
-      <div style="display:flex;gap:16px;flex-wrap:wrap;">
-        <figure style="flex:1;min-width:280px;">
-          <img src="static/images/moralevol_hp_action.png" alt="HP trajectories with actions">
-          <figcaption>HP trajectories of example agents, annotated with actions. A kin-focused parent frequently shares HP with offspring, eventually dying from resource depletion after third reproduction.</figcaption>
-        </figure>
-        <figure style="flex:1;min-width:280px;">
-          <img src="static/images/moralevol_confusion.png" alt="Moral type inference confusion matrix">
-          <figcaption>Confusion matrix: GPT-4.1 infers agents' moral types from observed behaviors with high accuracy (std &lt; 0.02), validating morality-behavior consistency.</figcaption>
-        </figure>
-      </div>
-
-      <h2>Mini-Game: Family Resource Allocation</h2>
-      <p>Controlled experiments on intergenerational resource transfer between parents and children across all moral types:</p>
-      <figure>
-        <img src="static/images/moralevol_heatmaps.png" alt="Resource allocation heatmaps">
-        <figcaption>Allocation heatmaps across moral types and life stages. X-axis = parent HP, Y-axis = child HP, color = amount transferred. <strong>Kin-focused parents sacrifice nearly all HP for offspring survival</strong>; selfish parents hoard resources for self-preservation.</figcaption>
-      </figure>
-
-      <div class="highlight-box">
-        <strong>Connection to "Who Is Us":</strong> This paper directly simulates the evolutionary dynamics of $\theta_b$ (moral boundary parameter). Results confirm: (1) kin-focused morality ($\theta_b$ = family) is the most evolutionarily stable under baseline conditions; (2) universal morality requires low-cost interactions to be viable; (3) environmental pressure (resource scarcity, interaction cost) shifts the optimal boundary. These findings provide computational evidence for the stable boundary expansion conditions in the "Who Is Us" framework.
-      </div>
-
-      <div class="cite-block"><h3>Cite</h3>@article{zhou2025moralevolution,
-  title   = {An LLM-based Agent Simulation Approach to Study Moral Evolution},
-  author  = {Zhou, Ziheng and Tang, Huacong and Bi, Mingjie and Kang, Yipeng and He, Wanying and Sun, Fang and Sun, Yizhou and Wu, Ying Nian and Terzopoulos, Demetri and Zhong, Fangwei},
-  journal = {arXiv preprint arXiv:2509.17703},
-  year    = {2025},
-  url     = {https://josephzz.github.io/academic-work/#socialevol}
-}</div>
+    <div class="paper-page embed" id="page-socialevol">
+      <iframe src="https://moralagentsim.github.io/"></iframe>
     </div>
 
     <!-- ==================== FAIRNESS ==================== -->
     <div class="paper-page" id="page-fairness">
       <h1>Fairness Consensus Among Simulated Agents</h1>
-      <span class="paper-tag tag-ai">Under Review for ACL</span>
-      <a class="paper-btn" href="../towards_arriving_consensus_over_fairness_among_simulated_cognitive_agents.pdf" target="_blank">Paper</a>
+      <span class="paper-tag tag-ai">ICLR 2026 Workshop AFAA</span>
       <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong> et al.</p>
 
       <h2>Abstract</h2>
@@ -1181,7 +1119,6 @@ body { font-family: var(--font-sans); color: var(--text); background: var(--bg);
     <div class="paper-page" id="page-aiethics">
       <h1>A Human-Centric Framework for Debating the Ethics of AI Consciousness Under Uncertainty</h1>
       <span class="paper-tag tag-theory">arXiv &middot; 2 Dec 2025</span>
-      <a class="paper-btn" href="../AI_Consciousness_Ethics.pdf" target="_blank">Paper</a>
       <a class="paper-btn" href="https://arxiv.org/abs/2512.02544" target="_blank">arXiv</a>
       <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong>, Haiqiang Dai, Bin Ling, Yingnian Wu, Demetri Terzopoulos</p>
 
