@@ -198,7 +198,7 @@ body { font-family: var(--font-serif); color: var(--text); background: var(--bg)
 
         <h4>Three Frontiers toward General Intelligence</h4>
         <ul>
-          <li><strong>Frontier 1: Minimize $L(z)$</strong> &mdash; efficient reasoning. A shorter $z$ that achieves the same prediction has found a more fundamental pattern. Connects to internalization: System 2 &rarr; System 1.</li>
+          <li><strong>Frontier 1: Abstraction (Deeper Understanding)</strong> &mdash; minimize $L(z)$. A shorter $z$ that achieves the same prediction has found a more fundamental pattern. Today compression is passive (a side effect of fixed $|\theta|$); the frontier is to make the agent <em>actively</em> abstract and compress at test time. Connects to internalization: System 2 &rarr; System 1.</li>
           <li><strong>Frontier 2: Continuous learning ($\Delta\theta$)</strong> &mdash; unlock online weight updates at deployment. Better compression leads to better continual learning (low-dimensional submanifolds are harder to overwrite).</li>
           <li><strong>Frontier 3: Self-model ($\hat{\mathcal{E}}_{\text{self}}$)</strong> &mdash; an agent that models itself, diagnoses weaknesses, plans learning, and verifies modifications. The cognitive loop becomes recursive.</li>
         </ul>
@@ -476,7 +476,8 @@ body { font-family: var(--font-serif); color: var(--text); background: var(--bg)
       <p>This is the recursive application of the compression principle to itself: the meta-level compression of the space of compressions.</p>
 
       <h3>The Three Frontiers of AI Development</h3>
-      <p><strong>Frontier 1: Minimizing $L(z)$&mdash;Deeper Understanding and Better Generalization.</strong> Models that simultaneously optimize for correctness <em>and</em> $z$-compression: $\min_z -\log p(x \mid z) + \lambda \cdot |z|$. A shorter $z$ that achieves the same prediction quality has found a more fundamental pattern&mdash;this is the MDL principle applied to reasoning itself. This connects to <strong>generalization</strong> (by the compression-understanding equivalence, a more compressed $z$ necessarily generalizes better) and <strong>internalization</strong> (as $L(z)$ is minimized, explicit text-based reasoning is gradually absorbed into implicit $\theta$-level computation&mdash;a transition from System 2 to System 1). A fully internalized reasoning step is the ultimate compression: $L(z) \to 0$, with the knowledge absorbed into $\theta$.</p>
+      <p><strong>Frontier 1: Abstraction (Deeper Understanding)&mdash;Minimizing $L(z)$.</strong> Models that simultaneously optimize for correctness <em>and</em> $z$-compression: $\min_z -\log p(x \mid z) + \lambda \cdot |z|$. A shorter $z$ that achieves the same prediction quality has found a more fundamental pattern&mdash;this is the MDL principle applied to reasoning itself. This connects to <strong>generalization</strong> (by the compression-understanding equivalence, a more compressed $z$ necessarily generalizes better) and <strong>internalization</strong> (as $L(z)$ is minimized, explicit text-based reasoning is gradually absorbed into implicit $\theta$-level computation&mdash;a transition from System 2 to System 1). A fully internalized reasoning step is the ultimate compression: $L(z) \to 0$, with the knowledge absorbed into $\theta$.</p>
+      <p><strong>From passive to active abstraction.</strong> In today's models, compression is entirely <em>passive</em>: a fixed parameter budget $|\theta|$ implicitly squeezes the world into finite capacity, and whatever abstraction emerges is a side effect of that constraint. The model is never asked to abstract; it is merely prevented from not abstracting. The frontier is to make abstraction an <strong>active</strong> objective the agent pursues at test time&mdash;deliberately compressing its own reasoning, actively searching for the shorter $z$ that explains the same data, and seeking deeper understanding rather than waiting for it to fall out of a capacity bottleneck. Concretely: at inference, an agent could re-describe a problem in progressively more compact terms, test whether the compressed description still predicts, and keep the shortest one that survives&mdash;turning $\min_z L(z)$ from an implicit training-time regularizer into an explicit, agent-driven act of understanding.</p>
       <p><strong>Frontier 2: Continuous Learning&mdash;Unlocking $\Delta\theta$ at All Timescales.</strong> The most fundamental limitation of current LLMs is that $\theta$ is <strong>frozen</strong> after training. True continuous learning would unlock $\Delta\theta$ at deployment: $\theta_{t+1} = \theta_t + \Delta\theta(e_t)$, online, autonomously, without catastrophic forgetting. Better compression leads to better continual learning&mdash;deeply compressed knowledge is stored in low-dimensional submanifolds of parameter space that are harder to accidentally overwrite. A promising path is <strong>multi-timescale $\theta$</strong>: partition parameters into fast-adapting and slow-stable components (analogous to hippocampus vs. neocortex).</p>
       <p><strong>Frontier 3: Self-Model-Based Autonomous Self-Improvement.</strong> An agent that has a <strong>model of itself</strong>: $\hat{\mathcal{E}}_{\text{self}} \approx \mathcal{E}(\theta, z)$. With this self-model, the agent can (i) <strong>diagnose</strong> its own weaknesses (where $E(x|z)$ is high or $L(z)$ is unnecessarily large), (ii) <strong>plan</strong> its own learning (which experiences to seek, which $\Delta\theta$ to apply), and (iii) <strong>verify</strong> its own modifications. The cognitive loop becomes recursive:</p>
       <div class="key-eq" style="font-size:0.9rem;">$$\underbrace{o \to s \to W \to V \to \pi \to a \to \Delta\mathcal{E}}_{\text{first-order: act in the world}} \to \underbrace{\hat{\mathcal{E}}_{\text{self}} \to \Delta\theta_{\text{targeted}}}_{\text{second-order: improve oneself}}$$</div>
@@ -625,6 +626,11 @@ body { font-family: var(--font-serif); color: var(--text); background: var(--bg)
       <a class="paper-btn" href="https://arxiv.org/abs/2605.27028" target="_blank">arXiv</a>
       <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong>, Jiaqi Li, Huacong Tang, Ying Nian Wu, Demetri Terzopoulos</p>
 
+      <figure>
+        <img src="static/images/esr/teaser_overview.png" alt="Full-rollout OPD suffers Off-policy Teacher Decay; ESR trains only early tokens and later tokens align without direct training">
+        <figcaption>Full-rollout OPD lets the student's off-policy prefix grow until the teacher's signal decays into auto-completion. ESR stops the rollout early, training only the first $N$ tokens &mdash; later positions align on their own via <em>Cascading Alignment</em>, and the student commits to a better, shorter sub-mode. The result is better, more stable, and 24&times; faster distillation.</figcaption>
+      </figure>
+
       <h2>Abstract</h2>
       <p>On-policy distillation (OPD) trains a student by scoring its own rollouts with a teacher model. We observe an <strong>&ldquo;Off-policy Teacher Decay&rdquo;</strong> problem in this paradigm: for later tokens, the student's earlier trajectory becomes context that is off-policy to the teacher, so the teacher's ability to produce a corrective score decays and it falls back to token-completion behavior learned during pre-training. We propose <strong>Early Stopping Rollout (ESR)</strong> to fix it: simply restrict the rollout generation to the first $N$ response tokens. ESR surpasses full-rollout OPD across model size, family, task, and training regime, while being far more GPU-efficient and training-stable &mdash; especially in cross-family settings. We further identify the <em>Cascading Alignment</em> and <em>Sub-mode Commitment</em> effects that explain why it works, and show that this position-based selection cannot be explained away by KL divergence or entropy signals.</p>
 
@@ -644,6 +650,13 @@ body { font-family: var(--font-serif); color: var(--text); background: var(--bg)
         <figcaption>Teacher accuracy decays monotonically as it is conditioned on longer student-generated prefixes, approaching the student baseline. Uniformly weighting all token positions in OPD gives undue emphasis to regions where the teacher signal is no longer corrective.</figcaption>
       </figure>
 
+      <p>The accuracy curve tells us the teacher <em>gets worse</em>; the sharper question is whether it is still <em>correcting</em> the student at all. We measure the teacher's preference margin between correct and incorrect continuations at each position, $\Delta = \log \pi_T(\text{correct}) - \log \pi_T(\text{incorrect})$:</p>
+
+      <figure>
+        <img src="static/images/esr/fig_decay_margin.png" alt="Teacher correct-minus-incorrect log-probability margin by token position">
+        <figcaption>The teacher stops correcting after ~100 tokens. $\Delta = \log \pi_T(\text{correct}) - \log \pi_T(\text{incorrect})$ by token position ($\pm$ s.e.). Under a <strong>student-generated prefix</strong> the margin decays and then <em>inverts</em> &mdash; past roughly 100 tokens the teacher scores incorrect continuations <em>above</em> correct ones, so the supervision signal is not merely weak but actively misleading. Under the <strong>teacher's own prefix</strong> the margin stays at $\approx 0$ throughout, which isolates the student prefix &mdash; not token position itself &mdash; as the cause.</figcaption>
+      </figure>
+
       <h2>Method: Early Stopping Rollout (ESR)</h2>
       <p>Standard on-policy reverse-KL distillation computes the loss over the student's entire response $\mathbf{y} = (y_1, \ldots, y_T)$:</p>
       <div class="key-eq">$$\mathcal{L}_{\text{full}} = \mathbb{E}_{\mathbf{y} \sim \pi_s(\cdot \mid x)} \left[ \sum_{t=1}^{T} \mathrm{KL}\bigl(\pi_s(\cdot \mid x, \mathbf{y}_{&lt;t}) \,\|\, \pi_t(\cdot \mid x, \mathbf{y}_{&lt;t})\bigr) \right]$$</div>
@@ -660,7 +673,58 @@ body { font-family: var(--font-serif); color: var(--text); background: var(--bg)
       </div>
 
       <h3>Better across families, generations, and sizes</h3>
-      <p>Across every cell of the main table, ESR matches or beats OPD's best score, and surpasses the teacher reference in many. In the same-family same-generation setting full-rollout OPD sometimes falls <em>below</em> the student's original performance (Qwen 1.7B, 14B), while ESR always improves. In cross-family settings full-rollout OPD collapses most of the time; ESR degrades nowhere. It also holds across tasks (MATH-500, HumanEval, BFCL) and both LoRA and full fine-tuning.</p>
+      <p>Across every cell of the main table, ESR matches or beats OPD's best score, and surpasses the teacher reference in many. In the same-family same-generation setting full-rollout OPD sometimes falls <em>below</em> the student's original performance (Qwen 1.7B, 14B), while ESR always improves. In cross-family settings full-rollout OPD collapses most of the time; ESR degrades nowhere. It also holds across tasks (MATH-500, HumanEval, BFCL) and, with one exception noted below, under full fine-tuning as well as LoRA.</p>
+
+      <table>
+        <tr>
+          <th rowspan="2">Pair (Student &rarr; Teacher)</th>
+          <th colspan="4" style="text-align:center; border-left:1px solid var(--border);">avg@4</th>
+          <th colspan="4" style="text-align:center; border-left:1px solid var(--border);">pass@4</th>
+        </tr>
+        <tr>
+          <th style="border-left:1px solid var(--border);">Student</th><th>Teacher</th><th>OPD</th><th>ESR</th>
+          <th style="border-left:1px solid var(--border);">Student</th><th>Teacher</th><th>OPD</th><th>ESR</th>
+        </tr>
+        <tr><td colspan="9" style="background:var(--bg-alt); font-style:italic;">Same family, same generation</td></tr>
+        <tr><td>Qwen3-1.7B &rarr; Qwen3-4B</td><td>69.20</td><td>77.95</td><td>65.85</td><td><strong>69.20</strong></td><td>81.00</td><td>86.40</td><td>78.00</td><td><strong>81.20</strong></td></tr>
+        <tr><td>Qwen2.5-14B &rarr; Qwen2.5-Math-72B</td><td>73.80</td><td>72.60</td><td>73.45</td><td><strong>74.30</strong> &#9733;</td><td>83.20</td><td>84.80</td><td>83.80</td><td><strong>84.00</strong></td></tr>
+        <tr><td>Qwen2.5-32B &rarr; Qwen2.5-Math-72B</td><td>77.05</td><td>72.60</td><td>77.30 &#9733;</td><td><strong>78.10</strong> &#9733;</td><td>84.40</td><td>84.80</td><td>86.20 &#9733;</td><td><strong>87.40</strong> &#9733;</td></tr>
+        <tr><td colspan="9" style="background:var(--bg-alt); font-style:italic;">Same family, cross generation</td></tr>
+        <tr><td>Qwen2.5-Math-1.5B &rarr; Qwen3-1.7B</td><td>50.95</td><td>69.20</td><td>62.35</td><td><strong>65.85</strong></td><td>72.80</td><td>81.00</td><td>75.20</td><td><strong>79.80</strong></td></tr>
+        <tr><td>Qwen2.5-Math-1.5B &rarr; Qwen3-4B</td><td>50.95</td><td>77.95</td><td>67.45<sup>&darr;&minus;12.4</sup></td><td><strong>68.95</strong></td><td>72.80</td><td>86.40</td><td>80.60</td><td><strong>81.00</strong></td></tr>
+        <tr><td>Qwen2.5-Math-7B &rarr; Qwen3-14B</td><td>53.60</td><td>76.15</td><td>68.85<sup>&darr;&minus;6.5</sup></td><td><strong>68.95</strong></td><td>75.00</td><td>83.20</td><td>80.00</td><td><strong>81.20</strong></td></tr>
+        <tr><td>Qwen2.5-14B &rarr; Qwen3.5-35B-A3B</td><td>73.80</td><td>83.85</td><td>5.40<sup>&Dagger;</sup></td><td><strong>75.15</strong></td><td>83.20</td><td>88.00</td><td>15.80<sup>&Dagger;</sup></td><td><strong>85.40</strong></td></tr>
+        <tr><td>Gemma-2 2B &rarr; Gemma-3 4B</td><td>13.45</td><td>66.60</td><td>22.95</td><td><strong>27.20</strong></td><td>28.20</td><td>74.80</td><td>31.40</td><td><strong>39.40</strong></td></tr>
+        <tr><td colspan="9" style="background:var(--bg-alt); font-style:italic;">Cross family</td></tr>
+        <tr><td>Gemma-2 2B &rarr; Qwen3-4B</td><td>13.45</td><td>77.95</td><td>16.40<sup>&darr;&minus;11.5</sup></td><td><strong>19.90</strong></td><td>28.20</td><td>86.40</td><td>27.00<sup>&darr;&minus;17.2</sup></td><td><strong>30.20</strong></td></tr>
+      </table>
+      <p style="color:var(--text-sec); font-size:0.85rem;">MATH-500. &ldquo;Student&rdquo;/&ldquo;Teacher&rdquo; are the base models with no distillation. OPD values are the <em>peak</em> across training; <sup>&darr;&minus;&Delta</sup> gives the drop from peak to the final checkpoint (shown when &gt;5%). <sup>&Dagger;</sup> marks configurations that never reach a functional checkpoint (peak &lt;20% across all saved steps). ESR uses $N{=}100$, LoRA ($N{=}50$ for Gemma-2 2B &rarr; Qwen3-4B). <strong>Bold</strong>: ESR beats OPD. &#9733;: surpasses the teacher reference.</p>
+
+      <h3>Other tasks, and full fine-tuning</h3>
+      <table>
+        <tr><th>Pair</th><th>Method</th><th>HumanEval (pass@1)</th><th>BFCL (full acc)</th></tr>
+        <tr><td rowspan="4">Qwen2.5-Math-1.5B<br>&rarr; Qwen3-1.7B</td><td>Student</td><td>31.10</td><td>2.70</td></tr>
+        <tr><td>Teacher</td><td>39.60</td><td>54.00</td></tr>
+        <tr><td>OPD</td><td>40.20<sup>&darr;&minus;13.4</sup></td><td>58.20 &#9733;</td></tr>
+        <tr><td>ESR</td><td><strong>42.10</strong> &#9733;</td><td><strong>61.30</strong> &#9733;</td></tr>
+        <tr><td rowspan="4">Gemma-2-2B<br>&rarr; Gemma-3 4B</td><td>Student</td><td>23.78</td><td>73.17</td></tr>
+        <tr><td>Teacher</td><td>20.70</td><td>72.83</td></tr>
+        <tr><td>OPD</td><td>22.00<sup>&darr;&minus;10.4</sup></td><td>76.83 &#9733;</td></tr>
+        <tr><td>ESR</td><td><strong>28.70</strong> &#9733;</td><td><strong>79.00</strong> &#9733;</td></tr>
+      </table>
+
+      <table>
+        <tr><th>Pair (full fine-tuning, MATH-500)</th><th>Method</th><th>avg@4</th><th>pass@4</th></tr>
+        <tr><td rowspan="4">Qwen2.5-Math-1.5B<br>&rarr; Qwen3-1.7B</td><td>Student</td><td>50.95</td><td>72.80</td></tr>
+        <tr><td>Teacher</td><td>69.20</td><td>81.00</td></tr>
+        <tr><td>OPD</td><td>58.20</td><td>75.40</td></tr>
+        <tr><td>ESR</td><td>56.20</td><td>73.80</td></tr>
+        <tr><td rowspan="4">Gemma-2-2B<br>&rarr; Gemma-3 4B</td><td>Student</td><td>13.45</td><td>28.20</td></tr>
+        <tr><td>Teacher</td><td>66.60</td><td>74.80</td></tr>
+        <tr><td>OPD</td><td>13.90</td><td>25.00</td></tr>
+        <tr><td>ESR</td><td><strong>26.65</strong></td><td><strong>40.40</strong></td></tr>
+      </table>
+      <p style="color:var(--text-sec); font-size:0.85rem;">Under full fine-tuning the same-family math pair is the one cell where OPD edges ahead (58.20 vs. 56.20); we conjecture the smaller learning rate tolerates tail noise better. On the cross-generation Gemma pair, full-FT OPD fails to move the student at all (13.90 vs. 13.45 baseline) while ESR nearly doubles it.</p>
 
       <h3>Efficiency</h3>
       <table>
