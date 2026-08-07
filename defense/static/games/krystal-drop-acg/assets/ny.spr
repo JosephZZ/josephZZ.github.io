@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sprite SYSTEM "sprite.dtd">
+<sprite fps="9">
+	<anim>
+		<file name="ny1.png"/>
+		<goto anim="0"/>
+	</anim>
+	<anim>
+		<file name="ny1.png"/>
+		<file name="ny2.png"/>
+		<file name="ny3.png"/>
+		<file name="ny4.png"/>
+		<file name="ny5.png"/>
+		<onlyonce/>
+	</anim>
+</sprite>

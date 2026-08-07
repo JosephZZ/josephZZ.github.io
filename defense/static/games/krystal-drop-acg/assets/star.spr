@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sprite SYSTEM "sprite.dtd">
+<sprite fps="5">
+	<anim>
+		<file name="star.png" xcenter="8" ycenter="8"/>
+		<onlyonce/>
+	</anim>
+</sprite>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sprite SYSTEM "sprite.dtd">
+<sprite fps="12">
+	<anim>
+		<file name="bn51.png"/>
+		<goto anim="0"/>
+	</anim>
+	<anim>
+		<file name="bn52.png"/>
+		<file name="bn52.png"/>
+		<file name="bn52.png"/>
+		<file name="bn52.png"/>
+		<file name="bn52.png"/>
+		<file name="bn52.png"/>
+		<file name="bn52.png"/>
+		<file name="bn52.png"/>
+		<file name="bn52.png"/>
+		<file name="bn52.png"/>
+		<file name="bn52.png"/>
+		<file name="bn52.png"/>
+		<goto anim="0"/>
+	</anim>
+
+	<anim>
+		<file name="bn53.png"/>
+		<file name="bn53.png"/>
+		<file name="bn53.png"/>
+		<file name="bn53.png"/>
+		<file name="bn53.png"/>
+		<file name="bn53.png"/>
+		<file name="bn53.png"/>
+		<file name="bn53.png"/>
+		<file name="bn53.png"/>
+		<file name="bn53.png"/>
+		<file name="bn53.png"/>
+		<file name="bn53.png"/>
+		<goto anim="0"/>
+	</anim>
+
+	<anim>
+		<file name="bn54.png"/>
+		<goto anim="3"/>
+	</anim>
+
+
+</sprite>

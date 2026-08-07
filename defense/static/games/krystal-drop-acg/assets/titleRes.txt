@@ -1,0 +1,5 @@
+<resources>
+	<resource name="title1" file="title1.png"/>
+	<resource name="title2" file="title2.png"/>
+	<resource name="title3" file="title3.png"/>
+</resources>
