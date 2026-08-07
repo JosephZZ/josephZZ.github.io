@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sprite SYSTEM "sprite.dtd">
+<sprite fps="1">
+	<anim>
+		<file name="sg1.png"/>
+		<goto anim="0"/>
+	</anim>
+	<anim>
+		<file name="sg1.png"/>
+		<file name="sg2.png"/>
+		<file name="sg3.png"/>
+		<file name="sg4.png"/>
+		<onlyonce/>
+	</anim>
+</sprite>

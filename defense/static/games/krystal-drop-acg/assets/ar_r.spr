@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sprite SYSTEM "sprite.dtd">
+<sprite fps="24">
+	<anim>
+		<file name="ar_r1.png"/>
+		<file name="ar_r2.png"/>
+		<file name="ar_r3.png"/>
+		<file name="ar_r4.png"/>
+		<file name="ar_r5.png"/>
+		<file name="ar_r6.png"/>
+		<file name="ar_r7.png"/>
+		<file name="ar_r8.png"/>
+		<goto anim="0"/>
+	</anim>
+</sprite>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sprite SYSTEM "sprite.dtd">
+<sprite fps="4">
+	<anim>
+		<file name="line1.png"/>
+		<goto anim="0"/>
+	</anim>
+	<anim>
+		<file name="line1.png"/>
+		<file name="line2.png"/>
+		<file name="line3.png"/>
+		<file name="line4.png"/>
+		<goto anim="1"/>
+	</anim>
+	<anim>
+		<file name="line4.png"/>
+		<file name="line3.png"/>
+		<file name="line2.png"/>
+		<file name="line1.png"/>
+		<goto anim="2"/>
+	</anim>
+</sprite>

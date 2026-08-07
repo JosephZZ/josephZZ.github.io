@@ -1,0 +1,3 @@
+<resources>
+	<resource name="line" file="line.spr"/>
+</resources>

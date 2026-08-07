@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sprite SYSTEM "sprite.dtd">
+<sprite fps="20">
+	<anim>
+		<file name="doorl1.png"/>
+		<file name="doorl2.png"/>
+		<file name="doorl3.png"/>
+		<file name="doorl4.png"/>
+		<file name="doorl5.png"/>
+		<file name="doorl6.png"/>
+		<file name="doorl7.png"/>
+		<file name="doorl8.png"/>
+		<file name="doorl9.png"/>
+		<file name="doorl10.png"/>
+		<file name="doorl10.png"/>
+		<file name="doorl9.png"/>
+		<file name="doorl8.png"/>
+		<file name="doorl7.png"/>
+		<file name="doorl6.png"/>
+		<file name="doorl5.png"/>
+		<file name="doorl4.png"/>
+		<file name="doorl3.png"/>
+		<file name="doorl2.png"/>
+		<file name="doorl1.png"/>
+		<goto anim="0"/>
+	</anim>
+</sprite>
