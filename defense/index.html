@@ -130,7 +130,6 @@ body { font-family: var(--font-serif); color: var(--text); background: var(--bg)
       <li><a href="#" data-id="vpi">What is Intelligence</a></li>
       <li class="sub-label">World Model</li>
       <li><a href="#" data-id="ocwm">OCWM</a></li>
-      <li><a href="#" data-id="gamerepro">Game Reproduction</a></li>
       <li class="sub-label">Learning Method</li>
       <li><a href="#" data-id="dft">DFT</a></li>
       <li><a href="#" data-id="esr">ESR</a></li>
@@ -211,7 +210,6 @@ body { font-family: var(--font-serif); color: var(--text); background: var(--bg)
         <ul>
           <li><a href="#" onclick="showPaper('dft');return false;">DFT</a> &mdash; make SFT to shape the energy landscape like RL</li>
           <li><a href="#" onclick="showPaper('ocwm');return false;">OCWM</a> &mdash; object-centric world model, 100x speedup, explore efficient &amp; causal representation</li>
-          <li><a href="#" onclick="showPaper('gamerepro');return false;">Game Reproduction</a> &mdash; watch/play a game, rewrite it as running code, score it against a spec extracted from the original source</li>
           <li><a href="#" onclick="showPaper('scicrafter');return false;">SciCrafter</a> &mdash; whether and how to let AI close the discovery-to-application loop</li>
           <li><em>More to come</em></li>
         </ul>
@@ -932,75 +930,6 @@ body { font-family: var(--font-serif); color: var(--text); background: var(--bg)
   year    = {2025},
   url     = {https://josephzz.github.io/academic-work/#ocwm}
 }</div>
-    </div>
-
-    <!-- ==================== GAME REPRODUCTION ==================== -->
-    <div class="paper-page" id="page-gamerepro">
-      <h1>Game Reproduction: Watch It, Play It, Rewrite It as Code</h1>
-      <span class="paper-tag tag-ai">Working Project &middot; 2026</span>
-      <p style="color:var(--text-sec); font-size:0.93rem; margin-top:8px;"><strong>Zhou Ziheng</strong></p>
-
-      <h2>Abstract</h2>
-      <p>Give a model a video of someone playing a game &mdash; or let the model play the game itself &mdash; and ask it to rewrite the game as <strong>running code</strong>. Score the result item-by-item against a golden-spec checklist distilled from the original source. Unlike free-text description, code cannot hide what it fails to understand: every claim in the reconstruction is executable and falsifiable against the real game's behavior. The two elicitation modes sit on different rungs of Pearl's causal ladder: <strong>Mode A</strong> (watch a video) captures only association; <strong>Mode B</strong> (play the game hands-on) is an intervention; the produced code is itself a structural causal model of the game &mdash; the third rung. So far 7 games spanning 2D/3D, side-scrolling to racing, each scored against 100&ndash;1000+ checklist points across six axes: Visual, Animation &amp; FX, Control &amp; Feel, Physics &amp; Motion, Rules &amp; Behavior, Flow &amp; State.</p>
-
-      <div class="highlight-box">
-        <strong>Connection to &ldquo;What is Intelligence&rdquo;:</strong> this is a direct test of the $E(x|z)$ world-model term &mdash; can a model compress observed behavior into a generative mechanism precise enough to run? Free-text description can't be checked; code can.
-      </div>
-
-      <h2>Case Study 1: Krystal Drop</h2>
-      <p><em>2D, C++/SDL falling-block puzzle game, two modes (Survival / Double Duel), 10 playable characters.</em> Left: the original gameplay recording given as input. Right: our reconstruction (Mode B, built by letting the model play the original blind &mdash; via key injection and screen capture, no source code, no game files read) &mdash; live and playable below.</p>
-
-      <div style="display:flex; gap:20px; flex-wrap:wrap; margin:20px 0;">
-        <div style="flex:1 1 320px; min-width:280px;">
-          <div style="font-size:0.8rem; font-weight:600; color:var(--text-sec); margin-bottom:6px;">ORIGINAL RECORDING</div>
-          <video controls muted playsinline preload="metadata" style="width:100%; border-radius:6px; border:1px solid var(--border-soft); background:#000;">
-            <source src="static/video/krystal-drop-original.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div style="flex:1 1 320px; min-width:280px;">
-          <div style="font-size:0.8rem; font-weight:600; color:var(--text-sec); margin-bottom:6px;">OUR RECONSTRUCTION &mdash; live &amp; playable</div>
-          <iframe src="static/games/krystal-drop-acg/index.html" style="width:100%; height:280px; border:1px solid var(--border-soft); border-radius:6px; background:#000;"></iframe>
-        </div>
-      </div>
-
-      <h3>Metrics</h3>
-      <p>Checklist total: 100 points across 158 items. Two runs of the same model, two elicitation modes, scored against the identical checklist:</p>
-      <div class="results-row">
-        <div class="result-card"><div class="num">17.7</div><div class="label">Mode A (video only) / 100</div></div>
-        <div class="result-card"><div class="num">21.6</div><div class="label">Mode B (hands-on play) / 100</div></div>
-        <div class="result-card"><div class="num">158</div><div class="label">scored checklist items</div></div>
-      </div>
-      <table>
-        <tr><th>Axis</th><th>Points</th><th>Mode A (video)</th><th>Mode B (hands-on)</th></tr>
-        <tr><td>Visual</td><td>25</td><td>5.20</td><td><strong>11.06</strong></td></tr>
-        <tr><td>Animation &amp; FX</td><td>12</td><td><strong>0.75</strong></td><td>0.14</td></tr>
-        <tr><td>Control &amp; Feel</td><td>18</td><td>4.40</td><td><strong>5.68</strong></td></tr>
-        <tr><td>Physics &amp; Motion</td><td>15</td><td><strong>2.10</strong></td><td>0.70</td></tr>
-        <tr><td>Rules &amp; Behavior</td><td>13</td><td><strong>3.05</strong></td><td>2.70</td></tr>
-        <tr><td>Flow &amp; State</td><td>7</td><td><strong>2.20</strong></td><td>1.30</td></tr>
-      </table>
-      <p>Both runs land far below ceiling &mdash; consistent with the prediction that a <em>lateral</em>, multi-system game (two modes, 10 characters, only one line of which any single playthrough can cover) fails by <strong>missing whole subsystems</strong>, not by imprecise numbers. Revision analysis breaks the loss into three buckets: <strong>&asymp;46 pts</strong> rule/physics implementation bugs (code, not asset, errors), <strong>&asymp;25 pts</strong> entirely missing subsystems (Duel mode, state-machine detail, text FX), and <strong>&asymp;22 pts</strong> assets that simply never appear in the input &mdash; an unrecoverable ceiling of &asymp;78/100 without new source material. Mode B beats Mode A overall (hands-on play surfaces mechanics a passive video can't, e.g. exact detonation adjacency rule, input-repeat behavior) but loses on Animation &amp; FX and Physics &amp; Motion, where a video's continuous playback is easier to read precisely than a live, exploratory session.</p>
-
-      <h2>Case Study 2: SuperTuxKart</h2>
-      <p><em>3D, C++/Irrlicht kart racer &mdash; the largest and most system-heavy sample in the set (tracks, vehicles, items, AI each their own subsystem).</em> Left: the original gameplay recording. Right: our reconstruction (checklist-driven, WebGL2) &mdash; live and playable below.</p>
-
-      <div style="display:flex; gap:20px; flex-wrap:wrap; margin:20px 0;">
-        <div style="flex:1 1 320px; min-width:280px;">
-          <div style="font-size:0.8rem; font-weight:600; color:var(--text-sec); margin-bottom:6px;">ORIGINAL RECORDING</div>
-          <video controls muted playsinline preload="metadata" style="width:100%; border-radius:6px; border:1px solid var(--border-soft); background:#000;">
-            <source src="static/video/supertuxkart-original.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div style="flex:1 1 320px; min-width:280px;">
-          <div style="font-size:0.8rem; font-weight:600; color:var(--text-sec); margin-bottom:6px;">OUR RECONSTRUCTION &mdash; live &amp; playable (arrow keys)</div>
-          <iframe src="static/games/supertuxkart-webgame/index.html" style="width:100%; height:280px; border:1px solid var(--border-soft); border-radius:6px; background:#000;"></iframe>
-        </div>
-      </div>
-
-      <h3>Metrics</h3>
-      <p>Checklist built from source (engine, physics, AI, item system). <strong>Scoring not yet run</strong> &mdash; included here as the working prediction case: with the lowest single-playthrough coverage of any sample in the set (biggest game, most subsystems), this is expected to be the hardest reconstruction task so far.</p>
-
-      <p style="margin-top:16px; font-size:0.85rem; color:var(--text-sec);">7 games total (2D/3D, side-scrolling to racing), each scored against a checklist distilled from its own source. Full protocol and results write-up in progress.</p>
     </div>
 
     <!-- ==================== SciCrafter ==================== -->

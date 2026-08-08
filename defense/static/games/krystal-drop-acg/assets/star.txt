@@ -1,3 +1,0 @@
-<resources>
-	<resource name="star" file="star.spr"/>
-</resources>

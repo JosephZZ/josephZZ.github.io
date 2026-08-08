@@ -1,3 +1,0 @@
-<resources>
-	<resource name="cup" file="cup.spr"/>
-</resources>

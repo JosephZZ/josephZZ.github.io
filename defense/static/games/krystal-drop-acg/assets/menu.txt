@@ -1,4 +1,0 @@
-<resources>
-	<resource name="leftarrow" file="ar_l.spr"/>
-	<resource name="rightarrow" file="ar_r.spr"/>
-</resources>
