@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understanding the RH Proof</title>
+<meta name="description" content="A readable map of the formal Lean proof of the Riemann Hypothesis: what each step proves, and how.">
+<style>
+:root{--bg:#f7f8fa;--fg:#1c2230;--muted:#5b6475;--accent:#3a5bd9;--line:#d6dbe4}
+@media (prefers-color-scheme:dark){:root{--bg:#12151b;--fg:#e7ebf2;--muted:#9aa4b6;--accent:#8ea8ff;--line:#2e3544}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,"Segoe UI","PingFang SC","Noto Sans SC",sans-serif;
+  padding:56px max(20px,env(safe-area-inset-left)) 56px max(20px,env(safe-area-inset-right))}
+main{max-width:680px;margin:0 auto}
+h1{font-size:2rem;line-height:1.25;margin:0 0 .4em;text-wrap:balance}
+.tag{display:inline-block;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:2px 10px;margin-bottom:18px}
+p{margin:.6em 0;color:var(--fg)}
+.muted{color:var(--muted)}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<main>
+  <span class="tag">Coming soon</span>
+  <h1>Understanding the Riemann Hypothesis Proof</h1>
+  <p>A readable map of the formal Lean 4 proof of the Riemann Hypothesis in
+  <a href="https://github.com/leanprover-community/riemann-hypothesis">leanprover-community/riemann-hypothesis</a>.
+  The proof, about 17 million lines of Lean, is reorganized into a tree of meaning units. For each step the map shows
+  what it must prove, how it is proved, and which parts are new to this proof. The code is only reorganized, never changed.</p>
+  <p class="muted">The interactive map and the method notes will appear here.</p>
+  <hr>
+  <h1 style="font-size:1.4rem">理解黎曼猜想的形式化证明</h1>
+  <p>把约 1,700 万行的 Lean 形式化证明，重新组织成一棵由意义单元构成的树：每一步要证明什么、怎么证明、哪些是本证明特有的。代码只重新组织，内容一字不改。</p>
+  <p class="muted">交互式证明地图和方法说明即将上线。</p>
+  <hr>
+  <p class="muted">Source and data: <a href="https://github.com/JosephZZ/Understanding-The-Riemann-Hypothesis-Proof">github.com/JosephZZ/Understanding-The-Riemann-Hypothesis-Proof</a></p>
+</main>
+</body>
+</html>
